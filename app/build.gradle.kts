@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.yandex.android:maps.mobile:4.5.1-lite")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

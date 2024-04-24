@@ -37,7 +37,7 @@ public class MainFragment extends Fragment {
                 fTrans =  getParentFragmentManager().beginTransaction();
                 fTrans.replace(R.id.fragment_container,new TrailFragment());
                 fTrans.addToBackStack(null);
-                fTrans.commit()
+                fTrans.commit();
             }
         });
         return binding.getRoot();

@@ -1,18 +1,39 @@
 package com.example.hoofit.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Trail {
+    @SerializedName("ID")
     private int id;
 
+    @SerializedName("coordinates")
     private List<Coordinate> coordinates;
+
+    @SerializedName("trail_name")
     private String trailName;
+
+    @SerializedName("description")
     private String description;
+
+    @SerializedName("status")
     private String status;
+
+    @SerializedName("liked")
     private boolean liked;
 
     // Конструктор, геттеры и сеттеры
     public Trail() {}
+
+    public Trail(int id, List<Coordinate> coordinates, String trailName, String description, String status, boolean liked) {
+        this.id = id;
+        this.coordinates = coordinates;
+        this.trailName = trailName;
+        this.description = description;
+        this.status = status;
+        this.liked = liked;
+    }
 
     public int getId() {
         return id;
@@ -54,7 +75,7 @@ public class Trail {
         this.status = status;
     }
 
-    public boolean isLiked() {
+    public boolean getLiked() {
         return liked;
     }
 
