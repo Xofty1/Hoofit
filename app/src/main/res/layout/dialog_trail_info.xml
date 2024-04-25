@@ -9,25 +9,40 @@
         android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Информация о тропе"
-        android:textStyle="bold"
-        android:textSize="18sp"
+        android:gravity="center"
         android:padding="16dp"
-        android:gravity="center"/>
+        android:text="Информация о тропе"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Описание тропы, дополнительная информация и т.д."
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:text="Описание тропы, дополнительная информация и т.д." />
 
-    <!-- Добавьте другие элементы пользовательского дизайна, если нужно -->
-
-    <Button
-        android:id="@+id/dialog_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ОК"
-        android:padding="12dp"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_to_trail"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_margin="5dp"
+            android:text="К тропе" />
+
+        <Button
+            android:id="@+id/button_dismiss"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_margin="5dp"
+            android:text="ОК" />
+    </LinearLayout>
 </LinearLayout>

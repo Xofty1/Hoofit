@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.TrailData;
-import com.example.hoofit.ui.TrailFragment;
+import com.example.hoofit.ui.MapFragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -26,6 +26,7 @@ public class DataHandler extends AsyncTask<Void, Void, String> {
     private DataInterface dataInterface;
 
     String Url = "https://firebasestorage.googleapis.com/v0/b/hoofit-5c8bd.appspot.com/o/way1.json?alt=media&token=36882818-c761-4caa-8b0c-dd788e27bbcf";
+
     public static TrailData importFromJSON(String resource) {
         try {
             return new Gson().fromJson(resource, TrailData.class);
@@ -72,9 +73,11 @@ public class DataHandler extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String resource) {
-        if (resource != null) {
+        if (resource != null) { // исправить логику при смене фрагмента мы делаем запрос но сохраяем его в локальную БД
             TrailData trailData = importFromJSON(resource);
-            dataInterface.onTrailDataReceived(trailData);
+            if (MapFragment.isMapFragment)
+                dataInterface.onTrailDataReceived(trailData);
+
         } else {
             Toast.makeText(context, "Ошибка получения данных", Toast.LENGTH_LONG).show();
         }
