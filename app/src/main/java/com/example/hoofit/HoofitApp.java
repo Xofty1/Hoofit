@@ -48,12 +48,14 @@ public class HoofitApp extends Application {
                                 allTrails.add(trail);
                         }
                     } else {
-                        Toast.makeText(HoofitApp.this, "Троп пока что нет", Toast.LENGTH_LONG);
+                        Toast.makeText(HoofitApp.this, "Троп пока что нет", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(HoofitApp.this, "Ошибка соединения", Toast.LENGTH_LONG);
+                    Toast.makeText(HoofitApp.this, "Ошибка соединения", Toast.LENGTH_LONG).show();
                 }
                 reserves.setReserves(rev);
             }
         });
-    }}
+    }
+
+}

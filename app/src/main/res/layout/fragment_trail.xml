@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.TrailFragment">
-    <com.yandex.mapkit.mapview.MapView
-        android:id="@+id/mapView"
+    android:orientation="vertical"
+    tools:context=".ui.ReserveFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Тропы"
+        android:textColor="@color/dark_blue"
+        android:textSize="21sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_trail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.yandex.mapkit.mapview.MapView>
-</FrameLayout>
+        android:layout_height="match_parent" />
+
+</LinearLayout>

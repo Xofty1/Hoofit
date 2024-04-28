@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hoofit.R;
+import com.example.hoofit.adapter.TrailAdapter;
 import com.example.hoofit.data.Coordinate;
+import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.TrailData;
 import com.example.hoofit.dataHandler.DataHandler;
@@ -54,8 +57,16 @@ public class TrailFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        MapKitFactory.initialize(requireContext());
         binding = FragmentTrailBinding.inflate(getLayoutInflater());
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Reserve reserve = (Reserve) bundle.getSerializable("reserve");
+            TrailAdapter adapter = new TrailAdapter(getContext(), reserve);
+            binding.listTrail.setHasFixedSize(true);
+            binding.listTrail.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.listTrail.setAdapter(adapter);
+        }
         return binding.getRoot();
     }
 

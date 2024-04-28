@@ -1,8 +1,9 @@
 package com.example.hoofit.data;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Reserve {
+public class Reserve implements Serializable {
     private int id;
     private String name;
     private String description;
