@@ -1,48 +1,65 @@
-<!-- res/layout/custom_dialog_layout.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <!-- Добавьте элементы пользовательского дизайна здесь -->
-    <TextView
-        android:id="@+id/dialog_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="Информация о тропе"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/dialog_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Описание тропы, дополнительная информация и т.д." />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@drawable/rounded_background"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_to_trail"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_margin="5dp"
-            android:text="К тропе" />
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@color/dark_blue"
+            android:text="Информация о тропе"
+            android:textSize="21sp" />
 
-        <Button
-            android:id="@+id/button_dismiss"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/dialog_message"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_margin="5dp"
-            android:text="ОК" />
+            android:fontFamily="@font/montserrat"
+            android:padding="10dp"
+            android:textColor="@color/dark_blue"
+            android:text="Описание тропы, дополнительная информация и т.д."
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_to_trail"
+                style="@style/RoundedButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semibold"
+                android:padding="3dp"
+                android:text="К тропе" />
+
+            <Button
+                android:id="@+id/button_dismiss"
+                style="@style/RoundedButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semibold"
+                android:padding="3dp"
+                android:text="ОК" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

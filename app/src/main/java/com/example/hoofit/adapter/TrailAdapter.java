@@ -12,14 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
+import com.example.hoofit.data.Trail;
 
 public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> {
     Context context;
     Reserve reserve;
+    private OnItemClickListener itemClickListener;
 
     public TrailAdapter(Context context, Reserve reserve) {
         this.context = context;
         this.reserve = reserve;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -31,9 +37,17 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull TrailAdapter.ViewHolder holder, int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(reserve.getTrails().get(position));
+                }
+            }
+        });
         holder.textName.setText(reserve.getTrails().get(position).getName());
         holder.textDescription.setText(reserve.getTrails().get(position).getDescription());
-        holder.textLevel.setText(reserve.getTrails().get(position).getDifficulty());
+        holder.textLevel.setText("Сложность: " + reserve.getTrails().get(position).getDifficulty());
     }
 
     @Override
@@ -45,11 +59,17 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
         TextView textName;
         TextView textDescription;
         TextView textLevel;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
             textDescription = itemView.findViewById(R.id.text_description);
             textLevel = itemView.findViewById(R.id.text_level);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Trail trail);
     }
 }

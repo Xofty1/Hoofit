@@ -54,6 +54,7 @@ public class HoofitApp extends Application {
                     Toast.makeText(HoofitApp.this, "Ошибка соединения", Toast.LENGTH_LONG).show();
                 }
                 reserves.setReserves(rev);
+                Toast.makeText(HoofitApp.this, "Данные получены", Toast.LENGTH_LONG).show();
             }
         });
     }

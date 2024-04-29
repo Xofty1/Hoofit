@@ -1,6 +1,7 @@
 package com.example.hoofit.data;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 //public class Trail {
@@ -77,7 +78,7 @@ import java.util.List;
 //    }
 //}
 
-public class Trail {
+public class Trail implements Serializable {
     private int id;
     private String name;
     private double length;

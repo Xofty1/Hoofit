@@ -51,6 +51,8 @@ public class InfoReserveFragment extends Fragment {
                     transaction.commit();
                 }
             });
+            binding.textName.setText(reserve.getName());
+            binding.textDescription.setText(reserve.getDescription());
         }
 
 

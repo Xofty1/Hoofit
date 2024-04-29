@@ -10,4 +10,5 @@
     <color name="dark_blue">#397998</color>
     <color name="orange">#F0A54E</color>
     <color name="beige">#FFEEDB</color>
+    <color name="transparent">#00111111</color>
 </resources>

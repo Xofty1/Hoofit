@@ -1,10 +1,12 @@
 package com.example.hoofit.ui;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hoofit.HoofitApp;
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
+import com.example.hoofit.adapter.TrailAdapter;
 import com.example.hoofit.data.Coordinate;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
@@ -46,16 +50,13 @@ public class MapFragment extends Fragment {
     public static boolean isMapFragment;
     FragmentMapBinding binding;
     ReserveData reserves = HoofitApp.reserves;
+    private MapObjectTapListener[] mapObjectTapListeners;
+    private MapObjectTapListener mapTrailListener;
     List<Trail> allTrails = HoofitApp.allTrails;
-    private TrailData trailData;
     private AlertDialog dialog = null;
     private MapObjectCollection mapObjects;
     private MapView mapView;
-    private MapObjectTapListener[] mapObjectTapListeners;
 
-    public void setTrailData(TrailData trailData) {
-        this.trailData = trailData;
-    }
 
 //    @Override
 //    public void onTrailDataReceived(TrailData trailData) {
@@ -79,7 +80,8 @@ public class MapFragment extends Fragment {
 //    }
 
 
-    private void showTrailInfoDialog(Trail trail) {
+    private void showTrailInfoDialog(Trail trail, PolylineMapObject polyline) {
+
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
@@ -92,14 +94,44 @@ public class MapFragment extends Fragment {
         builder.setView(bindingInfo.getRoot());
 
         dialog = builder.create();
+        // Установка начального масштаба на 0
+        bindingInfo.getRoot().setScaleX(0);
+        bindingInfo.getRoot().setScaleY(0);
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                // Анимация масштабирования при появлении диалогового окна
+                bindingInfo.getRoot().animate()
+                        .scaleX(1)
+                        .scaleY(1)
+                        .setDuration(300)
+                        .start();
+            }
+        });
         dialog.show();
         bindingInfo.buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                polyline.setStrokeColor(getResources().getColor(R.color.orange));
+            }
+        });
+
+        bindingInfo.buttonToTrail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                polyline.setStrokeColor(getResources().getColor(R.color.orange));
+                InfoTrailFragment fragment = new InfoTrailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("trail", trail);
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,10 +142,19 @@ public class MapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         MapKitFactory.initialize(requireContext());
+
         binding = FragmentMapBinding.inflate(getLayoutInflater());
         mapView = binding.mapView;
         isMapFragment = true;
         mapObjects = mapView.getMap().getMapObjects().addCollection();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Trail trail = (Trail) bundle.getSerializable("trail");
+            makeTrail(trail);
+        } else {
+            makeMap();
+        }
+
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference reserveRef = database.getReference("reserves");
 //        List<Reserve> rev = new ArrayList<>();
@@ -139,7 +180,7 @@ public class MapFragment extends Fragment {
 //                makeMap();
 //            }
 //        });
-        makeMap();
+
         return binding.getRoot();
     }
 
@@ -158,10 +199,25 @@ public class MapFragment extends Fragment {
                 points.add(new Point(coordinate.getLatitude(), coordinate.getLongitude()));
             }
             PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(points));
-            mapObjectTapListeners[i] = createTapListener(i); // Сохраняем ссылку на созданный слушатель
+            mapObjectTapListeners[i] = createTapListener(allTrails.get(i), polyline); // Сохраняем ссылку на созданный слушатель
             polyline.addTapListener(mapObjectTapListeners[i]); // Используем сохраненный слушатель
             polyline.setStrokeColor(getResources().getColor(R.color.orange));
         }
+    }
+
+    public void makeTrail(Trail trail) {
+        mapView.getMap().move(new CameraPosition(new Point(trail.getCoordinatesList().get(0).getLatitude(), trail.getCoordinatesList().get(0).getLongitude()), 8.0F, 0.0F, 0.0F));
+        List<Coordinate> coordinates = trail.getCoordinatesList();
+        List<Point> points = new ArrayList<>();
+
+        for (Coordinate coordinate : coordinates) {
+            points.add(new Point(coordinate.getLatitude(), coordinate.getLongitude()));
+        }
+
+        PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(points));
+        mapTrailListener = createTapListener(trail, polyline);
+        polyline.addTapListener(mapTrailListener);
+        polyline.setStrokeColor(getResources().getColor(R.color.orange));
     }
 
     @Override
@@ -179,12 +235,13 @@ public class MapFragment extends Fragment {
         super.onStop();
     }
 
-    private MapObjectTapListener createTapListener(final int index) {
+    private MapObjectTapListener createTapListener(final Trail trail, final PolylineMapObject polyline) {
         return new MapObjectTapListener() {
             @Override
             public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
-                Log.d("FFF", "Listener = " + String.valueOf(index));
-                showTrailInfoDialog(allTrails.get(index));
+//                Log.d("FFF", "Listener = " + String.valueOf(index));
+                polyline.setStrokeColor(getResources().getColor(R.color.dark_blue));
+                showTrailInfoDialog(trail, polyline);
                 return true;
             }
         };

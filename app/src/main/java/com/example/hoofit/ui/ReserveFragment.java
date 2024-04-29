@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hoofit.HoofitApp;
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.adapter.ReserveAdapter;
 import com.example.hoofit.data.Reserve;
@@ -39,9 +40,7 @@ public class ReserveFragment extends Fragment {
                 fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
 //        adapter.setOnItemClickListener(new ReserveAdapter.OnItemClickListener() {
