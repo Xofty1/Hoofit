@@ -31,8 +31,7 @@ import java.util.List;
 
 public class HoofitApp extends Application {
     final static public String fileNameReserve = "reserves.json";
-    final static public String fileNameUser = "user.json";
-    public static User user = null;
+    public static User user;
     public static ReserveData reserves = null;
     public static List<Trail> allTrails = new ArrayList<>();
 
@@ -62,19 +61,6 @@ public class HoofitApp extends Application {
                     } else {
                         Toast.makeText(HoofitApp.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
                     }
-                } else { // если подключения к Интернету нет, то берем данные из JSON-файла
-                    Toast.makeText(HoofitApp.this, "Ошибка соединения", Toast.LENGTH_SHORT).show();
-//                    try {
-//
-//                        String json = JsonUtils.readFile(filePath);
-//                        ReserveData reserveData = JsonUtils.convertJsonToObject(json, ReserveData.class);
-//                        reserves = reserveData;
-//                        for (int i = 0; i < reserveData.getReserves().size(); i++) {
-//                            allTrails.addAll(reserveData.getReserves().get(i).getTrails());
-//                        }
-//                    } catch (IOException e) {
-//                        Toast.makeText(HoofitApp.this, "Не удалось получить данные", Toast.LENGTH_SHORT).show();
-//                    }
                 }
                 Toast.makeText(HoofitApp.this, "Данные получены", Toast.LENGTH_SHORT).show();
             }

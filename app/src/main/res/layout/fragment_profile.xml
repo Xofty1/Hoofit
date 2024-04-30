@@ -19,6 +19,7 @@
         android:textSize="21sp" />
 
    <Button
+       android:id="@+id/buttonSavedTrails"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        style="@style/RoundedButtonStyle"
@@ -29,6 +30,7 @@
        android:text="Сохраненные тропы"/>
 
     <Button
+        android:id="@+id/buttonSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/RoundedButtonStyle"
@@ -39,6 +41,7 @@
         android:text="Настройки"/>
 
     <Button
+        android:id="@+id/buttonHelp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/RoundedButtonStyle"

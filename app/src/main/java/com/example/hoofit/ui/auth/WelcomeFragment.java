@@ -56,20 +56,9 @@ public class WelcomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWelcomeBinding.inflate(getLayoutInflater());
-        binding.textWelcome.setText("Добро поажаловать, " + HoofitApp.user.getName());
+        binding.textWelcome.setText("Добро пожаловать, " + HoofitApp.user.getName());
         // Получите путь к внутреннему хранилищу приложения
 
-
-        File file = new File(getContext().getFilesDir(), HoofitApp.fileNameUser);
-        String filePath = file.getAbsolutePath();
-        String jsonUser = JsonUtils.convertObjectToJson(HoofitApp.user);
-        try {
-            JsonUtils.saveJsonToFile(jsonUser, filePath);
-            Toast.makeText(getContext(), "Успешно записаны данные о пользователе", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("FileWriteError", "Ошибка при записи данных о пользователе в файл", e);
-        }
 
 
         File fileReserve = new File(getContext().getFilesDir(), HoofitApp.fileNameReserve);
@@ -90,6 +79,7 @@ public class WelcomeFragment extends Fragment {
         else{
             Toast.makeText(getContext(), "Проверьте подключение к Интернету", Toast.LENGTH_SHORT).show();
         }
+        startDelayedFragmentSwitch();
         return binding.getRoot();
     }
 

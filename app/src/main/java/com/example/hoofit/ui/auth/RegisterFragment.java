@@ -58,7 +58,6 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 User user = new User(name, username, email, null,false);
-                                HoofitApp.user = user;
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
