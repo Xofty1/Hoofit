@@ -43,21 +43,6 @@ public class ReserveFragment extends Fragment {
                 MainActivity.makeTransaction(transaction, fragment);
             }
         });
-//        adapter.setOnItemClickListener(new ReserveAdapter.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(Reserve reserve) {
-//                InfoReserveFragment fragment = new InfoReserveFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("reserve", reserve);
-//                fragment.setArguments(bundle);
-//
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
         binding.listReserve.setHasFixedSize(true);
         binding.listReserve.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.listReserve.setAdapter(adapter);

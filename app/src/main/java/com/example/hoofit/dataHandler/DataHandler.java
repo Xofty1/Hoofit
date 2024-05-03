@@ -2,13 +2,10 @@ package com.example.hoofit.dataHandler;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.TrailData;
-import com.example.hoofit.ui.MapFragment;
+import com.example.hoofit.ui.map.MapFragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -17,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 

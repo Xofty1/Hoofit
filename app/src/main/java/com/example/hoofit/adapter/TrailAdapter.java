@@ -14,15 +14,18 @@ import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
 
+import java.util.List;
+
 public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> {
     Context context;
-    Reserve reserve;
-    private OnItemClickListener itemClickListener;
+    List<Trail> trails;
 
-    public TrailAdapter(Context context, Reserve reserve) {
+    public TrailAdapter(Context context, List<Trail> trails) {
         this.context = context;
-        this.reserve = reserve;
+        this.trails = trails;
     }
+
+    private OnItemClickListener itemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -41,18 +44,18 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 if (itemClickListener != null) {
-                    itemClickListener.onItemClick(reserve.getTrails().get(position));
+                    itemClickListener.onItemClick(trails.get(position));
                 }
             }
         });
-        holder.textName.setText(reserve.getTrails().get(position).getName());
-        holder.textDescription.setText(reserve.getTrails().get(position).getDescription());
-        holder.textLevel.setText("Сложность: " + reserve.getTrails().get(position).getDifficulty());
+        holder.textName.setText(trails.get(position).getName());
+        holder.textDescription.setText(trails.get(position).getDescription());
+        holder.textLevel.setText("Сложность: " + trails.get(position).getDifficulty());
     }
 
     @Override
     public int getItemCount() {
-        return reserve.getTrails().size();
+        return trails.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

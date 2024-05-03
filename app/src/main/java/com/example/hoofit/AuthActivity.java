@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
+import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
 import com.example.hoofit.dataHandler.JsonUtils;
 import com.example.hoofit.ui.MainFragment;
@@ -48,9 +49,11 @@ public class AuthActivity extends AppCompatActivity {
                 String json = JsonUtils.readFile(filePath);
                 ReserveData reserveData = JsonUtils.convertJsonToObject(json, ReserveData.class);
                 HoofitApp.reserves = reserveData;
+                List<Trail> allTrails = new ArrayList<>();
                 for (int i = 0; i < reserveData.getReserves().size(); i++) {
-                    HoofitApp.allTrails.addAll(reserveData.getReserves().get(i).getTrails());
+                    allTrails.addAll(reserveData.getReserves().get(i).getTrails());
                 }
+                HoofitApp.allTrails = allTrails;
             } catch (Exception e) {
                 Toast.makeText(this, "Не удалось получить данные " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }

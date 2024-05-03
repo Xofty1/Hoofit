@@ -33,7 +33,7 @@ public class HoofitApp extends Application {
     final static public String fileNameReserve = "reserves.json";
     public static User user;
     public static ReserveData reserves = null;
-    public static List<Trail> allTrails = new ArrayList<>();
+    public static List<Trail> allTrails;
 
     @Override
     public void onCreate() {
@@ -52,12 +52,15 @@ public class HoofitApp extends Application {
                 if (task.isSuccessful()) {// если есть подключение к интернету берем данные из Firebase
                     DataSnapshot dataSnapshot = task.getResult();
                     if (dataSnapshot.exists()) {
+                        List<Trail> trails = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Reserve reserve = snapshot.getValue(Reserve.class);
+                            trails.addAll(reserve.getTrails());
                             rev.add(reserve);
-                            allTrails.addAll(reserve.getTrails());
+
                         }
                         reserves.setReserves(rev);
+                        allTrails = trails;
                     } else {
                         Toast.makeText(HoofitApp.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
                     }

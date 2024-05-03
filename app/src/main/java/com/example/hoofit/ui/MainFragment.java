@@ -39,13 +39,22 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
 
-        CardView cardView = binding.getRoot().findViewById(R.id.cardView1);
-
-        cardView.setOnClickListener(new View.OnClickListener() {
+        CardView reserves = binding.getRoot().findViewById(R.id.reserves);
+        CardView trails = binding.getRoot().findViewById(R.id.trails);
+        reserves.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fTrans = getParentFragmentManager().beginTransaction();
                 fTrans.replace(R.id.fragment_container, new ReserveFragment());
+                fTrans.addToBackStack(null);
+                fTrans.commit();
+            }
+        });
+        trails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fTrans = getParentFragmentManager().beginTransaction();
+                fTrans.replace(R.id.fragment_container, new TrailFragment());
                 fTrans.addToBackStack(null);
                 fTrans.commit();
             }

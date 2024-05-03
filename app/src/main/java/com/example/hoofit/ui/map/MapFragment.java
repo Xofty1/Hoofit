@@ -1,15 +1,10 @@
-package com.example.hoofit.ui;
+package com.example.hoofit.ui.map;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PointF;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +12,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +28,7 @@ import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.DialogTrailInfoBinding;
 import com.example.hoofit.databinding.FragmentMapBinding;
+import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -54,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment {
+    private MapViewModel viewModel;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 1;
@@ -121,12 +119,24 @@ public class MapFragment extends Fragment {
             }
         });
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopLocationUpdates(); // Остановить обновление местоположения при переходе на другой фрагмент
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startLocationUpdates(); // Возобновить обновление местоположения при возврате на фрагмент
+    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel = new ViewModelProvider(this).get(MapViewModel.class);
+//        viewModel.loadTrails();
     }
 
     @Override
@@ -138,6 +148,7 @@ public class MapFragment extends Fragment {
         mapView = binding.mapView;
         mapObjects = mapView.getMap().getMapObjects().addCollection();
         requestLocationPermission();
+        Bundle bundle = getArguments();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         locationCallback = new LocationCallback() {
             @Override
@@ -148,7 +159,7 @@ public class MapFragment extends Fragment {
                     updateMarker(new Point(location.getLatitude(), location.getLongitude()));
 
                     Log.d("Location", "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
-                    if (currentLocation == null)
+                    if (currentLocation == null && bundle == null)
                     {
                         mapView.getMap().move(new CameraPosition(new Point(location.getLatitude(), location.getLongitude()), 5.0F, 0.0F, 0.0F));
                     }
@@ -159,7 +170,7 @@ public class MapFragment extends Fragment {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates();
         }
-        Bundle bundle = getArguments();
+
         if (bundle != null) {
             Trail trail = (Trail) bundle.getSerializable("trail");
             makeTrail(trail);
@@ -191,9 +202,6 @@ public class MapFragment extends Fragment {
             }
         }
     }
-
-    // Методы для запуска и остановки обновлений местоположения
-
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -281,7 +289,6 @@ public class MapFragment extends Fragment {
         return new MapObjectTapListener() {
             @Override
             public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
-//                Log.d("FFF", "Listener = " + String.valueOf(index));
                 polyline.setStrokeColor(getResources().getColor(R.color.dark_blue));
                 showTrailInfoDialog(trail, polyline);
                 return true;
