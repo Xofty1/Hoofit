@@ -55,7 +55,8 @@ public class HoofitApp extends Application {
                         List<Trail> trails = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Reserve reserve = snapshot.getValue(Reserve.class);
-                            trails.addAll(reserve.getTrails());
+                            if (reserve.getTrails() != null)
+                                trails.addAll(reserve.getTrails());
                             rev.add(reserve);
 
                         }

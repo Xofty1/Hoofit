@@ -1,17 +1,25 @@
 package com.example.hoofit.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -47,6 +55,30 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
         });
         holder.textName.setText(reserves.getReserves().get(position).getName());
         holder.textDescription.setText(reserves.getReserves().get(position).getDescription());
+        // Получаем ссылку на Firebase Storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+// Получаем ссылку на изображение в Firebase Storage
+        StorageReference imageRef = storageRef.child("images/" + reserves.getReserves().get(position).getName());
+
+// Получаем URI изображения и загружаем его в ImageView
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Загружаем изображение в ImageView
+                Glide.with(context)
+                        .load(uri)
+                        .into(holder.image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Обработка ошибок при загрузке изображения
+//                Log.e(TAG, "Ошибка загрузки изображения: " + exception.getMessage());
+            }
+        });
+
     }
 
     @Override
@@ -57,11 +89,14 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
         TextView textDescription;
+        ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
             textDescription = itemView.findViewById(R.id.text_description);
+            image = itemView.findViewById(R.id.imageView);
+
         }
     }
 
