@@ -1,10 +1,20 @@
 package com.example.hoofit.ui;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,36 +27,36 @@ import android.widget.Toast;
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
-import com.example.hoofit.adapter.TrailAdapter;
 import com.example.hoofit.data.Coordinate;
-import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
-import com.example.hoofit.data.TrailData;
-import com.example.hoofit.dataHandler.DataHandler;
-import com.example.hoofit.dataHandler.DataInterface;
 import com.example.hoofit.databinding.DialogTrailInfoBinding;
 import com.example.hoofit.databinding.FragmentMapBinding;
-import com.example.hoofit.databinding.FragmentTrailBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.geometry.Polyline;
 import com.yandex.mapkit.map.CameraPosition;
+import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
 import com.yandex.mapkit.map.MapObjectTapListener;
+import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.PolylineMapObject;
 import com.yandex.mapkit.mapview.MapView;
+import com.yandex.runtime.image.ImageProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment {
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
+    private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 1;
     public static boolean isMapFragment;
     FragmentMapBinding binding;
     ReserveData reserves = HoofitApp.reserves;
@@ -56,28 +66,8 @@ public class MapFragment extends Fragment {
     private AlertDialog dialog = null;
     private MapObjectCollection mapObjects;
     private MapView mapView;
-
-
-//    @Override
-//    public void onTrailDataReceived(TrailData trailData) {
-//        this.trailData = trailData;
-//        mapView.getMap().move(new CameraPosition(new Point(trailData.getTrails().get(0).getCoordinates().get(0).getLatitude(), trailData.getTrails().get(0).getCoordinates().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
-//
-//        int trailsCount = trailData.getTrails().size();
-//        mapObjectTapListeners = new MapObjectTapListener[trailsCount];
-//
-//        for (int i = 0; i < trailsCount; i++) {
-//            List<Point> points = new ArrayList<>();
-//            List<Coordinate> coordinates = trailData.getTrails().get(i).getCoordinates();
-//            for (Coordinate coordinate : coordinates) {
-//                points.add(new Point(coordinate.getLatitude(), coordinate.getLongitude()));
-//            }
-//            PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(points));
-//            mapObjectTapListeners[i] = createTapListener(i); // Сохраняем ссылку на созданный слушатель
-//            polyline.addTapListener(mapObjectTapListeners[i]); // Используем сохраненный слушатель
-//            polyline.setStrokeColor(getResources().getColor(R.color.orange));
-//        }
-//    }
+    Location currentLocation = null;
+    private PlacemarkMapObject userLocationMarker;
 
 
     private void showTrailInfoDialog(Trail trail, PolylineMapObject polyline) {
@@ -136,6 +126,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -145,8 +136,29 @@ public class MapFragment extends Fragment {
 
         binding = FragmentMapBinding.inflate(getLayoutInflater());
         mapView = binding.mapView;
-        isMapFragment = true;
         mapObjects = mapView.getMap().getMapObjects().addCollection();
+        requestLocationPermission();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Location location = locationResult.getLastLocation();
+                if (location != null) {
+                    updateMarker(new Point(location.getLatitude(), location.getLongitude()));
+
+                    Log.d("Location", "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
+                    if (currentLocation == null)
+                    {
+                        mapView.getMap().move(new CameraPosition(new Point(location.getLatitude(), location.getLongitude()), 5.0F, 0.0F, 0.0F));
+                    }
+                    currentLocation = location;
+                }
+            }
+        };
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates();
+        }
         Bundle bundle = getArguments();
         if (bundle != null) {
             Trail trail = (Trail) bundle.getSerializable("trail");
@@ -155,38 +167,68 @@ public class MapFragment extends Fragment {
             makeMap();
         }
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference reserveRef = database.getReference("reserves");
-//        List<Reserve> rev = new ArrayList<>();
-//        reserveRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DataSnapshot dataSnapshot = task.getResult();
-//                    if (dataSnapshot.exists()) {
-//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                            Reserve reserve = snapshot.getValue(Reserve.class);
-//                            rev.add(reserve);
-//                            for (Trail trail : reserve.getTrails())
-//                                allTrails.add(trail);
-//                        }
-//                    } else {
-//                        Toast.makeText(getContext(), "Троп пока что нет", Toast.LENGTH_LONG);
-//                    }
-//                } else {
-//                    Toast.makeText(getContext(), "Ошибка соединения", Toast.LENGTH_LONG);
-//                }
-//                reserves.setReserves(rev);
-//                makeMap();
-//            }
-//        });
-
         return binding.getRoot();
     }
 
+    private void requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSIONS_REQUEST_FINE_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Разрешение на местоположение получено, начать обновления местоположения
+                startLocationUpdates();
+            } else {
+                // Разрешение на местоположение не было предоставлено, обработать это событие соответственно
+                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // Методы для запуска и остановки обновлений местоположения
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.requestLocationUpdates(createLocationRequest(), locationCallback, null);
+    }
+
+    private void stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+    }
+
+    // Метод для создания запроса местоположения
+
+    private LocationRequest createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return locationRequest;
+    }
+    private void updateMarker(Point point) {
+        if (userLocationMarker == null) {
+            userLocationMarker = mapObjects.addPlacemark(point, ImageProvider.fromResource(requireContext(), R.drawable.search_result));
+        } else {
+            userLocationMarker.setGeometry(point);
+        }
+
+        // Установка размеров изображения маркера
+        userLocationMarker.setIconStyle(new IconStyle().setScale(0.7f)); // Установка масштаба изображения маркера
+        // Установка других свойств стиля маркера, если необходимо
+    }
 
     public void makeMap() {
-        mapView.getMap().move(new CameraPosition(new Point(reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLatitude(), reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
+
+//        mapView.getMap().move(new CameraPosition(new Point(reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLatitude(), reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
 
         int trailsCount = allTrails.size();
         Log.d("firebase", "size " + trailsCount);
@@ -229,10 +271,10 @@ public class MapFragment extends Fragment {
 
     @Override
     public void onStop() {
-        mapView.onStop();
-        isMapFragment = false;
-        MapKitFactory.getInstance().onStop();
         super.onStop();
+        mapView.onStop();
+        MapKitFactory.getInstance().onStop();
+
     }
 
     private MapObjectTapListener createTapListener(final Trail trail, final PolylineMapObject polyline) {
