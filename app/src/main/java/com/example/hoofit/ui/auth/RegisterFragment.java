@@ -1,5 +1,6 @@
 package com.example.hoofit.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.data.User;
 import com.example.hoofit.databinding.FragmentRegisterBinding;
+import com.example.hoofit.ui.MainFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -48,9 +50,27 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 email = binding.editTextEmail.getText().toString();
+                if (email.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите email", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
                 password = binding.editTextPassword.getText().toString();
+                if (password.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
+                name = binding.editTextName.getText().toString();
+                if (name.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
                 name = binding.editTextName.getText().toString();
                 username = binding.editTextUsername.getText().toString();
+                if (username.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите ник", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
+
 
                 auth.createUserWithEmailAndPassword(email,
                                 password)
@@ -63,9 +83,7 @@ public class RegisterFragment extends Fragment {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 Toast.makeText(getContext(), "Все круто", Toast.LENGTH_LONG).show();
-                                                WelcomeFragment fragment = new WelcomeFragment();
-                                                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                                                MainActivity.makeTransaction(transaction, fragment);
+                                                startActivity(new Intent(getContext(), MainActivity.class));
                                             }
                                         });
                             }

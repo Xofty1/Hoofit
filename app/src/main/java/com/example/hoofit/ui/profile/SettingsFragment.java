@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.example.hoofit.AuthActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.databinding.FragmentSettingsBinding;
-import com.example.hoofit.databinding.FragmentSignInBinding;
-import com.example.hoofit.databinding.FragmentWelcomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 

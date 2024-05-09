@@ -21,6 +21,7 @@ import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
 import com.example.hoofit.databinding.FragmentSignInBinding;
+import com.example.hoofit.ui.MainFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,9 +89,7 @@ public class SignInFragment extends Fragment {
                                                         break;
                                                     }
                                                 }
-                                                WelcomeFragment fragment = new WelcomeFragment();
-                                                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                                                MainActivity.makeTransaction(transaction, fragment);
+                                                startActivity(new Intent(getContext(), MainActivity.class));
                                             }
                                         }
                                     }
@@ -109,14 +108,16 @@ public class SignInFragment extends Fragment {
                             }
                         });
 
-                binding.textViewToRegistration.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RegisterFragment fragment = new RegisterFragment();
-                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        MainActivity.makeTransaction(transaction, fragment);
-                    }
-                });
+
+            }
+
+        });
+        binding.textViewToRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RegisterFragment fragment = new RegisterFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
         return binding.getRoot();

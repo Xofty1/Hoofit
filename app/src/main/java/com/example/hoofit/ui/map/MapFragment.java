@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -82,6 +84,7 @@ public class MapFragment extends Fragment {
         builder.setView(bindingInfo.getRoot());
 
         dialog = builder.create();
+
         // Установка начального масштаба на 0
         bindingInfo.getRoot().setScaleX(0);
         bindingInfo.getRoot().setScaleY(0);
@@ -97,6 +100,7 @@ public class MapFragment extends Fragment {
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bindingInfo.buttonDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

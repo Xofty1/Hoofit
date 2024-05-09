@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.R;
@@ -40,23 +41,26 @@ public class InfoReserveFragment extends Fragment {
             binding.buttonToTrails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundleTrail = new Bundle();
-                    bundleTrail.putSerializable("reserve", reserve);
-                    TrailFragment trailFragment = new TrailFragment();
-                    trailFragment.setArguments(bundle);
+                    if (reserve.getTrails() == null)
+                    {
+                        Toast.makeText(getContext(), "У этого заповедника пока что нет троп", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Bundle bundleTrail = new Bundle();
+                        bundleTrail.putSerializable("reserve", reserve);
+                        TrailFragment trailFragment = new TrailFragment();
+                        trailFragment.setArguments(bundle);
 
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, trailFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, trailFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
                 }
             });
             binding.textName.setText(reserve.getName());
             binding.textDescription.setText(reserve.getDescription());
         }
-
-
-
         return binding.getRoot();
     }
 }

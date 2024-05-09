@@ -2,7 +2,9 @@ package com.example.hoofit.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable {
     private double latitude;
 
     private double longitude;
