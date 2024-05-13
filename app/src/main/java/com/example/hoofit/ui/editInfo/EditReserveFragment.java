@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.addInfo;
+package com.example.hoofit.ui.editInfo;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -10,17 +10,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.hoofit.R;
+import com.example.hoofit.MainActivity;
+import com.example.hoofit.adapter.ReserveAdapter;
 import com.example.hoofit.data.Reserve;
-import com.example.hoofit.databinding.FragmentAddReserveBinding;
+import com.example.hoofit.databinding.FragmentEditReserveBinding;
+import com.example.hoofit.ui.ReserveFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -29,23 +30,67 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class AddReserveFragment extends Fragment {
-    FragmentAddReserveBinding binding;
+public class EditReserveFragment extends Fragment {
+    FragmentEditReserveBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private Uri filePath;
     FirebaseStorage storage;
     StorageReference storageRef;
+    Reserve reserve = null;
     private StorageReference storageReference;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAddReserveBinding.inflate(getLayoutInflater());
+        binding = FragmentEditReserveBinding.inflate(getLayoutInflater());
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            binding.deleteButton.setVisibility(View.VISIBLE);
+            reserve = (Reserve) bundle.getSerializable("reserve");
+            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+            binding.editTextDescription.setText(reserve.getDescription());
+            binding.editTextName.setText(reserve.getName());
+            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+                    String name = binding.editTextName.getText().toString();
+                    String description = binding.editTextDescription.getText().toString();
+                    updateData(name, description, reservesRef);
+                    ReserveFragment fragment = new ReserveFragment();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    MainActivity.makeTransaction(transaction, fragment);
+                }
+            });
+        } else {
+            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+                    String name = binding.editTextName.getText().toString();
+                    String description = binding.editTextDescription.getText().toString();
+                    addData(name, description, reservesRef);
+
+                }
+            });
+        }
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+                reservesRef.child(reserve.getId()).removeValue();
+                ReserveFragment fragment = new ReserveFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                MainActivity.makeTransaction(transaction, fragment);
+            }
+        });
 
         binding.selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,12 +99,6 @@ public class AddReserveFragment extends Fragment {
             }
         });
 
-        binding.uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadFile();
-            }
-        });
 
         return binding.getRoot();
     }
@@ -84,20 +123,16 @@ public class AddReserveFragment extends Fragment {
         }
     }
 
-    private void uploadFile() {
+    private void updateData(String name, String description, DatabaseReference reservesRef) {
+        reserve.setDescription(description);
+        reserve.setName(name);
+        reservesRef.child(reserve.getId()).setValue(reserve);
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-            String name = binding.editTextName.getText().toString();
-            String description = binding.editTextDescription.getText().toString();
-            DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
-            String id = reservesRef.push().getKey(); // Получаем уникальный ключ
-
-            Reserve newReserve = new Reserve(id, name, description, null);
-            reservesRef.child(id).setValue(newReserve);
-
-            StorageReference ref = storageReference.child("images/" + name);
+            StorageReference ref = storageReference.child("images/" + reserve.getId());
+            ref.delete();
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -114,7 +149,39 @@ public class AddReserveFragment extends Fragment {
                         }
                     });
         }
-        else{
+    }
+
+    private void addData(String name, String description, DatabaseReference reservesRef) {
+        if (filePath != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            String id = reservesRef.push().getKey(); // Получаем уникальный ключ
+
+            Reserve newReserve = new Reserve(id, name, description, null);
+            reservesRef.child(id).setValue(newReserve);
+
+            StorageReference ref = storageReference.child("images/" + newReserve.getId());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
+                            ReserveFragment fragment = new ReserveFragment();
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                            MainActivity.makeTransaction(transaction, fragment);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
             Toast.makeText(getActivity(), "Выберите изображение", Toast.LENGTH_SHORT).show();
         }
     }
@@ -126,8 +193,7 @@ public class AddReserveFragment extends Fragment {
             // Разрешение на чтение внешнего хранилища не предоставлено, запрашиваем его
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_EXTERNAL_STORAGE);
-        }
-        else {
+        } else {
             openFileChooser();
         }
     }
@@ -143,9 +209,7 @@ public class AddReserveFragment extends Fragment {
                 // Вы можете выполнять нужные действия, которые требуют доступа к файлам
                 openFileChooser();
             } else {
-                // Разрешение не было предоставлено
-                // Обработайте эту ситуацию, например, сообщите пользователю о том, что
-                // доступ к файлам не предоставлен и приложение не сможет выполнить нужные действия
+                Toast.makeText(getActivity(), "Нет доступа к файлам", Toast.LENGTH_SHORT).show();
             }
         }
     }

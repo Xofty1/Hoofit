@@ -36,7 +36,7 @@
         android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Image"
+        android:text="Выбрать изображение"
         style="@style/RoundedButtonStyle"
         android:layout_below="@id/textView"
         android:layout_centerHorizontal="true"
@@ -58,8 +58,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/RoundedButtonStyle"
-        android:text="Upload Image"
+        android:text="Сохранить"
         android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButtonStyle"
+        android:text="Удалить"
+        android:layout_below="@id/uploadButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:visibility="gone"/>

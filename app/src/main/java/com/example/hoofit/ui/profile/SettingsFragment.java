@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hoofit.AuthActivity;
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.databinding.FragmentSettingsBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ FragmentSettingsBinding binding;
             public void onClick(View view) {
                 mAuth.signOut();
                 startActivity(new Intent(getContext(), AuthActivity.class));
+                getActivity().finish();
             }
         });
         return binding.getRoot();

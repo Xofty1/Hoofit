@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
+import com.example.hoofit.data.User;
 import com.example.hoofit.dataHandler.JsonUtils;
 import com.example.hoofit.ui.auth.RegisterFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,16 +31,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AuthActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static boolean isPersistenceEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         if (!isPersistenceEnabled) {
             database.setPersistenceEnabled(true);
             isPersistenceEnabled = true;
@@ -91,6 +95,7 @@ public class AuthActivity extends AppCompatActivity {
                     Toast.makeText(AuthActivity.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Обработка ошибки, если она произошла
@@ -111,9 +116,31 @@ public class AuthActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
+        DatabaseReference users = database.getReference("Users");
+        users.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists()) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User tempUser = snapshot.getValue(User.class);
+                            if (Objects.equals(user.getEmail(), tempUser.getEmail())) {
+                                HoofitApp.user = tempUser;
+                                Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
         if (user == null)
             replaceFragment(new RegisterFragment());
-        else
+        else {
             startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 }
