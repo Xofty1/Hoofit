@@ -18,11 +18,13 @@ import com.google.android.gms.location.LocationRequest;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     ActivityMainBinding binding;
+    FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        transaction = getSupportFragmentManager().beginTransaction();
         setContentView(binding.getRoot());
         replaceFragment(new MainFragment());
         binding.navView.setOnItemSelectedListener(item -> {

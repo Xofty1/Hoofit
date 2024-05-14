@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
@@ -20,6 +21,9 @@ import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentTrailBinding;
 import com.example.hoofit.mainMenu.OnFragmentInteractionListener;
 import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrailFragment extends Fragment{
     FragmentTrailBinding binding;
@@ -45,8 +49,9 @@ public class TrailFragment extends Fragment{
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            Reserve reserve = (Reserve) bundle.getSerializable("reserve");
-            TrailAdapter adapter = new TrailAdapter(getContext(), reserve.getTrails());
+            List<Trail> trails = (List<Trail>) bundle.getSerializable("trails");
+
+            TrailAdapter adapter = new TrailAdapter(getContext(), trails);
             adapter.setOnItemClickListener(new TrailAdapter.OnItemClickListener() {
 
                 @Override
@@ -57,7 +62,7 @@ public class TrailFragment extends Fragment{
                     fragment.setArguments(bundle);
 
                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    MainActivity.makeTransaction(transaction, fragment);
+                    MainActivity.makeTransaction(transaction,fragment);
                 }
             });
             binding.listTrail.setHasFixedSize(true);
@@ -76,7 +81,7 @@ public class TrailFragment extends Fragment{
                     fragment.setArguments(bundle);
 
                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    MainActivity.makeTransaction(transaction, fragment);
+                    MainActivity.makeTransaction(transaction,fragment);
                 }
             });
             binding.listTrail.setHasFixedSize(true);

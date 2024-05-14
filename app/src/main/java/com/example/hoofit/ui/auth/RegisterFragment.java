@@ -77,8 +77,9 @@ public class RegisterFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                User user = new User(name, username, email, null,false);
-                                users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                User user = new User(id, name, username, email, null,false);
+                                users.child(id)
                                         .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {

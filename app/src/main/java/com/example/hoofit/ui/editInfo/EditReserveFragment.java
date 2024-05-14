@@ -88,7 +88,7 @@ public class EditReserveFragment extends Fragment {
                 reservesRef.child(reserve.getId()).removeValue();
                 ReserveFragment fragment = new ReserveFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction(transaction,fragment);
             }
         });
 
@@ -171,7 +171,7 @@ public class EditReserveFragment extends Fragment {
                             Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
                             ReserveFragment fragment = new ReserveFragment();
                             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                            MainActivity.makeTransaction(transaction, fragment);
+                            MainActivity.makeTransaction( transaction,fragment);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

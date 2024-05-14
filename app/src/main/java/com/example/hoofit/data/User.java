@@ -1,15 +1,18 @@
 package com.example.hoofit.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private String id;
     private String name;
     private String username;
     private String email;
     private boolean isAdmin = false;
-    private List<Trail> likedTrails;
+    private List<Trail> likedTrails = new ArrayList<>();
 
-    public User(String name, String username, String email, List<Trail> trails, boolean isAdmin) {
+    public User(String id, String name, String username, String email, List<Trail> trails, boolean isAdmin) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
@@ -18,6 +21,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

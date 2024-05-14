@@ -119,7 +119,7 @@ public class MapFragment extends Fragment {
                 bundle.putSerializable("trail", trail);
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction(transaction,fragment);
             }
         });
     }

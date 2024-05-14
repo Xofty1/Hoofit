@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hoofit.HoofitApp;
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.adapter.ReserveAdapter;
 import com.example.hoofit.adapter.TrailAdapter;
@@ -47,14 +48,15 @@ public class InfoReserveFragment extends Fragment {
                     }
                     else {
                         Bundle bundleTrail = new Bundle();
-                        bundleTrail.putSerializable("reserve", reserve);
+                        bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
                         TrailFragment trailFragment = new TrailFragment();
-                        trailFragment.setArguments(bundle);
-
+                        trailFragment.setArguments(bundleTrail);
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_container, trailFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        MainActivity.makeTransaction(transaction,trailFragment);
+//                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//                        transaction.replace(R.id.fragment_container, trailFragment);
+//                        transaction.addToBackStack(null);
+//                        transaction.commit();
                     }
                 }
             });

@@ -44,6 +44,7 @@ public class MainFragment extends Fragment {
         reserves.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                MainActivity.makeTransaction(new ReserveFragment());
                 fTrans = getParentFragmentManager().beginTransaction();
                 fTrans.replace(R.id.fragment_container, new ReserveFragment());
                 fTrans.addToBackStack(null);
@@ -53,6 +54,7 @@ public class MainFragment extends Fragment {
         trails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                MainActivity.makeTransaction(new TrailFragment());
                 fTrans = getParentFragmentManager().beginTransaction();
                 fTrans.replace(R.id.fragment_container, new TrailFragment());
                 fTrans.addToBackStack(null);

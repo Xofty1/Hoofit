@@ -40,7 +40,7 @@ public class ReserveFragment extends Fragment {
                 fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction(transaction,fragment);
             }
         });
         adapter.setOnItemLongClickListener(new ReserveAdapter.OnItemLongClickListener() {
@@ -52,7 +52,7 @@ public class ReserveFragment extends Fragment {
                 fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction(transaction,fragment);
             }
         });
         binding.buttonAddReserve.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ public class ReserveFragment extends Fragment {
                 EditReserveFragment fragment = new EditReserveFragment();
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction(transaction,fragment);
             }
         });
         binding.listReserve.setHasFixedSize(true);

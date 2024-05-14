@@ -117,7 +117,7 @@ public class SignInFragment extends Fragment {
             public void onClick(View view) {
                 RegisterFragment fragment = new RegisterFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
+                MainActivity.makeTransaction( transaction,fragment);
             }
         });
         return binding.getRoot();
