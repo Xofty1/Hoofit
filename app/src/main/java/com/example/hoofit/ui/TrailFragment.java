@@ -20,6 +20,7 @@ import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentTrailBinding;
 import com.example.hoofit.mainMenu.OnFragmentInteractionListener;
+import com.example.hoofit.ui.editInfo.EditTrailFragment;
 import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.List;
 public class TrailFragment extends Fragment{
     FragmentTrailBinding binding;
     private OnFragmentInteractionListener listener;
+    Reserve reserve;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -48,46 +50,63 @@ public class TrailFragment extends Fragment{
         binding = FragmentTrailBinding.inflate(getLayoutInflater());
 
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            List<Trail> trails = (List<Trail>) bundle.getSerializable("trails");
-
-            TrailAdapter adapter = new TrailAdapter(getContext(), trails);
-            adapter.setOnItemClickListener(new TrailAdapter.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(Trail trail) {
-                    InfoTrailFragment fragment = new InfoTrailFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("trail", trail);
-                    fragment.setArguments(bundle);
-
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    MainActivity.makeTransaction(transaction,fragment);
-                }
-            });
-            binding.listTrail.setHasFixedSize(true);
-            binding.listTrail.setLayoutManager(new LinearLayoutManager(getContext()));
-            binding.listTrail.setAdapter(adapter);
+        if (HoofitApp.allTrails == null)
+        {
+            Toast.makeText(getContext(), "Нет троп", Toast.LENGTH_SHORT).show();
         }
-        else{
-            TrailAdapter adapter = new TrailAdapter(getContext(), HoofitApp.allTrails);
-            adapter.setOnItemClickListener(new TrailAdapter.OnItemClickListener() {
+        else {
+            if (bundle != null) {
+                List<Trail> trails = (List<Trail>) bundle.getSerializable("trails");
 
-                @Override
-                public void onItemClick(Trail trail) {
-                    InfoTrailFragment fragment = new InfoTrailFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("trail", trail);
-                    fragment.setArguments(bundle);
+                TrailAdapter adapter = new TrailAdapter(getContext(), trails);
+                adapter.setOnItemClickListener(new TrailAdapter.OnItemClickListener() {
 
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    MainActivity.makeTransaction(transaction,fragment);
-                }
-            });
-            binding.listTrail.setHasFixedSize(true);
-            binding.listTrail.setLayoutManager(new LinearLayoutManager(getContext()));
-            binding.listTrail.setAdapter(adapter);
+                    @Override
+                    public void onItemClick(Trail trail) {
+                        InfoTrailFragment fragment = new InfoTrailFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("trail", trail);
+                        fragment.setArguments(bundle);
+
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        MainActivity.makeTransaction(transaction, fragment);
+                    }
+                });
+                binding.listTrail.setHasFixedSize(true);
+                binding.listTrail.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.listTrail.setAdapter(adapter);
+            } else {
+                TrailAdapter adapter = new TrailAdapter(getContext(), HoofitApp.allTrails);
+                adapter.setOnItemClickListener(new TrailAdapter.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(Trail trail) {
+                        InfoTrailFragment fragment = new InfoTrailFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("trail", trail);
+                        fragment.setArguments(bundle);
+
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        MainActivity.makeTransaction(transaction, fragment);
+                    }
+                });
+                binding.listTrail.setHasFixedSize(true);
+                binding.listTrail.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.listTrail.setAdapter(adapter);
+            }
         }
+        binding.buttonAddTrail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                EditTrailFragment fragment = new EditTrailFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("reserve", reserve);
+//                fragment.setArguments(bundle);
+//
+//                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//                MainActivity.makeTransaction(transaction, fragment);
+            }
+        });
         return binding.getRoot();
     }
 

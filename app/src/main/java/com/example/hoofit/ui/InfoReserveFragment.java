@@ -19,6 +19,7 @@ import com.example.hoofit.adapter.TrailAdapter;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.databinding.FragmentInfoReserveBinding;
 import com.example.hoofit.databinding.FragmentReserveBinding;
+import com.example.hoofit.ui.editInfo.EditTrailFragment;
 
 import java.io.Serializable;
 
@@ -45,10 +46,18 @@ public class InfoReserveFragment extends Fragment {
                     if (reserve.getTrails() == null)
                     {
                         Toast.makeText(getContext(), "У этого заповедника пока что нет троп", Toast.LENGTH_SHORT).show();
+                        Bundle bundleTrail = new Bundle();
+//                        bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
+                        bundleTrail.putSerializable("reserve", reserve);
+                        EditTrailFragment fragment = new EditTrailFragment();
+                        fragment.setArguments(bundleTrail);
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        MainActivity.makeTransaction(transaction,fragment);
                     }
                     else {
                         Bundle bundleTrail = new Bundle();
                         bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
+//                        bundleTrail.putSerializable("reserve", reserve);
                         TrailFragment trailFragment = new TrailFragment();
                         trailFragment.setArguments(bundleTrail);
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

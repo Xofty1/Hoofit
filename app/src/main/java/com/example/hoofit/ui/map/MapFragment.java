@@ -59,7 +59,6 @@ public class MapFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 1;
     public static boolean isMapFragment;
     FragmentMapBinding binding;
-    ReserveData reserves = HoofitApp.reserves;
     private MapObjectTapListener[] mapObjectTapListeners;
     private MapObjectTapListener mapTrailListener;
     List<Trail> allTrails = HoofitApp.allTrails;
@@ -119,10 +118,11 @@ public class MapFragment extends Fragment {
                 bundle.putSerializable("trail", trail);
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction,fragment);
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -163,8 +163,7 @@ public class MapFragment extends Fragment {
                     updateMarker(new Point(location.getLatitude(), location.getLongitude()));
 
                     Log.d("Location", "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
-                    if (currentLocation == null && bundle == null)
-                    {
+                    if (currentLocation == null && bundle == null) {
                         mapView.getMap().move(new CameraPosition(new Point(location.getLatitude(), location.getLongitude()), 5.0F, 0.0F, 0.0F));
                     }
                     currentLocation = location;
@@ -206,6 +205,7 @@ public class MapFragment extends Fragment {
             }
         }
     }
+
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -226,6 +226,7 @@ public class MapFragment extends Fragment {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
     }
+
     private void updateMarker(Point point) {
         if (userLocationMarker == null) {
             userLocationMarker = mapObjects.addPlacemark(point, ImageProvider.fromResource(requireContext(), R.drawable.search_result));
@@ -241,19 +242,18 @@ public class MapFragment extends Fragment {
     public void makeMap() {
 
 //        mapView.getMap().move(new CameraPosition(new Point(reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLatitude(), reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
-
-        int trailsCount = allTrails.size();
+        int trailsCount = HoofitApp.allTrails.size();
         Log.d("firebase", "size " + trailsCount);
         mapObjectTapListeners = new MapObjectTapListener[trailsCount];
 
         for (int i = 0; i < trailsCount; i++) {
             List<Point> points = new ArrayList<>();
-            List<Coordinate> coordinates = allTrails.get(i).getCoordinatesList();
+            List<Coordinate> coordinates = HoofitApp.allTrails.get(i).getCoordinatesList();
             for (Coordinate coordinate : coordinates) {
                 points.add(new Point(coordinate.getLatitude(), coordinate.getLongitude()));
             }
             PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(points));
-            mapObjectTapListeners[i] = createTapListener(allTrails.get(i), polyline); // Сохраняем ссылку на созданный слушатель
+            mapObjectTapListeners[i] = createTapListener(HoofitApp.allTrails.get(i), polyline); // Сохраняем ссылку на созданный слушатель
             polyline.addTapListener(mapObjectTapListeners[i]); // Используем сохраненный слушатель
             polyline.setStrokeColor(getResources().getColor(R.color.orange));
         }

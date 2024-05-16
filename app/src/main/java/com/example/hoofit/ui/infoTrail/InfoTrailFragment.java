@@ -73,11 +73,15 @@ public class InfoTrailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     HoofitApp.user.getLikedTrails().add(viewModel.getTrailLiveData().getValue());
+                    binding.likeButtonImage.setVisibility(View.GONE);
+                    binding.likeButtonImageChecked.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Добавлено в сохраненные", Toast.LENGTH_SHORT).show();
                     users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
                 }
                 else {
                     HoofitApp.user.getLikedTrails().remove(viewModel.getTrailLiveData().getValue());
+                    binding.likeButtonImage.setVisibility(View.VISIBLE);
+                    binding.likeButtonImageChecked.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Удалено из сохраненных", Toast.LENGTH_SHORT).show();
 
 //                    users.child(HoofitApp.user.getId()).setValue(HoofitApp.user);

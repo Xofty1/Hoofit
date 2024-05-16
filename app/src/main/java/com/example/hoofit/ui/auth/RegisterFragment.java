@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class RegisterFragment extends Fragment {
     FirebaseAuth auth; //для авторизации
     FirebaseDatabase db;
@@ -64,7 +66,6 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
-                name = binding.editTextName.getText().toString();
                 username = binding.editTextUsername.getText().toString();
                 if (username.isEmpty()) {
                     Toast.makeText(getContext(), "Введите ник", Toast.LENGTH_SHORT).show();
@@ -78,7 +79,7 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                User user = new User(id, name, username, email, null,false);
+                                User user = new User(id, name, username, email, new ArrayList<>(),false);
                                 users.child(id)
                                         .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

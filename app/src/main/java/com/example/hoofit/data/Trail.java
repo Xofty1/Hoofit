@@ -79,12 +79,25 @@ import java.util.List;
 //}
 
 public class Trail implements Serializable {
-    private int id;
+    private String id;
     private String name;
     private double length;
     private String difficulty;
     private String timeRequired;
     private String description;
+
+    public Trail() {
+    }
+
+    public Trail(String id, String name, double length, String difficulty, String timeRequired, String description, List<Coordinate> coordinatesList) {
+        this.id = id;
+        this.name = name;
+        this.length = length;
+        this.difficulty = difficulty;
+        this.timeRequired = timeRequired;
+        this.description = description;
+        this.coordinatesList = coordinatesList;
+    }
 
     public String getDescription() {
         return description;
@@ -96,11 +109,11 @@ public class Trail implements Serializable {
 
     private List<Coordinate> coordinatesList;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
