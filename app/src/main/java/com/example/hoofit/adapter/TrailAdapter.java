@@ -19,7 +19,10 @@ import java.util.List;
 public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> {
     Context context;
     List<Trail> trails;
-
+    private OnItemLongClickListener onItemLongClickListener;
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
+    }
     public TrailAdapter(Context context, List<Trail> trails) {
         this.context = context;
         this.trails = trails;
@@ -48,6 +51,16 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
                 }
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(trails.get(position));
+                    return true;
+                }
+                return false;
+            }
+        });
         holder.textName.setText(trails.get(position).getName());
         holder.textDescription.setText(trails.get(position).getDescription());
         holder.textLevel.setText("Сложность: " + trails.get(position).getDifficulty());
@@ -74,5 +87,9 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
 
     public interface OnItemClickListener {
         void onItemClick(Trail trail);
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Trail trail);
     }
 }

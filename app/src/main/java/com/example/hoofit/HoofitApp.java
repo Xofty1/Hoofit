@@ -33,7 +33,6 @@ public class HoofitApp extends Application {
     public static User user;
     public static ReserveData reserves = null;
     public static List<Trail> allTrails;
-
     @Override
     public void onCreate() {
         super.onCreate();

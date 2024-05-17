@@ -3,6 +3,7 @@ package com.example.hoofit.ui.editInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -10,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.adapter.CoordinateAdapter;
 import com.example.hoofit.data.Coordinate;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentEditTrailBinding;
+import com.example.hoofit.ui.ReserveFragment;
+import com.example.hoofit.ui.TrailFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,6 +33,9 @@ public class EditTrailFragment extends Fragment {
     Trail trail = null;
     Reserve reserve;
     CoordinateAdapter adapter;
+    boolean isNewTrail = false;
+    DatabaseReference reservesRef,trailsRef;
+    List<Trail> trails;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,67 +46,65 @@ public class EditTrailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEditTrailBinding.inflate(getLayoutInflater());
-        Bundle bundle = getArguments();
-        DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+        initBundle();
+        initDatabaseReferences();
+        initData();
+        initUI();
+        return binding.getRoot();
+    }
 
-        boolean isNewTrail = false;
+    private void initBundle() {
+        Bundle bundle = getArguments();
         if (bundle != null) {
             trail = (Trail) bundle.getSerializable("trail");
             reserve = (Reserve) bundle.getSerializable("reserve");
             if (trail == null) {
                 trail = new Trail();
                 isNewTrail = true;
-
-
                 Toast.makeText(getContext(), "мы создаем тропу", Toast.LENGTH_SHORT).show();
-
+            } else {
+                binding.deleteButton.setVisibility(View.VISIBLE);
             }
         }
-        DatabaseReference trailsRef = reservesRef.child(reserve.getId()).child("trails");
-        List<Trail> trails = new ArrayList<>();
-        if (isNewTrail){
+    }
+
+    private void initDatabaseReferences() {
+        reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+        trailsRef = reservesRef.child(reserve.getId()).child("trails");
+    }
+
+    private void initData() {
+        if (reserve.getTrails() == null)
+            trails = new ArrayList<>();
+        else
+            trails = reserve.getTrails();
+        if (isNewTrail) {
             trails.add(trail);
             reserve.setTrails(trails);
-            String trailId = trailsRef.push().getKey();
+            String trailId = reservesRef.push().getKey();
             trail.setId(trailId);
         }
-        else {
-            trails = reserve.getTrails();
-            trails.add(trail);
-            reserve.setTrails(trails);
-        }
-
         adapter = new CoordinateAdapter(getContext(), trail.getCoordinatesList());
+    }
 
+    private void initUI() {
         binding.editTextDescription.setText(trail.getDescription());
         binding.editTextName.setText(trail.getName());
         binding.editTextDifficulty.setText(trail.getDifficulty());
         binding.editTextLength.setText(String.valueOf(trail.getLength()));
         binding.editTextTimeRequired.setText(trail.getTimeRequired());
 
-        List<Trail> finalTrails = trails;
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = binding.editTextName.getText().toString();
-                String description = binding.editTextDescription.getText().toString();
-                String difficulty = binding.editTextDifficulty.getText().toString();
-                String length = binding.editTextLength.getText().toString();
-                String timeRequired = binding.editTextTimeRequired.getText().toString();
-                List<Coordinate> coordinates = adapter.getCoordinates();
+                saveTrail();
+            }
+        });
 
-
-//                    String id = reservesRef.push().getKey();
-                trail.setDescription(description);
-                trail.setDifficulty(difficulty);
-                trail.setName(name);
-                trail.setLength(Double.parseDouble(length));
-                trail.setTimeRequired(timeRequired);
-                trail.setCoordinatesList(coordinates);
-
-                trailsRef.setValue(finalTrails);
-//                reservesRef.child(reserve.getId()).child("trails").child(trail.getId()).setValue(trail);
-                // Здесь вы можете сохранить trail с обновленными данными в базу данных
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTrail();
             }
         });
 
@@ -116,9 +121,70 @@ public class EditTrailFragment extends Fragment {
                 adapter.removeCoordinate();
             }
         });
+
         binding.recyclerViewCoordinates.setHasFixedSize(false);
         binding.recyclerViewCoordinates.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewCoordinates.setAdapter(adapter);
-        return binding.getRoot();
+    }
+
+    private void saveTrail() {
+        String name = binding.editTextName.getText().toString().trim();
+        String description = binding.editTextDescription.getText().toString().trim();
+        String difficulty = binding.editTextDifficulty.getText().toString().trim();
+        String length = binding.editTextLength.getText().toString().trim();
+        String timeRequired = binding.editTextTimeRequired.getText().toString().trim();
+        List<Coordinate> coordinates = adapter.getCoordinates();
+
+        if (isValidInput(name, description, difficulty, length, timeRequired, coordinates)) {
+            trail.setDescription(description);
+            trail.setDifficulty(difficulty);
+            trail.setName(name);
+            trail.setLength(Double.parseDouble(length));
+            trail.setTimeRequired(timeRequired);
+            trail.setCoordinatesList(coordinates);
+            trailsRef.setValue(trails);
+            TrailFragment fragment = new TrailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("reserve", reserve);
+            Toast.makeText(getContext(), "Тропа успешно добавлена", Toast.LENGTH_SHORT).show();
+
+            fragment.setArguments(bundle);
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            MainActivity.makeTransaction(transaction, fragment);
+        }
+    }
+
+    private boolean isValidInput(String name, String description, String difficulty, String length, String timeRequired, List<Coordinate> coordinates) {
+        if (name.isEmpty()) {
+            Toast.makeText(getContext(), "Не введены данные в поле Имя", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (description.isEmpty()) {
+            Toast.makeText(getContext(), "Не введены данные в поле Описание", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (difficulty.isEmpty()) {
+            Toast.makeText(getContext(), "Не введены данные в поле Сложность", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (length.isEmpty()) {
+            Toast.makeText(getContext(), "Не введены данные в поле Длина", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (timeRequired.isEmpty()) {
+            Toast.makeText(getContext(), "Не введены данные в поле Время", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (coordinates.size() < 2) {
+            Toast.makeText(getContext(), "Добавьте координаты для тропы", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteTrail() {
+        reserve.getTrails().remove(trail);
+        trailsRef.setValue(trails);
+        TrailFragment fragment = new TrailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("reserve", reserve);
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        MainActivity.makeTransaction(transaction, fragment);
     }
 }

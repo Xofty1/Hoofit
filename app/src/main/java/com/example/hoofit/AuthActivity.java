@@ -38,13 +38,11 @@ public class AuthActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static boolean isPersistenceEnabled = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         mAuth = FirebaseAuth.getInstance();
-
         if (!isPersistenceEnabled) {
             database.setPersistenceEnabled(true);
             isPersistenceEnabled = true;
@@ -90,7 +88,6 @@ public class AuthActivity extends AppCompatActivity {
                     }
                     HoofitApp.reserves.setReserves(rev);
                     HoofitApp.allTrails = trails;
-//                    goToMainActivity();
                 } else {
                     // Обработка случая, когда данных нет
                     Toast.makeText(AuthActivity.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
@@ -104,15 +101,12 @@ public class AuthActivity extends AppCompatActivity {
             }
         });
     }
-
-
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -125,7 +119,6 @@ public class AuthActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DataSnapshot dataSnapshot = task.getResult();
                         if (dataSnapshot.exists()) {
-
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 User tempUser = snapshot.getValue(User.class);
                                 if (Objects.equals(user.getEmail(), tempUser.getEmail())) {
@@ -138,7 +131,6 @@ public class AuthActivity extends AppCompatActivity {
                             }
                             if (user == null)
                                 replaceFragment(new RegisterFragment());
-
                         }
                     }
                 }

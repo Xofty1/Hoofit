@@ -121,6 +121,12 @@ public class MapFragment extends Fragment {
                 MainActivity.makeTransaction(transaction, fragment);
             }
         });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                polyline.setStrokeColor(getResources().getColor(R.color.orange));
+            }
+        });
     }
 
     @Override

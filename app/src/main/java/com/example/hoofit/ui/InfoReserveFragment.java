@@ -47,7 +47,6 @@ public class InfoReserveFragment extends Fragment {
                     {
                         Toast.makeText(getContext(), "У этого заповедника пока что нет троп", Toast.LENGTH_SHORT).show();
                         Bundle bundleTrail = new Bundle();
-//                        bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
                         bundleTrail.putSerializable("reserve", reserve);
                         EditTrailFragment fragment = new EditTrailFragment();
                         fragment.setArguments(bundleTrail);
@@ -57,15 +56,11 @@ public class InfoReserveFragment extends Fragment {
                     else {
                         Bundle bundleTrail = new Bundle();
                         bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
-//                        bundleTrail.putSerializable("reserve", reserve);
+                        bundleTrail.putSerializable("reserve", reserve);
                         TrailFragment trailFragment = new TrailFragment();
                         trailFragment.setArguments(bundleTrail);
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         MainActivity.makeTransaction(transaction,trailFragment);
-//                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.fragment_container, trailFragment);
-//                        transaction.addToBackStack(null);
-//                        transaction.commit();
                     }
                 }
             });
