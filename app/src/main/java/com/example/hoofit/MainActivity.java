@@ -65,11 +65,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 }

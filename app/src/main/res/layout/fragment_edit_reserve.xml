@@ -49,7 +49,6 @@
         android:layout_below="@id/selectImageButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:src="@drawable/example2"
         android:scaleType="centerCrop"
         android:visibility="gone"/>
 

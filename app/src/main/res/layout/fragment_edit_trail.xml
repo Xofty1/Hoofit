@@ -23,6 +23,7 @@
 
         <EditText
             android:id="@+id/editTextName"
+            style="@style/RoundedEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -30,6 +31,7 @@
 
         <EditText
             android:id="@+id/editTextDescription"
+            style="@style/RoundedEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -37,13 +39,15 @@
 
         <EditText
             android:id="@+id/editTextTimeRequired"
+            style="@style/RoundedEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Введите затрачиваемое время для тропы" />
+            android:hint="Введите время для тропы"/>
 
         <EditText
             android:id="@+id/editTextLength"
+            style="@style/RoundedEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -52,6 +56,7 @@
 
         <EditText
             android:id="@+id/editTextDifficulty"
+            style="@style/RoundedEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -74,12 +79,14 @@
 
             <Button
                 android:id="@+id/buttonAdd"
+                style="@style/RoundedButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+" />
 
             <Button
                 android:id="@+id/buttonRemove"
+                style="@style/RoundedButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-" />
@@ -88,15 +95,16 @@
         <!-- Кнопка Сохранить -->
         <Button
             android:id="@+id/saveButton"
+            style="@style/RoundedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Сохранить" />
         <Button
             android:id="@+id/deleteButton"
+            style="@style/RoundedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/RoundedButtonStyle"
             android:text="Удалить"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"

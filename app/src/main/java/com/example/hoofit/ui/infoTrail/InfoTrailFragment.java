@@ -1,13 +1,20 @@
 package com.example.hoofit.ui.infoTrail;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,16 +22,20 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hoofit.AuthActivity;
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
+import com.example.hoofit.R;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentInfoTrailBinding;
 import com.example.hoofit.ui.map.MapFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 
 public class InfoTrailFragment extends Fragment {
     private FragmentInfoTrailBinding binding;
     private InfoTrailViewModel viewModel;
+    boolean isLiked = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,9 @@ public class InfoTrailFragment extends Fragment {
             if (trail != null) {
                 binding.textName.setText(trail.getName());
                 binding.textDescription.setText(trail.getDescription());
+                binding.textDifficulty.setText("Cложность: " + trail.getDifficulty());
+                binding.textLength.setText("Расстояние: " + String.valueOf(trail.getLength()) + " км");
+                binding.textTimeRequired.setText("Требуемое время: " + trail.getTimeRequired());
             }
         });
 
@@ -61,32 +75,48 @@ public class InfoTrailFragment extends Fragment {
                 viewModel.getTrailLiveData().getValue();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 MainActivity.makeTransaction(transaction, fragment);
-
             }
         });
-        if (HoofitApp.user.getLikedTrails().contains(viewModel.getTrailLiveData().getValue())){
-            binding.likeButton.setChecked(true);
+        ImageView buttonLike = binding.buttonLike;
+        String currentId = viewModel.getTrailLiveData().getValue().getId();
+        Trail currentTrail = null;
+        for (Trail trail : HoofitApp.user.getLikedTrails()) // следует оптимизировать
+        {
+            if (Objects.equals(trail.getId(), currentId)) {
+                currentTrail = trail;
+                buttonLike.setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
+                isLiked = true;
+                break;
+            }
         }
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users");
-        binding.likeButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Trail finalCurrentTrail = currentTrail;
+        binding.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
+            public void onClick(View view) {
+                ValueAnimator colorAnimator;
+                if (isLiked){
+                    colorAnimator = ValueAnimator.ofArgb(getResources().getColor(R.color.orange), Color.parseColor("#F0F3FF"));
+                    HoofitApp.user.getLikedTrails().remove(finalCurrentTrail);
+                }
+                else{
+                    colorAnimator = ValueAnimator.ofArgb(Color.parseColor("#F0F3FF"), getResources().getColor(R.color.orange));
                     HoofitApp.user.getLikedTrails().add(viewModel.getTrailLiveData().getValue());
-                    binding.likeButtonImage.setVisibility(View.GONE);
-                    binding.likeButtonImageChecked.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "Добавлено в сохраненные", Toast.LENGTH_SHORT).show();
-                    users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
                 }
-                else {
-                    HoofitApp.user.getLikedTrails().remove(viewModel.getTrailLiveData().getValue());
-                    binding.likeButtonImage.setVisibility(View.VISIBLE);
-                    binding.likeButtonImageChecked.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "Удалено из сохраненных", Toast.LENGTH_SHORT).show();
+                colorAnimator.setDuration(200); // Устанавливаем длительность анимации
 
-//                    users.child(HoofitApp.user.getId()).setValue(HoofitApp.user);
-                    users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
-                }
+                colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                        // Получаем текущий цвет анимации
+                        int color = (int) valueAnimator.getAnimatedValue();
+                        // Устанавливаем новый цвет сердца
+                        buttonLike.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    }
+                });
+                isLiked = !isLiked;
+                colorAnimator.start();
+                users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
             }
         });
         return binding.getRoot();
