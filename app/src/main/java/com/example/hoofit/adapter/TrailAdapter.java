@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hoofit.R;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
 
 import java.util.List;

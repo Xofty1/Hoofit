@@ -2,8 +2,6 @@ package com.example.hoofit.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,25 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
-import com.example.hoofit.ui.InfoReserveFragment;
-import com.example.hoofit.ui.editInfo.EditReserveFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
-public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHolder>{
+public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHolder> {
     Context context;
     ReserveData reserves;
     private OnItemClickListener itemClickListener;
@@ -38,6 +29,7 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
     }
+
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.onItemLongClickListener = listener;
     }
@@ -124,6 +116,7 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
     public interface OnItemClickListener {
         void onItemClick(Reserve reserve);
     }
+
     public interface OnItemLongClickListener {
         void onItemLongClick(Reserve reserve);
     }

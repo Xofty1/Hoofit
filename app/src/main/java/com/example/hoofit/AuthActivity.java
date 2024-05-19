@@ -8,14 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
-import com.example.hoofit.dataHandler.JsonUtils;
 import com.example.hoofit.ui.auth.RegisterFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,10 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.rpc.context.AttributeContext;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

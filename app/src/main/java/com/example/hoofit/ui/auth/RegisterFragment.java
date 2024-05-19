@@ -12,15 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
 import com.example.hoofit.data.User;
 import com.example.hoofit.databinding.FragmentRegisterBinding;
-import com.example.hoofit.ui.MainFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

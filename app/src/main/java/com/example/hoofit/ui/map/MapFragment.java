@@ -61,7 +61,6 @@ public class MapFragment extends Fragment {
     FragmentMapBinding binding;
     private MapObjectTapListener[] mapObjectTapListeners;
     private MapObjectTapListener mapTrailListener;
-    List<Trail> allTrails = HoofitApp.allTrails;
     private AlertDialog dialog = null;
     private MapObjectCollection mapObjects;
     private MapView mapView;

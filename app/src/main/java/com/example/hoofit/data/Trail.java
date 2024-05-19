@@ -4,80 +4,6 @@ package com.example.hoofit.data;
 import java.io.Serializable;
 import java.util.List;
 
-//public class Trail {
-//    private int id;
-//
-//    private List<Coordinate> coordinates;
-//
-//    private String trailName;
-//
-//    private String description;
-//
-//    private String status;
-//
-//    private boolean liked;
-//
-//    // Конструктор, геттеры и сеттеры
-//    public Trail() {}
-//
-//    public Trail(int id, List<Coordinate> coordinates, String trailName, String description, String status, boolean liked) {
-//        this.id = id;
-//        this.coordinates = coordinates;
-//        this.trailName = trailName;
-//        this.description = description;
-//        this.status = status;
-//        this.liked = liked;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public List<Coordinate> getCoordinates() {
-//        return coordinates;
-//    }
-//
-//    public void setCoordinates(List<Coordinate> coordinates) {
-//        this.coordinates = coordinates;
-//    }
-//
-//    public String getTrailName() {
-//        return trailName;
-//    }
-//
-//    public void setTrailName(String trailName) {
-//        this.trailName = trailName;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//    public String getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(String status) {
-//        this.status = status;
-//    }
-//
-//    public boolean getLiked() {
-//        return liked;
-//    }
-//
-//    public void setLiked(boolean liked) {
-//        this.liked = liked;
-//    }
-//}
-
 public class Trail implements Serializable {
     private String id;
     private String name;
@@ -85,6 +11,7 @@ public class Trail implements Serializable {
     private String difficulty;
     private String timeRequired;
     private String description;
+    private List<Coordinate> coordinatesList;
 
     public Trail() {
     }
@@ -107,7 +34,7 @@ public class Trail implements Serializable {
         this.description = description;
     }
 
-    private List<Coordinate> coordinatesList;
+
 
     public String getId() {
         return id;

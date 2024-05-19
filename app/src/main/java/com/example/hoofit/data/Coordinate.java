@@ -1,7 +1,5 @@
 package com.example.hoofit.data;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 public class Coordinate implements Serializable {

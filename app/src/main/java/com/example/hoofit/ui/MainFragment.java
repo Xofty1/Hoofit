@@ -7,15 +7,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
+import com.example.hoofit.adapter.InterestingAdapter;
 import com.example.hoofit.data.Coordinate;
+import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentMainBinding;
@@ -41,6 +46,14 @@ public class MainFragment extends Fragment {
 
         CardView reserves = binding.getRoot().findViewById(R.id.reserves);
         CardView trails = binding.getRoot().findViewById(R.id.trails);
+        Interesting i1 = new Interesting(Interesting.ItemType.RESERVE, "Новая тропа", "Ура новая тропа", null);
+        Interesting i2 = new Interesting(Interesting.ItemType.RESERVE, "Новая тропа", "Ура новая тропа", null);
+        Interesting i3 = new Interesting(Interesting.ItemType.RESERVE, "Новая тропа", "Ура новая тропа", null);
+        HoofitApp.interestings = new ArrayList<>();
+        HoofitApp.interestings.add(i1);
+        HoofitApp.interestings.add(i2);
+        HoofitApp.interestings.add(i3);
+        InterestingAdapter adapter = new InterestingAdapter(getContext(), HoofitApp.interestings);
         reserves.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +72,9 @@ public class MainFragment extends Fragment {
                 fTrans.commit();
             }
         });
+        binding.recyclerViewInteresting.setHasFixedSize(true);
+        binding.recyclerViewInteresting.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.recyclerViewInteresting.setAdapter(adapter);
         return binding.getRoot();
     }
 

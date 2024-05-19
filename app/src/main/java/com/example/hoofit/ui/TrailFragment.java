@@ -15,17 +15,14 @@ import android.widget.Toast;
 
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
-import com.example.hoofit.adapter.ReserveAdapter;
 import com.example.hoofit.adapter.TrailAdapter;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentTrailBinding;
 import com.example.hoofit.mainMenu.OnFragmentInteractionListener;
-import com.example.hoofit.ui.editInfo.EditReserveFragment;
 import com.example.hoofit.ui.editInfo.EditTrailFragment;
 import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrailFragment extends Fragment {

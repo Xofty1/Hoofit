@@ -37,6 +37,38 @@ public class EditTrailFragment extends Fragment {
     DatabaseReference reservesRef,trailsRef;
     List<Trail> trails;
 
+    public Trail getTrail() {
+        return trail;
+    }
+
+    public void setTrail(Trail trail) {
+        this.trail = trail;
+    }
+
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
+    public boolean isNewTrail() {
+        return isNewTrail;
+    }
+
+    public void setNewTrail(boolean newTrail) {
+        isNewTrail = newTrail;
+    }
+
+    public List<Trail> getTrails() {
+        return trails;
+    }
+
+    public void setTrails(List<Trail> trails) {
+        this.trails = trails;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +85,7 @@ public class EditTrailFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initBundle() {
+    public void initBundle() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             trail = (Trail) bundle.getSerializable("trail");
@@ -68,12 +100,12 @@ public class EditTrailFragment extends Fragment {
         }
     }
 
-    private void initDatabaseReferences() {
+    public void initDatabaseReferences() {
         reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
         trailsRef = reservesRef.child(reserve.getId()).child("trails");
     }
 
-    private void initData() {
+    public void initData() {
         if (reserve.getTrails() == null)
             trails = new ArrayList<>();
         else
@@ -154,7 +186,7 @@ public class EditTrailFragment extends Fragment {
         }
     }
 
-    private boolean isValidInput(String name, String description, String difficulty, String length, String timeRequired, List<Coordinate> coordinates) {
+    public boolean isValidInput(String name, String description, String difficulty, String length, String timeRequired, List<Coordinate> coordinates) {
         if (name.isEmpty()) {
             Toast.makeText(getContext(), "Не введены данные в поле Имя", Toast.LENGTH_SHORT).show();
             return false;

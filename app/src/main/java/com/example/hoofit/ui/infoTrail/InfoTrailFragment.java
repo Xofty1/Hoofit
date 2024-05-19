@@ -37,6 +37,22 @@ public class InfoTrailFragment extends Fragment {
     private InfoTrailViewModel viewModel;
     boolean isLiked = false;
 
+    public void setViewModel(InfoTrailViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    public void setBinding(FragmentInfoTrailBinding binding) {
+        this.binding = binding;
+    }
+
+    public FragmentInfoTrailBinding getBinding() {
+        return binding;
+    }
+
+    public InfoTrailViewModel getViewModel() {
+        return viewModel;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
