@@ -1,17 +1,24 @@
 package com.example.hoofit.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Trail;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -42,27 +49,45 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (itemClickListener != null) {
-//                    itemClickListener.onItemClick(interestings.get(position));
-//                }
-//            }
-//        });
-//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (onItemLongClickListener != null) {
-//                    onItemLongClickListener.onItemLongClick(interestings.get(position));
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(interestings.get(position));
+                }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(interestings.get(position));
+                    return true;
+                }
+                return false;
+            }
+        });
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("images/" + interestings.get(position).getId());
+        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Загружаем изображение в ImageView
+                Glide.with(context)
+                        .load(uri)
+                        .into(holder.image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Обработка ошибок при загрузке изображения
+//                Log.e(TAG, "Ошибка загрузки изображения: " + exception.getMessage());
+            }
+        });
         holder.textName.setText(interestings.get(position).getName());
         holder.textDescription.setText(interestings.get(position).getDescription());
-        holder.textType.setText(interestings.get(position).getType().getDisplayName());
+        holder.textType.setText(interestings.get(position).getType());
     }
 
 
@@ -75,13 +100,14 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
         TextView textName;
         TextView textDescription;
         TextView textType;
-
+        ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textName);
             textDescription = itemView.findViewById(R.id.textDescription);
             textType = itemView.findViewById(R.id.textType);
+            image = itemView.findViewById(R.id.image);
         }
     }
 
@@ -92,5 +118,4 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
     public interface OnItemLongClickListener {
         void onItemLongClick(Interesting interesting);
     }
-
 }

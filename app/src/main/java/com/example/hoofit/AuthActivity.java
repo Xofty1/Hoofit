@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
@@ -43,8 +44,10 @@ public class AuthActivity extends AppCompatActivity {
             isPersistenceEnabled = true;
         }
         DatabaseReference reserveRef = database.getReference("reserves");
+        DatabaseReference interestingRef = database.getReference("interesting");
         List<Reserve> rev = new ArrayList<>();
         HoofitApp.reserves = new ReserveData();
+        HoofitApp.interestings = new ArrayList<>();
         reserveRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -86,6 +89,50 @@ public class AuthActivity extends AppCompatActivity {
                 } else {
                     // Обработка случая, когда данных нет
                     Toast.makeText(AuthActivity.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Обработка ошибки, если она произошла
+                Toast.makeText(AuthActivity.this, "Ошибка при получении данных: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        interestingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists()) {
+                        List<Interesting> interestings = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Interesting interesting = snapshot.getValue(Interesting.class);
+                            interestings.add(interesting);
+                        }
+                        HoofitApp.interestings = interestings;
+                    } else {
+                        Toast.makeText(AuthActivity.this, "Новостей пока нет", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(AuthActivity.this, "Проверьте подключение к Интернету", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        interestingRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<Interesting> interestings = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Interesting interesting = snapshot.getValue(Interesting.class);
+                        interestings.add(interesting);
+                    }
+                    HoofitApp.interestings = interestings;
+                } else {
+                    // Обработка случая, когда данных нет
+                    Toast.makeText(AuthActivity.this, "Новостей пока что нет", Toast.LENGTH_SHORT).show();
+                    HoofitApp.interestings = new ArrayList<>();
                 }
             }
 

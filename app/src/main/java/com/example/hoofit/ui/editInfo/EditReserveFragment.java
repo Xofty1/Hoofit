@@ -86,6 +86,8 @@ public class EditReserveFragment extends Fragment {
             public void onClick(View view) {
                 DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
                 reservesRef.child(reserve.getId()).removeValue();
+//                StorageReference ref = storageReference.child("images/" + reserve.getId());
+//                ref.delete();
                 ReserveFragment fragment = new ReserveFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 MainActivity.makeTransaction(transaction,fragment);

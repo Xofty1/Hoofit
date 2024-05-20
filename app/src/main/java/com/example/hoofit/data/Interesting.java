@@ -1,32 +1,74 @@
 package com.example.hoofit.data;
 
-public class Interesting {
-    private ItemType type;
+import java.io.Serializable;
+import java.util.Date;
+
+public class Interesting implements Serializable {
+    private String id;
+    private String type;
     private String name;
     private String description;
     private String uri;
+    private Date date;
+    private Trail trail;
+    private Reserve reserve;
 
-    public Interesting(ItemType type, String name, String description, String uri) {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Trail getTrail() {
+        return trail;
+    }
+
+    public void setTrail(Trail trail) {
+        this.trail = trail;
+    }
+
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
+    public Interesting(String type, String name, String description, String uri) {
         this.type = type;
         this.name = name;
         this.description = description;
         this.uri = uri;
     }
-
+    public Interesting(String type, String name, String description, Trail trail) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.trail = trail;
+    }
+    public Interesting(String type, String name, String description, Reserve reserve) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.reserve = reserve;
+    }
     public Interesting() {
     }
 
-    public Interesting(ItemType type, String name, String description) {
+    public Interesting(String type, String name, String description) {
         this.type = type;
         this.name = name;
         this.description = description;
     }
 
-    public ItemType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ItemType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -68,6 +110,7 @@ public class Interesting {
         public String getDisplayName() {
             return displayName;
         }
+
 
         @Override
         public String toString() {

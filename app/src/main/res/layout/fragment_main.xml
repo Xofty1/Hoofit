@@ -111,7 +111,20 @@
             android:id="@+id/recyclerViewInteresting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddInteresting"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/round_button_orange"
+            android:textColor="#FFFFFF"
+            android:text="+"
+            android:textSize="24sp"
+            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:elevation="4dp"
+            android:stateListAnimator="@null"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

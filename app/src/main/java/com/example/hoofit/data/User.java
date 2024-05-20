@@ -1,5 +1,8 @@
 package com.example.hoofit.data;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,18 @@ public class User {
         this.likedTrails = trails;
         this.isAdmin = isAdmin;
     }
+    public static void changeUserPassword(String newPassword) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        System.out.println("Пароль успешно изменен.");
+                    } else {
+                        System.out.println("Ошибка при изменении пароля.");
+                    }
+                });
+    }
     public User() {
     }
 
