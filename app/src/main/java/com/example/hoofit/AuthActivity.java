@@ -200,7 +200,7 @@ public class AuthActivity extends AppCompatActivity {
             String userId = user.getUid();
             DatabaseReference userRef = database.getReference("Users").child(userId);
 
-            // Set a listener specifically for the "admin" field
+            // Set a listener specifically for the "admin" field of the current user
             DatabaseReference adminRef = userRef.child("admin");
 
             adminRef.addValueEventListener(new ValueEventListener() {
@@ -238,6 +238,7 @@ public class AuthActivity extends AppCompatActivity {
                         replaceFragment(new RegisterFragment());
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Log.e("FirebaseDatabase", "Failed to read user data", databaseError.toException());
