@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.adapter.CoordinateAdapter;
 import com.example.hoofit.data.Coordinate;
+import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentEditTrailBinding;
@@ -111,8 +113,6 @@ public class EditTrailFragment extends Fragment {
         else
             trails = reserve.getTrails();
         if (isNewTrail) {
-            trails.add(trail);
-            reserve.setTrails(trails);
             String trailId = reservesRef.push().getKey();
             trail.setId(trailId);
         }
@@ -174,7 +174,22 @@ public class EditTrailFragment extends Fragment {
             trail.setLength(Double.parseDouble(length));
             trail.setTimeRequired(timeRequired);
             trail.setCoordinatesList(coordinates);
-            trailsRef.setValue(trails);
+            reserve.setTrails(trails);
+            if (isNewTrail) {
+                trails.add(trail);
+            }
+                trailsRef.setValue(trails);
+
+            for (Interesting interesting : HoofitApp.interestings) {
+                if (interesting.getTrail() != null && interesting.getTrail().equals(trail)) {
+                    Toast.makeText(getActivity(), "Найдено", Toast.LENGTH_SHORT).show();
+
+                    interesting.setTrail(trail);
+                    DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
+                    interestingRef.child(interesting.getId()).setValue(interesting);
+                    break;
+                }
+            }
             TrailFragment fragment = new TrailFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("reserve", reserve);
@@ -212,6 +227,17 @@ public class EditTrailFragment extends Fragment {
     private void deleteTrail() {
         reserve.getTrails().remove(trail);
         trailsRef.setValue(trails);
+        HoofitApp.user.getLikedTrails().remove(trail);
+        for (Interesting interesting : HoofitApp.interestings){
+            if (interesting.getTrail() != null && interesting.getTrail().equals(trail)){
+                DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
+                interestingRef.child(interesting.getId()).removeValue();
+                HoofitApp.interestings.remove(interesting);
+                break;
+            }
+        }
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users");
+        users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
         TrailFragment fragment = new TrailFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("reserve", reserve);

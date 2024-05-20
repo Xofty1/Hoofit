@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,7 @@ public class EditInterestingFragment extends Fragment {
             public void onClick(View view) {
                 interestingRef.child(interesting.getId()).removeValue();
                 HoofitApp.interestings.remove(interesting);
+                Log.d("FFF", HoofitApp.interestings.size() + " размер0");
                 StorageReference interest = storageReference.child("images/" + interesting.getId());
                 interest.delete();
                 MainFragment fragment = new MainFragment();
@@ -120,7 +122,9 @@ public class EditInterestingFragment extends Fragment {
             }
         });
 
-
+        if (!HoofitApp.user.isAdmin()) {
+            binding.saveButton.setVisibility(View.INVISIBLE);
+        }
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,12 +216,14 @@ public class EditInterestingFragment extends Fragment {
             openFileChooser();
         }
     }
+
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
     }
+
     public void updateData() {
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -242,6 +248,7 @@ public class EditInterestingFragment extends Fragment {
                     });
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

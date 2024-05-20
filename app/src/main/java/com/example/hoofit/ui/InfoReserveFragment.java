@@ -46,14 +46,17 @@ public class InfoReserveFragment extends Fragment {
                     if (reserve.getTrails() == null)
                     {
                         Toast.makeText(getContext(), "У этого заповедника пока что нет троп", Toast.LENGTH_SHORT).show();
-                        Bundle bundleTrail = new Bundle();
-                        bundleTrail.putSerializable("reserve", reserve);
-                        EditTrailFragment fragment = new EditTrailFragment();
-                        fragment.setArguments(bundleTrail);
-                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        MainActivity.makeTransaction(transaction,fragment);
+                        if (HoofitApp.user.isAdmin()) {
+                            Bundle bundleTrail = new Bundle();
+                            bundleTrail.putSerializable("reserve", reserve);
+                            EditTrailFragment fragment = new EditTrailFragment();
+                            fragment.setArguments(bundleTrail);
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                            MainActivity.makeTransaction(transaction, fragment);
+                        }
                     }
                     else {
+
                         Bundle bundleTrail = new Bundle();
                         bundleTrail.putSerializable("trails", (Serializable) reserve.getTrails());
                         bundleTrail.putSerializable("reserve", reserve);

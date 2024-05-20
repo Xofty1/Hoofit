@@ -17,11 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.adapter.ReserveAdapter;
+import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Reserve;
+import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentEditReserveBinding;
 import com.example.hoofit.ui.ReserveFragment;
+import com.example.hoofit.ui.TrailFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -35,8 +39,6 @@ public class EditReserveFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private Uri filePath;
-    FirebaseStorage storage;
-    StorageReference storageRef;
     Reserve reserve = null;
     private StorageReference storageReference;
 
@@ -45,8 +47,6 @@ public class EditReserveFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentEditReserveBinding.inflate(getLayoutInflater());
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
         Bundle bundle = getArguments();
 
@@ -86,11 +86,39 @@ public class EditReserveFragment extends Fragment {
             public void onClick(View view) {
                 DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
                 reservesRef.child(reserve.getId()).removeValue();
-//                StorageReference ref = storageReference.child("images/" + reserve.getId());
-//                ref.delete();
+                HoofitApp.reserves.getReserves().remove(reserve);
+
+                for (Interesting interesting : HoofitApp.interestings) {
+                    if (interesting.getReserve() != null && interesting.getReserve().equals(reserve)) {
+                        Toast.makeText(getActivity(), "Найдено", Toast.LENGTH_SHORT).show();
+                        DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
+                        interestingRef.child(interesting.getId()).removeValue();
+                        HoofitApp.interestings.remove(interesting);
+                        break;
+                    }
+                }
+                for (Interesting interesting : HoofitApp.interestings) {
+                    for (Trail trail : reserve.getTrails()) {
+                        if (interesting.getTrail() != null && interesting.getTrail().equals(trail)) {
+                            Toast.makeText(getActivity(), "Найдено", Toast.LENGTH_SHORT).show();
+                            DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
+                            interestingRef.child(interesting.getId()).removeValue();
+                            HoofitApp.interestings.remove(interesting);
+                            break;
+                        }
+                    }
+                }
+                for (Trail trail : reserve.getTrails()) {
+                    HoofitApp.allTrails.remove(trail);
+                    HoofitApp.user.getLikedTrails().remove(trail);
+                    DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users");
+                    users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
+                }
+                StorageReference ref = storageReference.child("images/" + reserve.getId());
+                ref.delete();
                 ReserveFragment fragment = new ReserveFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction,fragment);
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
 
@@ -129,6 +157,18 @@ public class EditReserveFragment extends Fragment {
         reserve.setDescription(description);
         reserve.setName(name);
         reservesRef.child(reserve.getId()).setValue(reserve);
+        for (Interesting interesting : HoofitApp.interestings) {
+            if (interesting.getReserve() != null && interesting.getReserve().equals(reserve)) {
+                Toast.makeText(getActivity(), "Найдено", Toast.LENGTH_SHORT).show();
+
+                interesting.setReserve(reserve);
+                DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
+                interestingRef.child(interesting.getId()).setValue(interesting);
+                break;
+            }
+        }
+
+
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
@@ -173,7 +213,7 @@ public class EditReserveFragment extends Fragment {
                             Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
                             ReserveFragment fragment = new ReserveFragment();
                             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                            MainActivity.makeTransaction( transaction,fragment);
+                            MainActivity.makeTransaction(transaction, fragment);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

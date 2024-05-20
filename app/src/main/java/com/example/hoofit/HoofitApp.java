@@ -8,13 +8,14 @@ import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
 import com.yandex.mapkit.MapKitFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HoofitApp extends Application {
     public static User user;
     public static ReserveData reserves = null;
     public static List<Trail> allTrails;
-    public static List<Interesting> interestings;
+    public static List<Interesting> interestings =new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();

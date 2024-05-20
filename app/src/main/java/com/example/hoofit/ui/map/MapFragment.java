@@ -247,7 +247,10 @@ public class MapFragment extends Fragment {
     public void makeMap() {
 
 //        mapView.getMap().move(new CameraPosition(new Point(reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLatitude(), reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
-        int trailsCount = HoofitApp.allTrails.size();
+        int trailsCount;
+        if (HoofitApp.allTrails == null)
+            trailsCount = 0;
+        else trailsCount = HoofitApp.allTrails.size();
         Log.d("firebase", "size " + trailsCount);
         mapObjectTapListeners = new MapObjectTapListener[trailsCount];
 
@@ -272,7 +275,6 @@ public class MapFragment extends Fragment {
         for (Coordinate coordinate : coordinates) {
             points.add(new Point(coordinate.getLatitude(), coordinate.getLongitude()));
         }
-
         PolylineMapObject polyline = mapObjects.addPolyline(new Polyline(points));
         mapTrailListener = createTapListener(trail, polyline);
         polyline.addTapListener(mapTrailListener);

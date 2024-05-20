@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.hoofit.data.Interesting;
@@ -34,6 +35,7 @@ public class AuthActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static boolean isPersistenceEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +134,6 @@ public class AuthActivity extends AppCompatActivity {
                 } else {
                     // Обработка случая, когда данных нет
                     Toast.makeText(AuthActivity.this, "Новостей пока что нет", Toast.LENGTH_SHORT).show();
-                    HoofitApp.interestings = new ArrayList<>();
                 }
             }
 
@@ -143,49 +144,107 @@ public class AuthActivity extends AppCompatActivity {
             }
         });
     }
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
+
+    //    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        DatabaseReference users = database.getReference("Users");
+//        if (user != null) {
+//            users.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DataSnapshot dataSnapshot = task.getResult();
+//                        if (dataSnapshot.exists()) {
+//                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                                User tempUser = snapshot.getValue(User.class);
+//                                if (Objects.equals(user.getEmail(), tempUser.getEmail())) {
+//                                    HoofitApp.user = tempUser;
+//                                    Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
+//                                    finish();
+//                                    break;
+//                                }
+//                            }
+//                            if (user == null)
+//                                replaceFragment(new RegisterFragment());
+//                        }
+//                    }
+//                }
+//            });
+//        }
+//        else{
+//            replaceFragment(new RegisterFragment());
+//        }
+////        if (user == null)
+////            replaceFragment(new RegisterFragment());
+////        else {
+////            startActivity(new Intent(AuthActivity.this, MainActivity.class));
+////            finish();
+////        }
+//    }
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        DatabaseReference users = database.getReference("Users");
+
         if (user != null) {
-            users.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            String userId = user.getUid();
+            DatabaseReference userRef = database.getReference("Users").child(userId);
+
+            // Set a listener specifically for the "admin" field
+            DatabaseReference adminRef = userRef.child("admin");
+
+            adminRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                User tempUser = snapshot.getValue(User.class);
-                                if (Objects.equals(user.getEmail(), tempUser.getEmail())) {
-                                    HoofitApp.user = tempUser;
-                                    Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
-                                    finish();
-                                    break;
-                                }
-                            }
-                            if (user == null)
-                                replaceFragment(new RegisterFragment());
-                        }
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        if (HoofitApp.user == null) HoofitApp.user = new User();
+                        // Update the admin field in the user object
+                        HoofitApp.user.setAdmin(dataSnapshot.getValue(Boolean.class));
+
+                        // Optionally, notify the user
+                        Toast.makeText(AuthActivity.this, "Admin status updated", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Handle the case where the admin field does not exist
+                        HoofitApp.user.setAdmin(false); // or any default value
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("FirebaseDatabase", "Failed to read admin field", databaseError.toException());
+                }
             });
-        }
-        else{
+
+            // Load the user data initially
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        HoofitApp.user = dataSnapshot.getValue(User.class);
+                        Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        replaceFragment(new RegisterFragment());
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("FirebaseDatabase", "Failed to read user data", databaseError.toException());
+                }
+            });
+        } else {
             replaceFragment(new RegisterFragment());
         }
-//        if (user == null)
-//            replaceFragment(new RegisterFragment());
-//        else {
-//            startActivity(new Intent(AuthActivity.this, MainActivity.class));
-//            finish();
-//        }
     }
 }

@@ -11,7 +11,7 @@ public class User {
     private String name;
     private String username;
     private String email;
-    private boolean isAdmin = false;
+    private boolean isAdmin;
     private List<Trail> likedTrails = new ArrayList<>();
 
     public User(String id, String name, String username, String email, List<Trail> trails, boolean isAdmin) {
@@ -21,18 +21,6 @@ public class User {
         this.email = email;
         this.likedTrails = trails;
         this.isAdmin = isAdmin;
-    }
-    public static void changeUserPassword(String newPassword) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        user.updatePassword(newPassword)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        System.out.println("Пароль успешно изменен.");
-                    } else {
-                        System.out.println("Ошибка при изменении пароля.");
-                    }
-                });
     }
     public User() {
     }

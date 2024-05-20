@@ -48,22 +48,27 @@ public class ReserveFragment extends Fragment {
                     MainActivity.makeTransaction(transaction, fragment);
                 }
             });
-            adapter.setOnItemLongClickListener(new ReserveAdapter.OnItemLongClickListener() {
-                @Override
-                public void onItemLongClick(Reserve reserve) {
-                    EditReserveFragment fragment = new EditReserveFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("reserve", reserve);
-                    fragment.setArguments(bundle);
+            if (HoofitApp.user.isAdmin()) {
+                adapter.setOnItemLongClickListener(new ReserveAdapter.OnItemLongClickListener() {
+                    @Override
+                    public void onItemLongClick(Reserve reserve) {
+                        EditReserveFragment fragment = new EditReserveFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("reserve", reserve);
+                        fragment.setArguments(bundle);
 
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    MainActivity.makeTransaction(transaction, fragment);
-                }
-            });
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        MainActivity.makeTransaction(transaction, fragment);
+                    }
+                });
+            }
 
             binding.listReserve.setHasFixedSize(true);
             binding.listReserve.setLayoutManager(new LinearLayoutManager(getContext()));
             binding.listReserve.setAdapter(adapter);
+        }
+        if (!HoofitApp.user.isAdmin()) {
+            binding.buttonAddReserve.setVisibility(View.INVISIBLE);
         }
         binding.buttonAddReserve.setOnClickListener(new View.OnClickListener() {
             @Override

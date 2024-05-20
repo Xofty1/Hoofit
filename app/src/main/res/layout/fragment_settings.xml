@@ -5,15 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.profile.SettingsFragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Настройки"
+        android:textColor="@color/dark_blue"
+        android:textSize="21sp" />
     <Button
         android:id="@+id/buttonEditData"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        style="@style/RoundedButtonStyle"
         android:layout_height="wrap_content"
         android:text="Изменить данные"/>
 
     <Button
         android:id="@+id/buttonLogOut"
-        android:layout_width="wrap_content"
+        style="@style/RoundedButtonStyle"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Выйти из аккаунта" />
 </LinearLayout>

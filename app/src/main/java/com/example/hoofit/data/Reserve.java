@@ -2,6 +2,7 @@ package com.example.hoofit.data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Reserve implements Serializable {
     private String id;
@@ -50,6 +51,19 @@ public class Reserve implements Serializable {
     public void setTrails(List<Trail> trails) {
         this.trails = trails;
     }
-// getters and setters
+
+    // getters and setters
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reserve that = (Reserve) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
 

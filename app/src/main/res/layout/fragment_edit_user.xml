@@ -4,7 +4,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
-
+    <TextView
+        android:id="@+id/textEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:text="Редактирование тропы"
+        android:textColor="@color/dark_blue"
+        android:textSize="16sp" />
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
@@ -20,19 +28,11 @@
         android:hint="@string/username_hint"
         android:inputType="text"
         android:maxLength="30"/>
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:maxLength="50"/>
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Пароль"
+        android:hint="Новый пароль"
         android:inputType="textPassword"
         android:maxLength="50"/>
 

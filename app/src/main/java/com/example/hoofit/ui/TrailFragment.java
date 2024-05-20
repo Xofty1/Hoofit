@@ -60,6 +60,7 @@ public class TrailFragment extends Fragment {
 
         if (HoofitApp.allTrails == null) {
             Toast.makeText(getContext(), "Нет троп", Toast.LENGTH_SHORT).show();
+            binding.buttonAddTrail.setVisibility(View.INVISIBLE);
         } else {
             List<Trail> trails;
             if (bundle != null) {
@@ -75,13 +76,9 @@ public class TrailFragment extends Fragment {
             }
 
             setupRecyclerView(adapter);
-
-            if (reserve == null) {
-                binding.buttonAddTrail.setVisibility(View.INVISIBLE);
-            } else {
+            if (HoofitApp.user.isAdmin()) {
                 setupItemLongClickListener(adapter);
             }
-
             setupItemClickListener(adapter);
         }
     }
@@ -122,6 +119,9 @@ public class TrailFragment extends Fragment {
     }
 
     private void setupAddButton() {
+        if (!HoofitApp.user.isAdmin()) {
+            binding.buttonAddTrail.setVisibility(View.INVISIBLE);
+        }
         binding.buttonAddTrail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

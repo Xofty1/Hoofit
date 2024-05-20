@@ -7,12 +7,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.hoofit.AuthActivity;
 import com.example.hoofit.MainActivity;
@@ -20,9 +25,18 @@ import com.example.hoofit.R;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.DialogTrailInfoBinding;
 import com.example.hoofit.databinding.FragmentSettingsBinding;
+import com.example.hoofit.databinding.RequestPasswordBinding;
 import com.example.hoofit.ui.InfoReserveFragment;
+import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.yandex.mapkit.map.PolylineMapObject;
+
+import java.io.Serializable;
 
 
 public class SettingsFragment extends Fragment {
@@ -48,10 +62,71 @@ public class SettingsFragment extends Fragment {
         binding.buttonEditData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditUserFragment fragment = new EditUserFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                MainActivity.makeTransaction(transaction, fragment);
-            }
+                AlertDialog dialog;
+                RequestPasswordBinding bindingPassword = RequestPasswordBinding.inflate(getLayoutInflater());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(bindingPassword.getRoot());
+
+                dialog = builder.create();
+
+                // Установка начального масштаба на 0
+                bindingPassword.getRoot().setScaleX(0);
+                bindingPassword.getRoot().setScaleY(0);
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        // Анимация масштабирования при появлении диалогового окна
+                        bindingPassword.getRoot().animate()
+                                .scaleX(1)
+                                .scaleY(1)
+                                .setDuration(300)
+                                .start();
+                    }
+                });
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                bindingPassword.buttonDismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                bindingPassword.buttonOk.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            String currentPassword = bindingPassword.editTextPassword.getText().toString();
+                            // Check if the password is correct
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
+                                user.reauthenticate(credential)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Password is correct, navigate to EditUserFragment
+                                                    dialog.dismiss();
+                                                    EditUserFragment fragment = new EditUserFragment();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putParcelable("user", user);
+                                                    fragment.setArguments(bundle);
+                                                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                                                    MainActivity.makeTransaction(transaction, fragment);
+                                                } else {
+                                                    Toast.makeText(getContext(), "Invalid password", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(getContext(), "User not signed in", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+               }
         });
         return binding.getRoot();
     }
