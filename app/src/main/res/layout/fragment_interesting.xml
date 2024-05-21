@@ -32,7 +32,8 @@
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="Перейти" />
+            android:text="Перейти"
+            android:layout_marginTop="16dp"/>
 
 
 

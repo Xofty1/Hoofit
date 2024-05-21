@@ -60,7 +60,11 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
             }
         });
         holder.textName.setText(trails.get(position).getName());
-        holder.textDescription.setText(trails.get(position).getDescription());
+        String description = trails.get(position).getDescription();
+        if (description.length() > 50) {
+            description = description.substring(0, 47) + "...";
+        }
+        holder.textDescription.setText(description);
         holder.textLevel.setText("Сложность: " + trails.get(position).getDifficulty());
     }
 

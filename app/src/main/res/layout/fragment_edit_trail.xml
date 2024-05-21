@@ -19,11 +19,12 @@
             android:gravity="center"
             android:text="Редактирование тропы"
             android:textColor="@color/dark_blue"
-            android:textSize="21sp" />
+            android:textSize="21sp"
+            android:layout_marginTop="16dp"/>
 
         <EditText
             android:id="@+id/editTextName"
-            style="@style/RoundedEditTextStyle"
+            style="@style/CustomEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -31,7 +32,7 @@
 
         <EditText
             android:id="@+id/editTextDescription"
-            style="@style/RoundedEditTextStyle"
+            style="@style/CustomEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -39,7 +40,7 @@
 
         <EditText
             android:id="@+id/editTextTimeRequired"
-            style="@style/RoundedEditTextStyle"
+            style="@style/CustomEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -47,7 +48,7 @@
 
         <EditText
             android:id="@+id/editTextLength"
-            style="@style/RoundedEditTextStyle"
+            style="@style/CustomEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -56,7 +57,7 @@
 
         <EditText
             android:id="@+id/editTextDifficulty"
-            style="@style/RoundedEditTextStyle"
+            style="@style/CustomEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -99,7 +100,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Сохранить" />
+            android:text="Сохранить"
+            android:layout_gravity="center_horizontal"/>
         <Button
             android:id="@+id/deleteButton"
             style="@style/RoundedButtonStyle"

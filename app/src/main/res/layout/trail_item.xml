@@ -25,17 +25,20 @@
                 android:id="@+id/text_name"
                 android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/beige"/>
             <TextView
                 android:id="@+id/text_description"
                 android:fontFamily="@font/montserrat"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/beige"/>
             <TextView
                 android:id="@+id/text_level"
                 android:fontFamily="@font/montserrat"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/beige"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewEmail"
         android:inputType="textEmailAddress"
+        style="@style/CustomEditTextStyle"
         android:hint="Введите адрес электронной почты"
         android:layout_marginTop="8dp"/>
 

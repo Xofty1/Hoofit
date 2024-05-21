@@ -66,8 +66,13 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
                 return false;
             }
         });
+
         holder.textName.setText(reserves.getReserves().get(position).getName());
-        holder.textDescription.setText(reserves.getReserves().get(position).getDescription());
+        String description = reserves.getReserves().get(position).getDescription();
+        if (description.length() > 50) {
+            description = description.substring(0, 47) + "...";
+        }
+        holder.textDescription.setText(description);
         // Получаем ссылку на Firebase Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();

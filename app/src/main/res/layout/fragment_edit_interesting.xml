@@ -12,11 +12,13 @@
         android:gravity="center"
         android:text="Редактирование"
         android:textColor="@color/dark_blue"
-        android:textSize="21sp" />
+        android:textSize="21sp"
+        android:layout_marginTop="16dp"/>
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/CustomEditTextStyle"
         android:hint="Введите название новости"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/dialogTitle"
@@ -26,6 +28,7 @@
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/CustomEditTextStyle"
         android:hint="Введите описание новости"
         android:layout_below="@id/editTextName"
         android:layout_centerHorizontal="true"
@@ -34,6 +37,7 @@
         android:id="@+id/editTextResource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/CustomEditTextStyle"
         android:hint="Введите"
         android:layout_below="@id/editTextDescription"
         android:layout_centerHorizontal="true"
@@ -43,6 +47,9 @@
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/CustomSpinnerStyle"
+        android:popupBackground="@drawable/spinner_background"
+        android:spinnerMode="dialog"
         android:layout_below="@id/editTextResource"
         android:layout_marginTop="16dp"
         android:layout_gravity="center"
@@ -87,8 +94,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:visibility="gone"/>
-
-
-
-
 </RelativeLayout>

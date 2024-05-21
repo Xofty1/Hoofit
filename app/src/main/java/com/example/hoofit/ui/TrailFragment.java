@@ -39,6 +39,7 @@ public class TrailFragment extends Fragment {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,6 @@ public class TrailFragment extends Fragment {
 
         if (HoofitApp.allTrails == null) {
             Toast.makeText(getContext(), "Нет троп", Toast.LENGTH_SHORT).show();
-            binding.buttonAddTrail.setVisibility(View.INVISIBLE);
         } else {
             List<Trail> trails;
             if (bundle != null) {
@@ -74,6 +74,8 @@ public class TrailFragment extends Fragment {
             } else {
                 adapter = new TrailAdapter(getContext(), HoofitApp.allTrails);
             }
+            if (reserve == null || !HoofitApp.user.isAdmin())
+                binding.buttonAddTrail.setVisibility(View.INVISIBLE);
 
             setupRecyclerView(adapter);
             if (HoofitApp.user.isAdmin()) {
