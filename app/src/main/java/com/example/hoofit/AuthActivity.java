@@ -16,6 +16,7 @@ import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
+import com.example.hoofit.ui.LoaderFragment;
 import com.example.hoofit.ui.auth.RegisterFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+        replaceFragment(new LoaderFragment());
         mAuth = FirebaseAuth.getInstance();
         if (!isPersistenceEnabled) {
             database.setPersistenceEnabled(true);

@@ -5,11 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
 import com.example.hoofit.databinding.FragmentHelpBinding;
 
@@ -32,6 +34,14 @@ FragmentHelpBinding binding;
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
+            }
+        });
+        binding.buttoToCreator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreatorFragment fragment = new CreatorFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                MainActivity.makeTransaction(transaction, fragment);
             }
         });
         return binding.getRoot();

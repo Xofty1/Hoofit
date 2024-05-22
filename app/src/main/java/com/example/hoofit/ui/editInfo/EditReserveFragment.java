@@ -81,6 +81,13 @@ public class EditReserveFragment extends Fragment {
                 }
             });
         }
+        binding.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filePath = null;
+                binding.constrWrapper.setVisibility(View.INVISIBLE);
+            }
+        });
         binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +155,7 @@ public class EditReserveFragment extends Fragment {
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             binding.imageView.setImageURI(filePath);
-            binding.imageView.setVisibility(View.VISIBLE);
+            binding.constrWrapper.setVisibility(View.VISIBLE);
             binding.uploadButton.setVisibility(View.VISIBLE);
         }
     }
@@ -171,7 +178,7 @@ public class EditReserveFragment extends Fragment {
 
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Uploading...");
+            progressDialog.setTitle("Загрузка...");
             progressDialog.show();
             StorageReference ref = storageReference.child("images/" + reserve.getId());
             ref.delete();

@@ -1,67 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- login_fragment.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- login_fragment.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:text="Регистрация"
+        android:textColor="@color/dark_blue"
+        android:textSize="21sp" />
 
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+
+        android:text="Электронная почта"
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <EditText
         android:id="@+id/editTextEmail"
+        style="@style/CustomEditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewEmail"
-        android:inputType="textEmailAddress"
-        style="@style/CustomEditTextStyle"
+        android:layout_marginTop="8dp"
         android:hint="Введите адрес электронной почты"
-        android:layout_marginTop="8dp"/>
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/textViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="16dp"
         android:text="Пароль"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_below="@id/editTextEmail"
-        android:layout_marginTop="16dp"/>
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <EditText
         android:id="@+id/editTextPassword"
+        style="@style/CustomEditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPassword"
-        android:inputType="textPassword"
+        android:layout_marginTop="8dp"
         android:hint="Введите пароль"
-        android:layout_marginTop="8dp"/>
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:text="Войти"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/textViewForgotPassword"
+        style="@style/RoundedButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Забыли пароль?"
-        android:layout_below="@id/buttonLogin"
-        android:layout_marginTop="16dp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Войти" />
+
     <TextView
         android:id="@+id/textViewToRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Зарегистрироваться"
-        android:layout_below="@id/textViewForgotPassword"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+        android:text="Зарегистрироваться" />
 
-</RelativeLayout>
+</LinearLayout>

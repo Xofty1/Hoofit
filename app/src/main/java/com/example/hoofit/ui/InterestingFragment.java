@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
@@ -22,6 +23,7 @@ import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
 public class InterestingFragment extends Fragment {
     FragmentInterestingBinding binding;
     Interesting interesting;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,33 +34,42 @@ public class InterestingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentInterestingBinding.inflate(getLayoutInflater());
         Bundle bundle = getArguments();
-        if (bundle != null){
+        if (bundle != null) {
             interesting = (Interesting) bundle.getSerializable("interesting");
             binding.textDescription.setText(interesting.getDescription());
             binding.textName.setText(interesting.getName());
             binding.buttonoResource.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (interesting.getType().equals("RESERVE")){
+                    if (interesting.getType().equals("RESERVE")) {
                         InfoReserveFragment fragment = new InfoReserveFragment();
                         Bundle bundleFragment = new Bundle();
                         bundleFragment.putSerializable("reserve", interesting.getReserve());
                         fragment.setArguments(bundleFragment);
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        MainActivity.makeTransaction(transaction,fragment);
-                    }
-                    else if (interesting.getType().equals("TRAIL")){
+                        MainActivity.makeTransaction(transaction, fragment);
+                    } else if (interesting.getType().equals("TRAIL")) {
                         InfoTrailFragment fragment = new InfoTrailFragment();
                         Bundle bundleFragment = new Bundle();
                         bundleFragment.putSerializable("trail", interesting.getTrail());
                         fragment.setArguments(bundleFragment);
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        MainActivity.makeTransaction(transaction,fragment);
-                    }
-                    else {
+                        MainActivity.makeTransaction(transaction, fragment);
+                    } else {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(interesting.getUri()));
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(interesting.getUri());
+                            intent.setData(uri);
+
+                            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getContext(), "No app found to handle the link", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (IllegalArgumentException e) {
+                            // Show a toast with a message about the bad link
+                            Toast.makeText(getContext(), "Invalid link", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });

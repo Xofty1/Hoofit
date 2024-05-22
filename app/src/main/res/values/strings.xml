@@ -9,9 +9,9 @@
         <item>Тропа</item>
         <item>Интернет ресурс</item>
     </string-array>
-        <string name="name_hint">Имя</string>
-        <string name="username_hint">Никнейм</string>
-        <string name="email_hint">Электронная почта</string>
-        <string name="save_changes">Сохранить изменения</string>
+    <string name="name_hint">Имя</string>
+    <string name="username_hint">Логин</string>
+    <string name="email_hint">Электронная почта</string>
+    <string name="save_changes">Сохранить изменения</string>
 
 </resources>

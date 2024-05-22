@@ -83,6 +83,7 @@ public class EditInterestingFragment extends Fragment {
         if (!isNewInteresting) {
             binding.deleteButton.setVisibility(View.VISIBLE);
         }
+
         binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,6 +195,13 @@ public class EditInterestingFragment extends Fragment {
                 }
             }
         });
+        binding.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filePath = null;
+                binding.constrWrapper.setVisibility(View.INVISIBLE);
+            }
+        });
         binding.selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,7 +265,7 @@ public class EditInterestingFragment extends Fragment {
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             binding.imageView.setImageURI(filePath);
-            binding.imageView.setVisibility(View.VISIBLE);
+            binding.constrWrapper.setVisibility(View.VISIBLE);
 //            binding.uploadButton.setVisibility(View.VISIBLE);
         }
     }
