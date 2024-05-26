@@ -43,7 +43,18 @@ public class RegisterFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
-
+        binding.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (binding.editTextPassword.getText().toString().isEmpty()) {
+                        binding.textInputLayoutPassword.setHint("Введите пароль");
+                    }
+                } else {
+                    binding.textInputLayoutPassword.setHint("");
+                }
+            }
+        });
         binding.buttonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,14 +68,27 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
+                if (password.length() <= 5){
+                    Toast.makeText(getContext(), "Пароль должен быть больше 5 символов", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
                 name = binding.editTextName.getText().toString();
                 if (name.isEmpty()) {
                     Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
+
                 username = binding.editTextUsername.getText().toString();
                 if (username.isEmpty()) {
-                    Toast.makeText(getContext(), "Введите ник", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Введите логин", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
+                if (username.length() <= 4) {
+                    Toast.makeText(getContext(), "Логин должен быть длинее 4 символов", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, если email пустой
+                }
+                if (username.length() >= 15) {
+                    Toast.makeText(getContext(), "Логин должен быть короче 16 символов", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
 

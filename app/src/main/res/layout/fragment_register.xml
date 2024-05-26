@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- registration_fragment.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -93,15 +93,23 @@
         android:layout_below="@id/editTextName"
         android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CustomEditTextStyle"
-        android:layout_below="@id/textViewPassword"
-        android:inputType="textPassword"
+        app:passwordToggleEnabled="true"
         android:hint="Введите пароль"
-        android:layout_marginTop="16dp"/>
+        app:boxBackgroundMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=""
+            style="@style/CustomEditTextStyle"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonRegistration"

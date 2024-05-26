@@ -95,6 +95,4 @@ public class Trail implements Serializable {
     public void setCoordinatesList(List<Coordinate> coordinatesList) {
         this.coordinatesList = coordinatesList;
     }
-
-    // getters and setters
 }

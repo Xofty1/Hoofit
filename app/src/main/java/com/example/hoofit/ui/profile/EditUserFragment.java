@@ -83,6 +83,22 @@ public class EditUserFragment extends Fragment {
                 String name = binding.editTextName.getText().toString();
                 String username = binding.editTextUsername.getText().toString();
                 String password = binding.editTextPassword.getText().toString();
+                if (name.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (username.isEmpty()) {
+                    Toast.makeText(getContext(), "Введите логин", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (username.length() <= 4) {
+                    Toast.makeText(getContext(), "Логин должен быть длинее 4 символов", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (username.length() >= 15) {
+                    Toast.makeText(getContext(), "Логин должен быть короче 16 символов", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!password.isEmpty()) {
                     changeUserPassword(user, password);
                 }
@@ -118,6 +134,18 @@ public class EditUserFragment extends Fragment {
                 MainActivity.makeTransaction(transaction, fragment);
             }
 
+        });
+        binding.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (binding.editTextPassword.getText().toString().isEmpty()) {
+                        binding.textInputLayoutPassword.setHint("Введите пароль");
+                    }
+                } else {
+                    binding.textInputLayoutPassword.setHint("");
+                }
+            }
         });
         binding.deleteImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

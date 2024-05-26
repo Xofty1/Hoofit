@@ -67,7 +67,6 @@ public class InterestingFragment extends Fragment {
                                 Toast.makeText(getContext(), "No app found to handle the link", Toast.LENGTH_SHORT).show();
                             }
                         } catch (IllegalArgumentException e) {
-                            // Show a toast with a message about the bad link
                             Toast.makeText(getContext(), "Invalid link", Toast.LENGTH_SHORT).show();
                         }
                     }

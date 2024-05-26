@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
-        android:text="Редактирование"
+        android:text="Редактирование профиля"
         android:textColor="@color/dark_blue"
         android:textSize="21sp"
         android:layout_marginTop="16dp"/>
@@ -57,17 +57,25 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="16dp"
 
-        android:text="Пароль"
+        android:text="Новый пароль"
         android:textAppearance="?android:textAppearanceMedium" />
-    <EditText
-        android:id="@+id/editTextPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CustomEditTextStyle"
-        android:hint="Новый пароль"
-        android:inputType="textPassword"
-        android:maxLength="50"
-        android:layout_marginTop="16dp"/>
+        app:passwordToggleEnabled="true"
+        android:hint="Введите пароль"
+        app:boxBackgroundMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=""
+            style="@style/CustomEditTextStyle"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/selectImageButton"
@@ -124,9 +132,11 @@
 
     <TextView
         android:id="@+id/textViewDeleteCurrent"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Удалить текущую аватарка" />
+        android:text="Удалить текущую аватарка"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/buttonSaveChanges"

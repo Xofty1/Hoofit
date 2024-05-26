@@ -73,14 +73,8 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
             description = description.substring(0, 47) + "...";
         }
         holder.textDescription.setText(description);
-        // Получаем ссылку на Firebase Storage
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-
-// Получаем ссылку на изображение в Firebase Storage
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageRef.child("images/" + reserves.getReserves().get(position).getId());
-
-// Получаем URI изображения и загружаем его в ImageView
         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -93,7 +87,6 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Обработка ошибок при загрузке изображения
-//                Log.e(TAG, "Ошибка загрузки изображения: " + exception.getMessage());
             }
         });
 

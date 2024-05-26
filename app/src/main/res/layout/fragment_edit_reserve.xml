@@ -125,6 +125,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Удалить"
+        android:layout_gravity="center_horizontal"
+
         android:visibility="gone" />
 
     <ProgressBar

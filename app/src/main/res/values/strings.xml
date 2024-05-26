@@ -13,5 +13,4 @@
     <string name="username_hint">Логин</string>
     <string name="email_hint">Электронная почта</string>
     <string name="save_changes">Сохранить изменения</string>
-
 </resources>

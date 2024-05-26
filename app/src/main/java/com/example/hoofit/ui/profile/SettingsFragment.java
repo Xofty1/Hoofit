@@ -92,7 +92,18 @@ public class SettingsFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-
+                bindingPassword.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean hasFocus) {
+                        if (!hasFocus) {
+                            if (bindingPassword.editTextPassword.getText().toString().isEmpty()) {
+                                bindingPassword.textInputLayoutPassword.setHint("Введите пароль");
+                            }
+                        } else {
+                            bindingPassword.textInputLayoutPassword.setHint("");
+                        }
+                    }
+                });
                 bindingPassword.buttonOk.setOnClickListener(new View.OnClickListener() {
 
                         @Override

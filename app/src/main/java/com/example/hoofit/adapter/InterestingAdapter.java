@@ -82,12 +82,16 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Обработка ошибок при загрузке изображения
-//                Log.e(TAG, "Ошибка загрузки изображения: " + exception.getMessage());
             }
         });
+        String description = interestings.get(position).getDescription();
+        if (description.length() > 30) {
+            description = description.substring(0, 27) + "...";
+        }
         holder.textName.setText(interestings.get(position).getName());
-        holder.textDescription.setText(interestings.get(position).getDescription());
-        holder.textType.setText(interestings.get(position).getType());
+        holder.textDescription.setText(description);
+//        holder.textType.setVisibility(View.INVISIBLE);
+//        holder.textType.setText(interestings.get(position).getType());
     }
 
 
@@ -99,14 +103,13 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
         TextView textDescription;
-        TextView textType;
+//        TextView textType;
         ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textName);
             textDescription = itemView.findViewById(R.id.textDescription);
-            textType = itemView.findViewById(R.id.textType);
             image = itemView.findViewById(R.id.image);
         }
     }

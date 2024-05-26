@@ -216,7 +216,6 @@ public class EditInterestingFragment extends Fragment {
     private void checkStoragePermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // Разрешение на чтение внешнего хранилища не предоставлено, запрашиваем его
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_EXTERNAL_STORAGE);

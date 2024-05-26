@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/orange"
         android:padding="16dp">
 
@@ -33,11 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageCard"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/montserrat"
             android:text="Заголовок"
             android:textColor="@color/beige"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textDescription"
@@ -46,16 +46,6 @@
             android:layout_below="@id/textName"
             android:fontFamily="@font/montserrat"
             android:text="Описание"
-            android:textColor="@color/beige"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/textType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textDescription"
-            android:fontFamily="@font/montserrat"
-            android:text="Тип"
             android:textColor="@color/beige"
             android:textSize="14sp" />
 

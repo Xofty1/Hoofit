@@ -55,6 +55,18 @@ public class SignInFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
+        binding.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (binding.editTextPassword.getText().toString().isEmpty()) {
+                        binding.textInputLayoutPassword.setHint("Введите пароль");
+                    }
+                } else {
+                    binding.textInputLayoutPassword.setHint("");
+                }
+            }
+        });
 
         binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
 

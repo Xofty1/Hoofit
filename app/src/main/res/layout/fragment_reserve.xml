@@ -28,7 +28,7 @@
         android:background="@drawable/round_button_orange"
         android:textColor="#FFFFFF"
         android:text="+"
-        android:textSize="52sp"
+        android:textSize="40sp"
         android:padding="16dp"
         android:layout_margin="16dp"
         android:elevation="4dp"

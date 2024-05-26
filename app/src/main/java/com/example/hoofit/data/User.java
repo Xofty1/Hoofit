@@ -67,7 +67,6 @@ public class User {
     public List<Trail> getLikedTrails() {
         return likedTrails;
     }
-
     public void setLikedTrails(List<Trail> likedTrails) {
         this.likedTrails = likedTrails;
     }

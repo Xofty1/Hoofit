@@ -78,7 +78,7 @@ public class TrailFragment extends Fragment {
                 binding.buttonAddTrail.setVisibility(View.INVISIBLE);
 
             setupRecyclerView(adapter);
-            if (HoofitApp.user.isAdmin()) {
+            if (HoofitApp.user.isAdmin() && reserve != null) {
                 setupItemLongClickListener(adapter);
             }
             setupItemClickListener(adapter);

@@ -65,7 +65,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Обработка ошибок при загрузке изображения
-//                Log.e(TAG, "Ошибка загрузки изображения: " + exception.getMessage());
             }
         });
 
@@ -91,6 +90,18 @@ public class ProfileFragment extends Fragment {
                 // Установка начального масштаба на 0
                 bindingPassword.getRoot().setScaleX(0);
                 bindingPassword.getRoot().setScaleY(0);
+                bindingPassword.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean hasFocus) {
+                        if (!hasFocus) {
+                            if (binding.textViewEditData.getText().toString().isEmpty()) {
+                                bindingPassword.textInputLayoutPassword.setHint("Введите пароль");
+                            }
+                        } else {
+                            bindingPassword.textInputLayoutPassword.setHint("");
+                        }
+                    }
+                });
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialogInterface) {
@@ -147,6 +158,8 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+        binding.textUsername.setText(HoofitApp.user.getUsername());
         binding.buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

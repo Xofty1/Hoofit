@@ -17,5 +17,3 @@ public class MapViewModel extends ViewModel {
         return selectedTrailLiveData;
     }
 }
-
-

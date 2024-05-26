@@ -51,8 +51,6 @@ public class Reserve implements Serializable {
     public void setTrails(List<Trail> trails) {
         this.trails = trails;
     }
-
-    // getters and setters
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

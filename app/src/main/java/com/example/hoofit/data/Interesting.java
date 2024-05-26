@@ -37,62 +37,29 @@ public class Interesting implements Serializable {
     public void setReserve(Reserve reserve) {
         this.reserve = reserve;
     }
-
-    public Interesting(String type, String name, String description, String uri) {
-        this.type = type;
-        this.name = name;
-        this.description = description;
-        this.uri = uri;
-    }
-    public Interesting(String type, String name, String description, Trail trail) {
-        this.type = type;
-        this.name = name;
-        this.description = description;
-        this.trail = trail;
-    }
-    public Interesting(String type, String name, String description, Reserve reserve) {
-        this.type = type;
-        this.name = name;
-        this.description = description;
-        this.reserve = reserve;
-    }
     public Interesting() {
     }
-
-    public Interesting(String type, String name, String description) {
-        this.type = type;
-        this.name = name;
-        this.description = description;
-    }
-
     public String getType() {
         return type;
     }
-
     public void setType(String type) {
         this.type = type;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
     public String getUri() {
         return uri;
     }
-
     public void setUri(String uri) {
         this.uri = uri;
     }
@@ -103,32 +70,8 @@ public class Interesting implements Serializable {
         Interesting that = (Interesting) o;
         return Objects.equals(id, that.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    public enum ItemType {
-        TRAIL("Trail"),
-        RESERVE("Reserve"),
-        RESOURCE("Resource");
-
-        private final String displayName;
-
-        ItemType(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-
-
-        @Override
-        public String toString() {
-            return displayName;
-        }
-    }
-
 }
