@@ -154,45 +154,6 @@ public class AuthActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    //    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        DatabaseReference users = database.getReference("Users");
-//        if (user != null) {
-//            users.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        DataSnapshot dataSnapshot = task.getResult();
-//                        if (dataSnapshot.exists()) {
-//                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                                User tempUser = snapshot.getValue(User.class);
-//                                if (Objects.equals(user.getEmail(), tempUser.getEmail())) {
-//                                    HoofitApp.user = tempUser;
-//                                    Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
-//                                    finish();
-//                                    break;
-//                                }
-//                            }
-//                            if (user == null)
-//                                replaceFragment(new RegisterFragment());
-//                        }
-//                    }
-//                }
-//            });
-//        }
-//        else{
-//            replaceFragment(new RegisterFragment());
-//        }
-////        if (user == null)
-////            replaceFragment(new RegisterFragment());
-////        else {
-////            startActivity(new Intent(AuthActivity.this, MainActivity.class));
-////            finish();
-////        }
-//    }
     @Override
     protected void onStart() {
         super.onStart();

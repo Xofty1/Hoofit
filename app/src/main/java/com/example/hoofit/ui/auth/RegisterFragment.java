@@ -83,8 +83,8 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), "Введите логин", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
-                if (username.length() <= 4) {
-                    Toast.makeText(getContext(), "Логин должен быть длинее 4 символов", Toast.LENGTH_SHORT).show();
+                if (username.length() < 4) {
+                    Toast.makeText(getContext(), "Логин должен быть длинее 3 символов", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, если email пустой
                 }
                 if (username.length() >= 15) {
@@ -104,8 +104,10 @@ public class RegisterFragment extends Fragment {
                                         .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(getContext(), "Все круто", Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(getContext(), MainActivity.class));
+                                                Toast.makeText(getContext(), "Авторизируйтесь", Toast.LENGTH_LONG).show();
+                                                SignInFragment fragment = new SignInFragment();
+                                                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                                                MainActivity.makeTransaction(transaction, fragment);
                                             }
                                         });
                             }

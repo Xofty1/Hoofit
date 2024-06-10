@@ -2,8 +2,10 @@ package com.example.hoofit.ui.editInfo;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,8 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
@@ -41,6 +46,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+
 public class EditInterestingFragment extends Fragment {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -49,6 +56,7 @@ public class EditInterestingFragment extends Fragment {
     boolean isNewInteresting = false;
     private Uri filePath;
     private StorageReference storageReference;
+    boolean isDeletedCurrentImage = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,14 +82,13 @@ public class EditInterestingFragment extends Fragment {
             interesting = new Interesting();
             isNewInteresting = true;
         }
-//        interesting.setType("RESERVE");
         DatabaseReference interestingRef = FirebaseDatabase.getInstance().getReference("interesting");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.options_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinner.setAdapter(adapter);
         if (!isNewInteresting) {
-            binding.deleteButton.setVisibility(View.VISIBLE);
+            binding.deleteButton.setVisibility(View.VISIBLE); // можно исправить покороче
         }
 
         binding.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +96,6 @@ public class EditInterestingFragment extends Fragment {
             public void onClick(View view) {
                 interestingRef.child(interesting.getId()).removeValue();
                 HoofitApp.interestings.remove(interesting);
-                Log.d("FFF", HoofitApp.interestings.size() + " размер0");
                 StorageReference interest = storageReference.child("images/" + interesting.getId());
                 interest.delete();
                 MainFragment fragment = new MainFragment();
@@ -131,7 +137,6 @@ public class EditInterestingFragment extends Fragment {
             public void onClick(View view) {
 
                 String resource = binding.editTextResource.getText().toString();
-
                 boolean find = false;
                 if (interesting.getType().equals("RESERVE")) {
                     for (Reserve reserve : HoofitApp.reserves.getReserves()) {
@@ -184,13 +189,12 @@ public class EditInterestingFragment extends Fragment {
                             interesting.setId(id);
                             HoofitApp.interestings.add(interesting);
                         }
-                        interestingRef.child(interesting.getId()).setValue(interesting);
-
-                        updateData();
-
-                        MainFragment fragment = new MainFragment();
-                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                        MainActivity.makeTransaction(transaction, fragment);
+                        interestingRef.child(interesting.getId()).setValue(interesting).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                updateData();
+                            }
+                        });
                     }
                 }
             }
@@ -199,7 +203,9 @@ public class EditInterestingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 filePath = null;
-                binding.constrWrapper.setVisibility(View.INVISIBLE);
+                isDeletedCurrentImage = true;
+                binding.deleteImageButton.setVisibility(View.GONE);
+                binding.imageView.setImageResource(R.drawable.logo);
             }
         });
         binding.selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +214,30 @@ public class EditInterestingFragment extends Fragment {
                 checkStoragePermission();
             }
         });
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("images/" + interesting.getId());
+        imageRef.getDownloadUrl().
 
+                addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Загружаем изображение в ImageView
+                        binding.imageView.setVisibility(View.VISIBLE);
+                        Glide.with(getContext())
+                                .load(uri)
+                                .into(binding.imageView);
+                        binding.deleteImageButton.setVisibility(View.VISIBLE);
+                    }
+                }).
+
+                addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        binding.imageView.setImageResource(R.drawable.logo);
+
+                    }
+                });
         return binding.getRoot();
     }
 
@@ -220,52 +249,144 @@ public class EditInterestingFragment extends Fragment {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_EXTERNAL_STORAGE);
         } else {
+            // Разрешение на чтение внешнего хранилища уже предоставлено, открываем диалог выбора файла
             openFileChooser();
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openFileChooser();
+            } else {
+                Toast.makeText(getActivity(), "Доступ запрещен", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+
     private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickPhotoIntent.setType("image/*");
+
+        // Создаем Intent для сделать фотографию
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Создаем Intent для открытия диалога выбора изображения или фотографирования
+        Intent chooserIntent = Intent.createChooser(pickPhotoIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{takePictureIntent});
+
+        // Запускаем Intent для выбора изображения из галереи или сделать фотографию
+        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK
+                && data != null) {
+            if (data.getData() != null) {
+                filePath = data.getData();
+                binding.imageView.setImageURI(filePath);
+                binding.constrWrapper.setVisibility(View.VISIBLE);
+                binding.deleteImageButton.setVisibility(View.VISIBLE);
+                // binding.uploadButton.setVisibility(View.VISIBLE);
+            } else if (data.getExtras() != null && data.getExtras().containsKey("data")) {
+                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                Uri tempUri = getImageUri(requireContext(), imageBitmap);
+                filePath = tempUri;
+                binding.imageView.setImageURI(filePath);
+                binding.constrWrapper.setVisibility(View.VISIBLE);
+                binding.deleteImageButton.setVisibility(View.VISIBLE);
+                // binding.uploadButton.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    // Метод для получения Uri изображения из Bitmap
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
     }
 
     public void updateData() {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
         if (filePath != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+            showProgressDialog("Загрузка...", progressDialog);
             StorageReference interest = storageReference.child("images/" + interesting.getId());
             interest.delete();
             interest.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
+                            handleSuccess("Загружено", progressDialog);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            handleFailure(e, progressDialog);
                         }
                     });
+        } else if (isDeletedCurrentImage) {
+            deleteImage(progressDialog);
+        } else {
+            navigateToMainFragment();
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void showProgressDialog(String title, ProgressDialog progressDialog) {
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK
-                && data != null && data.getData() != null) {
-            filePath = data.getData();
-            binding.imageView.setImageURI(filePath);
-            binding.constrWrapper.setVisibility(View.VISIBLE);
-//            binding.uploadButton.setVisibility(View.VISIBLE);
+        progressDialog.setTitle(title);
+        progressDialog.show();
+    }
+
+    private void handleSuccess(String message, ProgressDialog progressDialog) {
+        progressDialog.dismiss();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        navigateToMainFragment();
+    }
+
+    private void handleFailure(Exception e, ProgressDialog progressDialog) {
+        progressDialog.dismiss();
+        Toast.makeText(getActivity(), "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        navigateToMainFragment();
+    }
+
+    private void deleteImage(ProgressDialog progressDialog) {
+        showProgressDialog("Загрузка...", progressDialog);
+
+        if (interesting != null && interesting.getId() != null) {
+            StorageReference interest = storageReference.child("images/" + interesting.getId());
+            interest.delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            handleSuccess("Загружено", progressDialog);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            handleFailure(e, progressDialog);
+                        }
+                    });
+        } else {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(), "Не удалось найти изображение для удаления", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void navigateToMainFragment() {
+        MainFragment fragment = new MainFragment();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        MainActivity.makeTransaction(transaction, fragment);
+    }
+
+
 }
