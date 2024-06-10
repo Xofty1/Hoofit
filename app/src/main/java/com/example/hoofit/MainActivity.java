@@ -1,19 +1,27 @@
 package com.example.hoofit;
 
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.hoofit.mainMenu.OnFragmentInteractionListener;
 import com.example.hoofit.ui.MainFragment;
 import com.example.hoofit.ui.map.MapFragment;
 import com.example.hoofit.ui.ProfileFragment;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hoofit.databinding.ActivityMainBinding;
+import com.example.hoofit.utils.Utils;
 import com.google.android.gms.location.LocationRequest;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {

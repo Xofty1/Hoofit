@@ -1,6 +1,8 @@
 package com.example.hoofit.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.ReserveData;
+import com.example.hoofit.utils.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -73,23 +79,13 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
             description = description.substring(0, 47) + "...";
         }
         holder.textDescription.setText(description);
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imageRef = storageRef.child("images/" + reserves.getReserves().get(position).getId());
-        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Загружаем изображение в ImageView
-                Glide.with(context)
-                        .load(uri)
-                        .into(holder.image);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Обработка ошибок при загрузке изображения
-            }
-        });
+        String imageId = reserves.getReserves().get(position).getId();
 
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("images/" + imageId);
+        Utils.loadImage(context, imageId, holder.image, imageRef);
     }
 
     @Override

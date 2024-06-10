@@ -224,7 +224,7 @@ public class EditInterestingFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         // Загружаем изображение в ImageView
                         binding.imageView.setVisibility(View.VISIBLE);
-                        Glide.with(getContext())
+                        Glide.with(requireContext())
                                 .load(uri)
                                 .into(binding.imageView);
                         binding.deleteImageButton.setVisibility(View.VISIBLE);

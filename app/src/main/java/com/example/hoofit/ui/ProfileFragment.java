@@ -2,12 +2,15 @@ package com.example.hoofit.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
@@ -25,6 +30,7 @@ import com.example.hoofit.databinding.RequestPasswordBinding;
 import com.example.hoofit.ui.profile.EditUserFragment;
 import com.example.hoofit.ui.profile.HelpFragment;
 import com.example.hoofit.ui.profile.SettingsFragment;
+import com.example.hoofit.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,12 +46,10 @@ import java.io.Serializable;
 
 public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,21 +57,8 @@ public class ProfileFragment extends Fragment {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child("images/" + HoofitApp.user.getId());
-        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Загружаем изображение в ImageView
-                Glide.with(getContext())
-                        .load(uri)
-                        .into(binding.imageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Обработка ошибок при загрузке изображения
-            }
-        });
-
+        String imageId = HoofitApp.user.getId();
+        Utils.loadImage(requireContext(), imageId, binding.imageView, imageRef);
         binding.buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
