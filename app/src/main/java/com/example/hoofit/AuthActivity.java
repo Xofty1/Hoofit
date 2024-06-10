@@ -173,9 +173,6 @@ public class AuthActivity extends AppCompatActivity {
                         if (HoofitApp.user == null) HoofitApp.user = new User();
                         // Update the admin field in the user object
                         HoofitApp.user.setAdmin(dataSnapshot.getValue(Boolean.class));
-
-                        // Optionally, notify the user
-                        Toast.makeText(AuthActivity.this, "Admin status updated", Toast.LENGTH_SHORT).show();
                     } else {
                         // Handle the case where the admin field does not exist
                         HoofitApp.user.setAdmin(false); // or any default value
@@ -194,7 +191,6 @@ public class AuthActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         HoofitApp.user = dataSnapshot.getValue(User.class);
-                        Toast.makeText(AuthActivity.this, "Email " + HoofitApp.user.getEmail(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AuthActivity.this, MainActivity.class));
                         finish();
                     } else {
