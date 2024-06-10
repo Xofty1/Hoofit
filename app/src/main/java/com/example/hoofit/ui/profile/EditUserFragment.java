@@ -303,8 +303,6 @@ public class EditUserFragment extends Fragment {
             }
         }
     }
-
-    // Метод для получения Uri изображения из Bitmap
     private Uri getImageUri(Context context, Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 1000, bytes);

@@ -54,53 +54,6 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
         View view = LayoutInflater.from(context).inflate(R.layout.interesting_item, parent, false);
         return new InterestingAdapter.ViewHolder(view);
     }
-
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (itemClickListener != null) {
-//                    itemClickListener.onItemClick(interestings.get(position));
-//                }
-//            }
-//        });
-//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (onItemLongClickListener != null) {
-//                    onItemLongClickListener.onItemLongClick(interestings.get(position));
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        StorageReference imageRef = storageRef.child("images/" + interestings.get(position).getId());
-//        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                // Загружаем изображение в ImageView
-//                Glide.with(context)
-//                        .load(uri)
-//                        .into(holder.image);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Обработка ошибок при загрузке изображения
-//            }
-//        });
-//        String description = interestings.get(position).getDescription();
-//        if (description.length() > 30) {
-//            description = description.substring(0, 27) + "...";
-//        }
-//        holder.textName.setText(interestings.get(position).getName());
-//        holder.textDescription.setText(description);
-////        holder.textType.setVisibility(View.INVISIBLE);
-////        holder.textType.setText(interestings.get(position).getType());
-//    }
 @Override
 public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Interesting interesting = interestings.get(position);

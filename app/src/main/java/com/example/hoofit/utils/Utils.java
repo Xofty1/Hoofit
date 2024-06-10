@@ -66,8 +66,6 @@ public class Utils {
 
                         @Override
                         public void onLoadCleared(@Nullable Drawable placeholder) {
-                            // This is called when the View is cleared.
-                            // Make sure to remove any references to the bitmap here.
                         }
                     });
         }).addOnFailureListener(exception -> {
