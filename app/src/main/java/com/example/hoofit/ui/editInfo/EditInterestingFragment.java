@@ -1,5 +1,6 @@
 package com.example.hoofit.ui.editInfo;
 
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,9 +12,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,11 +36,13 @@ import com.example.hoofit.R;
 import com.example.hoofit.data.Interesting;
 import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
+import com.example.hoofit.utils.Utils;
 import com.example.hoofit.databinding.FragmentEditInterestingBinding;
 import com.example.hoofit.ui.InfoReserveFragment;
 import com.example.hoofit.ui.MainFragment;
 import com.example.hoofit.ui.ReserveFragment;
 import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +52,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class EditInterestingFragment extends Fragment {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -57,6 +68,8 @@ public class EditInterestingFragment extends Fragment {
     private Uri filePath;
     private StorageReference storageReference;
     boolean isDeletedCurrentImage = false;
+    String currentPhotoPath;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -195,6 +208,7 @@ public class EditInterestingFragment extends Fragment {
                                 updateData();
                             }
                         });
+                        navigateToMainFragment();
                     }
                 }
             }
@@ -249,8 +263,10 @@ public class EditInterestingFragment extends Fragment {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_EXTERNAL_STORAGE);
         } else {
-            // Разрешение на чтение внешнего хранилища уже предоставлено, открываем диалог выбора файла
             openFileChooser();
+            // Разрешение на чтение внешнего хранилища уже предоставлено, открываем диалог выбора файла
+//            Utils.openFileChooser(getActivity());
+//            currentPhotoPath = Utils.openFileChooser(getActivity()).getAbsolutePath();
         }
     }
 
@@ -260,9 +276,10 @@ public class EditInterestingFragment extends Fragment {
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openFileChooser();
+//                currentPhotoPath = Utils.openFileChooser(getActivity()).getAbsolutePath();
+
             } else {
                 Toast.makeText(getActivity(), "Доступ запрещен", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
@@ -272,49 +289,64 @@ public class EditInterestingFragment extends Fragment {
         Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickPhotoIntent.setType("image/*");
 
-        // Создаем Intent для сделать фотографию
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
-        // Создаем Intent для открытия диалога выбора изображения или фотографирования
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(requireContext(), "com.example.hoofit.fileprovider", photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        }
+
         Intent chooserIntent = Intent.createChooser(pickPhotoIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{takePictureIntent});
 
-        // Запускаем Intent для выбора изображения из галереи или сделать фотографию
         startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
     }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK
-                && data != null) {
-            if (data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                // Обработка изображения, выбранного из галереи
                 filePath = data.getData();
                 binding.imageView.setImageURI(filePath);
-                binding.constrWrapper.setVisibility(View.VISIBLE);
-                binding.deleteImageButton.setVisibility(View.VISIBLE);
-                // binding.uploadButton.setVisibility(View.VISIBLE);
-            } else if (data.getExtras() != null && data.getExtras().containsKey("data")) {
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                Uri tempUri = getImageUri(requireContext(), imageBitmap);
-                filePath = tempUri;
-                binding.imageView.setImageURI(filePath);
-                binding.constrWrapper.setVisibility(View.VISIBLE);
-                binding.deleteImageButton.setVisibility(View.VISIBLE);
-                // binding.uploadButton.setVisibility(View.VISIBLE);
+            } else {
+                // Обработка изображения, сделанного с камеры
+                if (currentPhotoPath != null) {
+                    File photoFile = new File(currentPhotoPath);
+                    if (photoFile.exists()) {
+                        filePath = Uri.fromFile(photoFile);
+                        binding.imageView.setImageURI(filePath);
+                    }
+                }
             }
+            binding.constrWrapper.setVisibility(View.VISIBLE);
+            binding.deleteImageButton.setVisibility(View.VISIBLE);
         }
     }
 
-    // Метод для получения Uri изображения из Bitmap
-    private Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
+
+    private File createImageFile() throws IOException {
+        // Создаем имя файла изображения
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
+        currentPhotoPath = imageFile.getAbsolutePath(); // Сохраняем путь к файлу
+        return imageFile;
     }
 
+
     public void updateData() {
+
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         if (filePath != null) {
             showProgressDialog("Загрузка...", progressDialog);

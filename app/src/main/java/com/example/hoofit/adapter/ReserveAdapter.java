@@ -72,6 +72,11 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
                 return false;
             }
         });
+        String imageId = reserves.getReserves().get(position).getId();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("images/" + imageId);
+        Utils.loadImage(context, imageId, holder.image, imageRef);
 
         holder.textName.setText(reserves.getReserves().get(position).getName());
         String description = reserves.getReserves().get(position).getDescription();
@@ -79,13 +84,7 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
             description = description.substring(0, 47) + "...";
         }
         holder.textDescription.setText(description);
-        String imageId = reserves.getReserves().get(position).getId();
 
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child("images/" + imageId);
-        Utils.loadImage(context, imageId, holder.image, imageRef);
     }
 
     @Override

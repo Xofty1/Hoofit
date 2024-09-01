@@ -6,4 +6,5 @@
         android:bottomLeftRadius="0dp"
         android:bottomRightRadius="0dp" />
     <solid android:color="?android:attr/windowBackground" /> <!-- Цвет фона -->
+
 </shape>

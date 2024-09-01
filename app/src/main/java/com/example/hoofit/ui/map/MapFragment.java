@@ -269,7 +269,7 @@ public class MapFragment extends Fragment {
     }
 
     public void makeTrail(Trail trail) {
-        mapView.getMap().move(new CameraPosition(new Point(trail.getCoordinatesList().get(0).getLatitude(), trail.getCoordinatesList().get(0).getLongitude()), 8.0F, 0.0F, 0.0F), new Animation(Animation.Type.SMOOTH, 2), null);
+        mapView.getMap().move(new CameraPosition(new Point(trail.getCoordinatesList().get(0).getLatitude(), trail.getCoordinatesList().get(0).getLongitude()), 15.0F, 0.0F, 0.0F), new Animation(Animation.Type.SMOOTH, 2), null);
         List<Coordinate> coordinates = trail.getCoordinatesList();
         List<Point> points = new ArrayList<>();
 
