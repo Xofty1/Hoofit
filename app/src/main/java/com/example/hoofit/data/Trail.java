@@ -13,6 +13,25 @@ public class Trail implements Serializable {
     private String timeRequired;
     private String description;
     private List<Coordinate> coordinatesList;
+    private double stars;
+    private List<Comment> comments;
+
+    public double getStars() {
+        return stars;
+    }
+
+    public void setStars(double stars) {
+        this.stars = stars;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,6 +55,18 @@ public class Trail implements Serializable {
         this.timeRequired = timeRequired;
         this.description = description;
         this.coordinatesList = coordinatesList;
+    }
+
+    public Trail(String id, String name, double length, String difficulty, String timeRequired, String description, List<Coordinate> coordinatesList, double stars, List<Comment> comments) {
+        this.id = id;
+        this.name = name;
+        this.length = length;
+        this.difficulty = difficulty;
+        this.timeRequired = timeRequired;
+        this.description = description;
+        this.coordinatesList = coordinatesList;
+        this.stars = stars;
+        this.comments = comments;
     }
 
     public String getDescription() {
@@ -95,4 +126,5 @@ public class Trail implements Serializable {
     public void setCoordinatesList(List<Coordinate> coordinatesList) {
         this.coordinatesList = coordinatesList;
     }
+
 }

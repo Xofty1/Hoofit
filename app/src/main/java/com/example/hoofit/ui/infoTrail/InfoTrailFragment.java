@@ -23,8 +23,10 @@ import com.example.hoofit.AuthActivity;
 import com.example.hoofit.HoofitApp;
 import com.example.hoofit.MainActivity;
 import com.example.hoofit.R;
+import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentInfoTrailBinding;
+import com.example.hoofit.ui.CommentFragment;
 import com.example.hoofit.ui.map.MapFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -67,32 +69,44 @@ public class InfoTrailFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             Trail trail = (Trail) bundle.getSerializable("trail");
+            Reserve reserve = (Reserve) bundle.getSerializable("reserve");
             viewModel.setTrail(trail);
-        }
 
-        viewModel.getTrailLiveData().observe(getViewLifecycleOwner(), trail -> {
-            if (trail != null) {
-                binding.textName.setText(trail.getName());
-                binding.textDescription.setText(trail.getDescription());
-                binding.textDifficulty.setText("Cложность: " + trail.getDifficulty());
-                binding.textLength.setText("Расстояние: " + String.valueOf(trail.getLength()) + " км");
-                binding.textTimeRequired.setText("Требуемое время: " + trail.getTimeRequired());
-            }
-        });
 
-        binding.buttonToMap.setOnClickListener(view -> {
+            viewModel.getTrailLiveData().observe(getViewLifecycleOwner(), trailRunner -> {
+                if (trailRunner != null) {
+                    binding.textName.setText(trailRunner.getName());
+                    binding.textDescription.setText(trailRunner.getDescription());
+                    binding.textDifficulty.setText("Cложность: " + trailRunner.getDifficulty());
+                    binding.textLength.setText("Расстояние: " + String.valueOf(trailRunner.getLength()) + " км");
+                    binding.textTimeRequired.setText("Требуемое время: " + trailRunner.getTimeRequired());
+                }
+            });
             Trail selectedTrail = viewModel.getTrailLiveData().getValue();
+            binding.buttonToMap.setOnClickListener(view -> {
 
-            if (selectedTrail != null) {
-                MapFragment fragment = new MapFragment();
-                Bundle bundleToMap = new Bundle();
-                bundleToMap.putSerializable("trail", selectedTrail);
-                fragment.setArguments(bundleToMap);
+
+                if (selectedTrail != null) {
+                    MapFragment fragment = new MapFragment();
+                    Bundle bundleToMap = new Bundle();
+                    bundleToMap.putSerializable("trail", selectedTrail);
+                    fragment.setArguments(bundleToMap);
+                    viewModel.getTrailLiveData().getValue();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    MainActivity.makeTransaction(transaction, fragment);
+                }
+            });
+            binding.buttonToComments.setOnClickListener(view -> {
+                CommentFragment fragment = new CommentFragment();
+                Bundle bundleToComments = new Bundle();
+                bundleToComments.putSerializable("trail", selectedTrail);
+                bundleToComments.putSerializable("reserve", reserve);
+                fragment.setArguments(bundleToComments);
                 viewModel.getTrailLiveData().getValue();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 MainActivity.makeTransaction(transaction, fragment);
-            }
-        });
+            });
+        }
         ImageView buttonLike = binding.buttonLike;
         String currentId = viewModel.getTrailLiveData().getValue().getId();
         Trail currentTrail = null;

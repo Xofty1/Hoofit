@@ -113,6 +113,7 @@ public class TrailFragment extends Fragment {
                 InfoTrailFragment fragment = new InfoTrailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("trail", trail);
+                bundle.putSerializable("reserve", reserve);
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 MainActivity.makeTransaction(transaction, fragment);

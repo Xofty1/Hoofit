@@ -1,3 +1,4 @@
+
 package com.example.hoofit.ui.editInfo;
 
 import android.os.Bundle;
@@ -176,7 +177,7 @@ public class EditTrailFragment extends Fragment {
             if (isNewTrail) {
                 trails.add(trail);
             }
-                trailsRef.setValue(trails);
+            trailsRef.setValue(trails);
 
             for (Interesting interesting : HoofitApp.interestings) {
                 if (interesting.getTrail() != null && interesting.getTrail().equals(trail)) {

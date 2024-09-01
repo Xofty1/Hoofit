@@ -40,6 +40,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -82,6 +83,9 @@ public class EditReserveFragment extends Fragment {
                 if (isNewReserve) {
                     String id = reservesRef.push().getKey();
                     reserve.setId(id);
+                    if (HoofitApp.reserves.getReserves() == null){
+                        HoofitApp.reserves.setReserves(new ArrayList<>());
+                    }
                     HoofitApp.reserves.getReserves().add(reserve);
                 }
 

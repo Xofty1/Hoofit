@@ -90,7 +90,14 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="На карте" />
-
+            <Button
+                android:id="@+id/button_to_comments"
+                style="@style/RoundedButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Комментарии" />
             <ImageButton
                 android:id="@+id/buttonLike"
                 android:layout_width="51dp"
