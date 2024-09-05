@@ -82,8 +82,8 @@ public class CommentFragment extends Fragment implements CommentAdapter.OnCommen
 
                 // Добавляем комментарий в локальный список
                 trail.getComments().add(comment);
-
-
+                trail.setStars(trail.getStars()+comment.getStars());
+                trail.setCommentsCounter(trail.getCommentsCounter()+1);
 
 // Обновите базу данных
 //                for (Comment commentC : trail.getComments()) {
@@ -117,8 +117,11 @@ public class CommentFragment extends Fragment implements CommentAdapter.OnCommen
     @Override
     public void onDeleteComment(int position) {
         if (adapter != null) {
+            trail.setCommentsCounter(trail.getCommentsCounter()-1);
+            trail.setStars(trail.getStars()-trail.getComments().get(position).getStars());
             adapter.removeItem(position);
 //            trail.getComments().remove(position);
+
             commentsRef.setValue(trail.getComments());
 //             DatabaseReference commentRef = FirebaseDatabase.getInstance()
 //                    .getReference("reserves")

@@ -13,14 +13,23 @@ public class Trail implements Serializable {
     private String timeRequired;
     private String description;
     private List<Coordinate> coordinatesList;
-    private double stars;
+    private float stars;
+    private int commentsCounter;
     private List<Comment> comments;
 
-    public double getStars() {
+    public int getCommentsCounter() {
+        return commentsCounter;
+    }
+
+    public void setCommentsCounter(int commentsCounter) {
+        this.commentsCounter = commentsCounter;
+    }
+
+    public float getStars() {
         return stars;
     }
 
-    public void setStars(double stars) {
+    public void setStars(float stars) {
         this.stars = stars;
     }
 
@@ -57,7 +66,7 @@ public class Trail implements Serializable {
         this.coordinatesList = coordinatesList;
     }
 
-    public Trail(String id, String name, double length, String difficulty, String timeRequired, String description, List<Coordinate> coordinatesList, double stars, List<Comment> comments) {
+    public Trail(String id, String name, double length, String difficulty, String timeRequired, String description, List<Coordinate> coordinatesList, List<Comment> comments) {
         this.id = id;
         this.name = name;
         this.length = length;
@@ -65,7 +74,8 @@ public class Trail implements Serializable {
         this.timeRequired = timeRequired;
         this.description = description;
         this.coordinatesList = coordinatesList;
-        this.stars = stars;
+        this.stars = 0;
+        this.commentsCounter = 0;
         this.comments = comments;
     }
 

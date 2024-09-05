@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,11 @@ import com.example.hoofit.data.Trail;
 import com.example.hoofit.databinding.FragmentInfoTrailBinding;
 import com.example.hoofit.ui.CommentFragment;
 import com.example.hoofit.ui.map.MapFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -70,6 +74,7 @@ public class InfoTrailFragment extends Fragment {
         if (bundle != null) {
             Trail trail = (Trail) bundle.getSerializable("trail");
             Reserve reserve = (Reserve) bundle.getSerializable("reserve");
+            viewModel.setReserve(reserve);
             viewModel.setTrail(trail);
 
 
@@ -83,6 +88,46 @@ public class InfoTrailFragment extends Fragment {
                 }
             });
             Trail selectedTrail = viewModel.getTrailLiveData().getValue();
+            if (reserve == null){
+
+                DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+                reservesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.e("FirebaseError222", "Ошибка базы ");
+                        for (DataSnapshot reserveSnapshot : dataSnapshot.getChildren()) {
+                            DataSnapshot trailsSnapshot = reserveSnapshot.child("trails");
+
+                            for (DataSnapshot trailSnapshot : trailsSnapshot.getChildren()) {
+                                Trail trailSearch = trailSnapshot.getValue(Trail.class);
+
+                                if (trailSearch != null && trailSearch.getId().equals(trail.getId())) {
+                                    Reserve foundReserve = reserveSnapshot.getValue(Reserve.class);
+
+                                    // Обновляем через ViewModel
+                                    viewModel.setReserve(foundReserve);
+
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("FirebaseError222", "Ошибка базы данных: " + databaseError.getMessage());
+                    }
+                });
+            }
+            if (trail.getComments() != null) {
+                if (trail.getComments().size() != 0)
+                    binding.textViewRating.setText(String.valueOf(trail.getStars() / trail.getCommentsCounter()));
+                else {
+                    binding.textViewRating.setText("Оценок пока нет");
+
+                }
+            }
+
             binding.buttonToMap.setOnClickListener(view -> {
 
 
@@ -96,17 +141,21 @@ public class InfoTrailFragment extends Fragment {
                     MainActivity.makeTransaction(transaction, fragment);
                 }
             });
+
             binding.buttonToComments.setOnClickListener(view -> {
                 CommentFragment fragment = new CommentFragment();
                 Bundle bundleToComments = new Bundle();
                 bundleToComments.putSerializable("trail", selectedTrail);
-                bundleToComments.putSerializable("reserve", reserve);
+                bundleToComments.putSerializable("reserve", viewModel.getReserveLiveData().getValue());
                 fragment.setArguments(bundleToComments);
                 viewModel.getTrailLiveData().getValue();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 MainActivity.makeTransaction(transaction, fragment);
             });
-        }
+
+
+
+    }
         ImageView buttonLike = binding.buttonLike;
         String currentId = viewModel.getTrailLiveData().getValue().getId();
         Trail currentTrail = null;

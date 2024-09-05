@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.hoofit.data.Reserve;
 import com.example.hoofit.data.Trail;
 
 public class InfoTrailViewModel extends ViewModel {
@@ -15,5 +16,14 @@ public class InfoTrailViewModel extends ViewModel {
 
     public LiveData<Trail> getTrailLiveData() {
         return trailLiveData;
+    }
+    private MutableLiveData<Reserve> reserveLiveData = new MutableLiveData<>();
+
+    public LiveData<Reserve> getReserveLiveData() {
+        return reserveLiveData;
+    }
+
+    public void setReserve(Reserve reserve) {
+        reserveLiveData.setValue(reserve);
     }
 }

@@ -83,7 +83,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             textName = itemView.findViewById(R.id.text_name);
             textMessage = itemView.findViewById(R.id.text_message);
             ratingBar = itemView.findViewById(R.id.ratingBar);
-            image = itemView.findViewById(R.id.imageView);
+            image = itemView.findViewById(R.id.imageView_avatar);
 
         }
     }

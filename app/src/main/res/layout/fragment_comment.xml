@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/list_comment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"/>
-
-    <EditText
-        android:id="@+id/editText_addMessage"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Отзыв" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/button_addComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Оставить отзыв" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numStars="5"/>
-</LinearLayout>
+        <EditText
+            android:id="@+id/editText_addMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Оставьте отзыв"/>
+
+        <Button
+            android:id="@+id/button_addComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Оценить" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_marginBottom="8dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:progressTint="@color/gold"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
