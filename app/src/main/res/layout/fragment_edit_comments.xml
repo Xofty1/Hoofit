@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Понравилось ли вам?"
+            android:textColor="@color/dark_blue"
+            android:textSize="21sp"
+            android:layout_gravity="center"
+            />
+        <!-- CardView с RatingBar -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="70dp"
+            app:cardBackgroundColor="@color/dark_blue">
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:paddingTop="5dp"
+                android:layout_margin="10dp"
+                android:progressTint="@color/gold"
+                android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- EditText для отзыва -->
+        <EditText
+            android:id="@+id/editText_addMessage"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="Оставьте отзыв"
+            android:layout_marginBottom="15dp"
+            android:lines="4"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:gravity="top"
+            android:padding="10dp"/>
+
+
+        <!-- Кнопка "Оценить" -->
+        <Button
+            android:id="@+id/button_addComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/RoundedButtonStyle"
+            android:text="Оценить"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

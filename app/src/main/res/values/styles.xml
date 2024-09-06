@@ -53,5 +53,12 @@
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeColor">@android:color/transparent</item>
     </style>
+    <style name="CustomButtonStyle" parent="ThemeOverlay.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_blue</item> <!-- Цвет текста dark_blue -->
+        <item name="android:padding">16dp</item> <!-- Отступы по желанию -->
+    </style>
+
 </resources>
 

@@ -54,6 +54,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
         holder.textName.setText(comments.get(position).getUser().getName());
+        holder.textDate.setText(comments.get(position).getDate());
         String message = comments.get(position).getMessage();
         holder.textMessage.setText(message);
         holder.ratingBar.setRating(comments.get(position).getStars());
@@ -72,6 +73,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
         TextView textMessage;
+        TextView textDate;
         RatingBar ratingBar;
         ImageView image;
         ImageView deleteComment;
@@ -84,6 +86,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             textMessage = itemView.findViewById(R.id.text_message);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             image = itemView.findViewById(R.id.imageView_avatar);
+            textDate = itemView.findViewById(R.id.text_date);
 
         }
     }

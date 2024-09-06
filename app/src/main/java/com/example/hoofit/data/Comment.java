@@ -50,6 +50,15 @@ public Comment(){}
     public void setStars(float stars) {
         this.stars = stars;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
