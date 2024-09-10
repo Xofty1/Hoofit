@@ -31,6 +31,8 @@
             android:fontFamily="@font/montserrat"
             android:padding="10dp"
             android:textColor="@color/dark_blue"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:text="Описание тропы, дополнительная информация и т.д."
             android:textSize="16sp" />
 

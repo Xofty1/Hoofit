@@ -58,15 +58,44 @@ public class AuthActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DataSnapshot dataSnapshot = task.getResult();
                     if (dataSnapshot.exists()) {
-                        List<Trail> trails = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Reserve reserve = snapshot.getValue(Reserve.class);
-                            if (reserve != null && reserve.getTrails() != null)
-                                trails.addAll(reserve.getTrails());
-                            rev.add(reserve);
+
+                            if (reserve != null) {
+                                // Проверка и обновление ID у заповедника
+                                if (reserve.getId() == null || reserve.getId().isEmpty() || Objects.equals(reserve.getId(), "none")) {
+                                    String newReserveId = snapshot.getRef().push().getKey();
+                                    reserve.setId(newReserveId);
+                                    reserveRef.child(newReserveId).setValue(reserve).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("Firebase", "Заповедник успешно обновлен с новым ID: " + newReserveId);
+                                            } else {
+                                                Log.e("Firebase", "Ошибка обновления заповедника: " + task.getException().getMessage());
+                                            }
+                                        }
+                                    });
+//                                    reserveRef.getRef().child("none").removeValue();  // Обновление ID в Firebase
+                                }
+
+                                // Проверка и обновление ID у троп
+                                if (reserve.getTrails() != null) {
+                                    int c = 0;
+                                    for (Trail trail : reserve.getTrails()) {
+                                        if (trail.getId() == null || trail.getId().isEmpty()) {
+                                            String newTrailId = snapshot.getRef().child("trails").push().getKey();
+                                            trail.setId(newTrailId);
+                                            snapshot.getRef().child("trails").child(String.valueOf(c)).child("id").setValue(newTrailId);  // Обновление ID в Firebase
+                                        }
+                                        c+=1;
+                                    }
+                                }
+
+                                // Обновление всей информации о заповеднике
+                                snapshot.getRef().setValue(reserve);
+                            }
                         }
-                        HoofitApp.reserves.setReserves(rev);
-                        HoofitApp.allTrails = trails;
                     } else {
                         Toast.makeText(AuthActivity.this, "Троп пока что нет", Toast.LENGTH_SHORT).show();
                     }
@@ -75,6 +104,7 @@ public class AuthActivity extends AppCompatActivity {
                 }
             }
         });
+
         reserveRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
