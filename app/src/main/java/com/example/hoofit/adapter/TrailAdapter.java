@@ -1,18 +1,27 @@
 package com.example.hoofit.adapter;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hoofit.HoofitApp;
 import com.example.hoofit.R;
 import com.example.hoofit.data.Trail;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> {
     Context context;
@@ -41,6 +50,8 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull TrailAdapter.ViewHolder holder, int position) {
+        int orangeColor = ContextCompat.getColor(context, R.color.orange);
+        int textColor = ContextCompat.getColor(context, R.color.text_color);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +75,53 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
         if (description.length() > 50) {
             description = description.substring(0, 47) + "...";
         }
-        holder.textDescription.setText(description);
-        holder.textLevel.setText("Сложность: " + trails.get(position).getDifficulty());
+
+
+        ImageView buttonLike = holder.buttonLike;
+        String currentId = trails.get(position).getId();
+        Trail currentTrail = null;
+        final boolean[] isLiked = {false};
+        for (Trail trail : HoofitApp.user.getLikedTrails()) // следует оптимизировать
+        {
+            if (Objects.equals(trail.getId(), currentId)) {
+                currentTrail = trail;
+                buttonLike.setColorFilter(ContextCompat.getColor(context, R.color.orange), PorterDuff.Mode.SRC_IN);
+                isLiked[0] = true;
+                break;
+            }
+        }
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users");
+        Trail finalCurrentTrail = currentTrail;
+        buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ValueAnimator colorAnimator;
+                if (isLiked[0]){
+                    colorAnimator = ValueAnimator.ofArgb(orangeColor, textColor);
+                    HoofitApp.user.getLikedTrails().remove(finalCurrentTrail);
+                }
+                else{
+                    colorAnimator = ValueAnimator.ofArgb(textColor, orangeColor);
+                    HoofitApp.user.getLikedTrails().add(trails.get(position));
+                }
+                colorAnimator.setDuration(200); // Устанавливаем длительность анимации
+
+                colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                        // Получаем текущий цвет анимации
+                        int color = (int) valueAnimator.getAnimatedValue();
+                        // Устанавливаем новый цвет сердца
+                        buttonLike.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    }
+                });
+                isLiked[0] = !isLiked[0];
+                colorAnimator.start();
+                users.child(HoofitApp.user.getId()).child("likedTrails").setValue(HoofitApp.user.getLikedTrails());
+            }
+        });
+//        holder.textDescription.setText(description);
+//        holder.textLevel.setText("Сложность: " + trails.get(position).getDifficulty());
     }
 
     @Override
@@ -77,13 +133,14 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
         TextView textName;
         TextView textDescription;
         TextView textLevel;
+        ImageView buttonLike;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
             textDescription = itemView.findViewById(R.id.text_description);
-            textLevel = itemView.findViewById(R.id.text_level);
+            buttonLike = itemView.findViewById(R.id.buttonLike);
         }
     }
 

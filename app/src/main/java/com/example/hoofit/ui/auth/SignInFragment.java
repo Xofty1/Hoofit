@@ -22,6 +22,7 @@ import com.example.hoofit.data.Trail;
 import com.example.hoofit.data.User;
 import com.example.hoofit.databinding.FragmentSignInBinding;
 import com.example.hoofit.ui.MainFragment;
+import com.example.hoofit.ui.profile.HelpFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,6 +56,11 @@ public class SignInFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
+        binding.buttonInfo.setOnClickListener(view ->{
+            HelpFragment fragment = new HelpFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            MainActivity.makeTransaction(transaction, fragment);
+        });
         binding.editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {

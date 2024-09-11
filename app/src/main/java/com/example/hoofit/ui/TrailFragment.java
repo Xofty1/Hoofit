@@ -75,7 +75,7 @@ public class TrailFragment extends Fragment {
                 adapter = new TrailAdapter(getContext(), HoofitApp.allTrails);
             }
             if (reserve == null || !HoofitApp.user.isAdmin())
-                binding.buttonAddTrail.setVisibility(View.INVISIBLE);
+                binding.buttonAddTrail.setVisibility(View.GONE);
 
             setupRecyclerView(adapter);
             if (HoofitApp.user.isAdmin() && reserve != null) {
@@ -123,7 +123,7 @@ public class TrailFragment extends Fragment {
 
     private void setupAddButton() {
         if (!HoofitApp.user.isAdmin()) {
-            binding.buttonAddTrail.setVisibility(View.INVISIBLE);
+            binding.buttonAddTrail.setVisibility(View.GONE);
         }
         binding.buttonAddTrail.setOnClickListener(new View.OnClickListener() {
             @Override

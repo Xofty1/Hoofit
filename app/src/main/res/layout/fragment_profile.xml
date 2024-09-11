@@ -14,7 +14,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:layout_marginBottom="10dp"
         android:text="Профиль"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/text_color"
         android:textSize="21sp"
         android:layout_marginTop="16dp"/>
 
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="Username"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/text_color"
         android:textSize="21sp"/>
 
     <TextView
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:text="Изменить данные >"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/text_color"
         android:layout_marginTop="10dp"
         />
 
@@ -85,5 +85,5 @@
         style="@style/RoundedButtonStyle"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="Помощь"/>
+        android:text="О проекте"/>
 </LinearLayout>

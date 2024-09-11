@@ -27,7 +27,7 @@ FragmentHelpBinding binding;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHelpBinding.inflate(getLayoutInflater());
-        binding.linkTextView.setOnClickListener(new View.OnClickListener() {
+        binding.tgLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String url = "https://t.me/na_svoih_dvoih";
@@ -36,6 +36,17 @@ FragmentHelpBinding binding;
                 startActivity(intent);
             }
         });
+
+        binding.vkLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://vk.com/na.svoih.dvoih";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
         binding.buttoToCreator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,35 +3,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:https="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+
     tools:context=".ui.profile.HelpFragment">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/montserrat_semibold"
         android:layout_marginBottom="10dp"
-        android:text="Помощь"
-        android:textColor="@color/dark_blue"
+        android:text="О проекте"
+        android:textColor="@color/text_color"
         android:textSize="21sp"
         android:layout_marginTop="16dp"/>
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@color/dark_blue"
-      android:layout_marginTop="16dp"
-      android:text="Главная  -  вкладка, с которой вы можете перейти к списку заповеднников и троп, а также посмотреть подборку интересной информации\n
-Карта - вкладка, на которой вы можете увидеть и ознакомиться со всеми тропами. При нажатии на тропу вы увидите всплывающее окно и сможете более подробно ознакомиться с тропой\n
-Профиль - вкладка, на которой вы можете посмотреть информаци. о профиль: сохраненный и пройденные тропы, изменить данные о себе, а также настроить приложение для себя"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/dark_blue"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:layout_marginTop="16dp"
+        android:text="О нас" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/text_color"
+        android:layout_marginTop="16dp"
+        android:text="Мы - команда “На Своих Двоих” и ваши проводники в мир активного туризма! Наша миссия - рассказать об активном туризме в России, сформировав единую систему туристических маршрутов, находящихся на особо охраняемых природных территориях (ООПТ). Данная платформа соберет в себе основную информацию о национальных парках, заповедниках и тропах Северного Кавказа, что поможет туристам при самостоятельном планировании путешествия."/>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/dark_blue"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:layout_marginTop="16dp"
+        android:text="Медиа" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
+        android:text="Помимо развития платформы наша команда создает для вас интересный и увлекательный контент в социальных сетях:"/>
     <TextView
         android:id="@+id/linkTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Мы в Телеграмме: @na_svoih_dvoih"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/text_color"
+        android:layout_marginLeft="5dp"
         android:textSize="16sp"
         android:layout_marginTop="16dp"/>
+    <LinearLayout
+        android:id="@+id/vkLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/vk"/>
+        <TextView
+            android:id="@+id/vk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сообщество “На Своих Двоих”"
+            android:textColor="@color/text_color"
+            android:gravity="center_vertical"
+
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tgLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/tg"/>
+        <TextView
+            android:id="@+id/tg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Канал “На Своих Двоих”"
+            android:textColor="@color/text_color"
+            android:gravity="center_vertical"
+
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/dark_blue"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:layout_marginTop="16dp"
+        android:text="Контакты" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
+        android:text="nasvdv@yandex.ru\n8 (977) 718-08-15\n\nВсегда будем рады вашим вопросам и предложениям!"
+        />
     <Button
         android:id="@+id/buttoToCreator"
         style="@style/RoundedButtonStyle"
@@ -39,7 +139,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="О разработчике" />
+        android:text="О разработчике"
+        android:visibility="gone"/>
+
 
 
 

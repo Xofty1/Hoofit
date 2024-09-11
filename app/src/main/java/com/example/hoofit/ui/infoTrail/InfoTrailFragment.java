@@ -121,7 +121,7 @@ public class InfoTrailFragment extends Fragment {
             }
             if (trail.getComments() != null) {
                 if (trail.getComments().size() != 0)
-                    binding.textViewRating.setText(String.valueOf(trail.getStars() / trail.getCommentsCounter()));
+                    binding.textViewRating.setText("Средняя оценка: " + String.valueOf(trail.getStars() / trail.getCommentsCounter()));
                 else {
                     binding.textViewRating.setText("Оценок пока нет");
 

@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.List;
+import java.util.Objects;
 
 public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.ViewHolder> {
     Context context;
@@ -84,7 +85,12 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         description = description.substring(0, 27) + "...";
     }
     holder.textName.setText(interesting.getName());
-    holder.textDescription.setText(description);
+    if (Objects.equals(interesting.getType(), "RESERVE"))
+        holder.textType.setText("Заповедник");
+    else if (Objects.equals(interesting.getType(), "TRAIL"))
+        holder.textType.setText("Тропа");
+    else
+        holder.textType.setText("Интернет-ресурс");
 }
 
 
@@ -96,14 +102,14 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
-        TextView textDescription;
+        TextView textType;
 //        TextView textType;
         ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textName);
-            textDescription = itemView.findViewById(R.id.textDescription);
+            textType = itemView.findViewById(R.id.textType);
             image = itemView.findViewById(R.id.image);
         }
     }

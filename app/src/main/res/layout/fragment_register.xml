@@ -12,19 +12,8 @@
         android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
         android:text="Регистрация"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/text_color"
         android:textSize="21sp"
-        android:layout_marginTop="16dp"/>
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:text="Введите email"
-
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_below="@id/dialogTitle"
-
         android:layout_marginTop="16dp"/>
 
     <EditText
@@ -32,42 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/CustomEditTextStyle"
-        android:layout_below="@id/textViewEmail"
         android:inputType="textEmailAddress"
         android:hint="Введите адрес электронной почты"
         android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/textViewUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-
-        android:text="Введите логин"
-
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_below="@id/editTextEmail"
-        android:layout_marginTop="16dp"/>
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/CustomEditTextStyle"
-        android:layout_below="@id/textViewUsername"
         android:inputType="text"
         android:hint="Введите логин"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-
-        android:text="Введите имя"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_below="@id/editTextUsername"
         android:layout_marginTop="16dp"/>
 
     <EditText
@@ -76,22 +40,9 @@
         android:layout_height="wrap_content"
 
         style="@style/CustomEditTextStyle"
-        android:layout_below="@id/textViewName"
         android:inputType="text"
         android:hint="Введите имя"
         android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-
-        android:text="Введите пароль"
-
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_below="@id/editTextName"
-        android:layout_marginTop="16dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_password"
@@ -111,6 +62,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <Button
         android:id="@+id/buttonRegistration"
         style="@style/RoundedButtonStyle"
@@ -119,7 +71,63 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="center"
         android:text="Зарегистрироваться" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+        app:cardBackgroundColor="@color/button_background"
+        android:layout_marginBottom="16dp">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/text_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="О проекте"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_color"
+                    android:fontFamily="@font/montserrat_semibold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/text_right1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/arrow"
+                    android:textColor="@color/dark_blue"
+                    android:fontFamily="@font/montserrat_semibold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Кнопка -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/textViewToLogin"
         android:layout_width="wrap_content"

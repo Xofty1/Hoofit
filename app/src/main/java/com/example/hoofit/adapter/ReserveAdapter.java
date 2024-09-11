@@ -83,7 +83,15 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
         if (description.length() > 50) {
             description = description.substring(0, 47) + "...";
         }
-        holder.textDescription.setText(description);
+        String marsh = " маршрутов";
+        int counter = reserves.getReserves().get(position).getTrails().size();
+        if (counter == 1){
+            marsh = " маршрут";
+        }
+        else if (counter >= 2 && counter <= 4){
+            marsh = " маршрута";
+        }
+        holder.textCountOfTrail.setText(String.valueOf(counter) + marsh);
 
     }
 
@@ -94,13 +102,13 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textName;
-        TextView textDescription;
+        TextView textCountOfTrail;
         ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
-            textDescription = itemView.findViewById(R.id.text_description);
+            textCountOfTrail = itemView.findViewById(R.id.textCountOfTrail);
             image = itemView.findViewById(R.id.imageView);
 
         }

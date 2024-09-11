@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Понравилось ли вам?"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/text_color"
             android:textSize="21sp"
             android:layout_gravity="center"
             />

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -64,7 +65,7 @@ public class ReserveFragment extends Fragment {
             }
 
             binding.listReserve.setHasFixedSize(true);
-            binding.listReserve.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.listReserve.setLayoutManager(new GridLayoutManager(getContext(),2));
             binding.listReserve.setAdapter(adapter);
         }
         if (!HoofitApp.user.isAdmin()) {

@@ -12,37 +12,33 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        app:cardBackgroundColor="@color/orange"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/text_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semibold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:textColor="@color/beige"/>
-            <TextView
-                android:id="@+id/text_description"
-                android:fontFamily="@font/montserrat"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/beige"/>
-            <TextView
-                android:id="@+id/text_level"
-                android:fontFamily="@font/montserrat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:textColor="@color/beige"/>
+                android:text="name"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/text_color" />
+
+            <ImageView
+                android:id="@+id/buttonLike"
+                android:layout_width="38dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerInside"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/heart" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
