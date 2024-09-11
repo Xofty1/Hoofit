@@ -1,4 +1,4 @@
-package com.example.hoofit;
+package com.tvoyhod.hoofit;
 
 import android.content.Context;
 

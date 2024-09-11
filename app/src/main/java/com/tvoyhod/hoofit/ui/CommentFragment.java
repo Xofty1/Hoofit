@@ -1,44 +1,26 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.CommentAdapter;
-import com.example.hoofit.adapter.ReserveAdapter;
-import com.example.hoofit.data.Comment;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentCommentBinding;
-import com.example.hoofit.ui.editInfo.EditCommentsFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.adapter.CommentAdapter;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentCommentBinding;
+import com.tvoyhod.hoofit.ui.editInfo.EditCommentsFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class CommentFragment extends Fragment implements CommentAdapter.OnCommentClickListener{
     Trail trail;
@@ -85,9 +67,11 @@ public class CommentFragment extends Fragment implements CommentAdapter.OnCommen
     public void onDeleteComment(int position) {
         if (adapter != null) {
             trail.setCommentsCounter(trail.getCommentsCounter()-1);
-
+            DatabaseReference reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
+            DatabaseReference trailsRef = reservesRef.child(reserve.getId()).child("trails");
             trail.setStars(trail.getStars()-trail.getComments().get(position).getStars());
-
+            trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("commentsCounter").setValue(trail.getCommentsCounter());
+            trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("stars").setValue(trail.getStars());
             adapter.removeItem(position);
             commentsRef.setValue(trail.getComments());
             adapter.notifyDataSetChanged();

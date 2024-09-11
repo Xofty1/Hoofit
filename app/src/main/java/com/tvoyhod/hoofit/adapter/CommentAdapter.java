@@ -1,10 +1,9 @@
-package com.example.hoofit.adapter;
+package com.tvoyhod.hoofit.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,11 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Comment;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.utils.Utils;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Comment;
+import com.tvoyhod.hoofit.utils.Utils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

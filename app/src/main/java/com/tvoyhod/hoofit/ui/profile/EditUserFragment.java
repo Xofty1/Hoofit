@@ -1,11 +1,9 @@
-package com.example.hoofit.ui.profile;
+package com.tvoyhod.hoofit.ui.profile;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,18 +15,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.databinding.FragmentEditUserBinding;
-import com.example.hoofit.ui.ProfileFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.databinding.FragmentEditUserBinding;
+import com.tvoyhod.hoofit.ui.ProfileFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +35,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;

@@ -1,7 +1,6 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
 import android.content.Intent;
-import android.icu.util.BuddhistCalendar;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,12 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.databinding.FragmentInterestingBinding;
-import com.example.hoofit.ui.editInfo.EditInterestingFragment;
-import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.databinding.FragmentInterestingBinding;
+import com.tvoyhod.hoofit.ui.infoTrail.InfoTrailFragment;
 
 public class InterestingFragment extends Fragment {
     FragmentInterestingBinding binding;

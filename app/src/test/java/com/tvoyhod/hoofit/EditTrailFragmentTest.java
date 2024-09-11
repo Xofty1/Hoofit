@@ -1,4 +1,4 @@
-package com.example.hoofit;
+package com.tvoyhod.hoofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,9 +7,9 @@ import static org.mockito.Mockito.mock;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.hoofit.data.Coordinate;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.ui.editInfo.EditTrailFragment;
+import com.tvoyhod.hoofit.data.Coordinate;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.ui.editInfo.EditTrailFragment;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

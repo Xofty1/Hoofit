@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.profile;
+package com.tvoyhod.hoofit.ui.profile;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.databinding.FragmentHelpBinding;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.databinding.FragmentHelpBinding;
 
 public class HelpFragment extends Fragment {
 FragmentHelpBinding binding;

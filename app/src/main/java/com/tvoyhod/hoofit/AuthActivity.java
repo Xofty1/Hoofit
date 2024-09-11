@@ -1,4 +1,4 @@
-package com.example.hoofit;
+package com.tvoyhod.hoofit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.ReserveData;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.data.User;
-import com.example.hoofit.ui.LoaderFragment;
-import com.example.hoofit.ui.auth.RegisterFragment;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.ReserveData;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.data.User;
+import com.tvoyhod.hoofit.ui.LoaderFragment;
+import com.tvoyhod.hoofit.ui.auth.RegisterFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

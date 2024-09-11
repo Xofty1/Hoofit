@@ -1,42 +1,26 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.InterestingAdapter;
-import com.example.hoofit.adapter.ReserveAdapter;
-import com.example.hoofit.data.Coordinate;
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentMainBinding;
-import com.example.hoofit.ui.editInfo.EditInterestingFragment;
-import com.example.hoofit.ui.editInfo.EditReserveFragment;
-import com.example.hoofit.ui.profile.SettingsFragment;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.adapter.InterestingAdapter;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.databinding.FragmentMainBinding;
+import com.tvoyhod.hoofit.ui.editInfo.EditInterestingFragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MainFragment extends Fragment {
     FragmentMainBinding binding;

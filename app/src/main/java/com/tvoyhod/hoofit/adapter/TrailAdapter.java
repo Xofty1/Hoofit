@@ -1,8 +1,7 @@
-package com.example.hoofit.adapter;
+package com.tvoyhod.hoofit.adapter;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Trail;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Trail;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

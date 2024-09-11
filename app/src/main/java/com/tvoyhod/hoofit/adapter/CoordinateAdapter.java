@@ -1,4 +1,4 @@
-package com.example.hoofit.adapter;
+package com.tvoyhod.hoofit.adapter;
 
 import android.content.Context;
 import android.text.Editable;
@@ -12,8 +12,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hoofit.R;
-import com.example.hoofit.data.Coordinate;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;

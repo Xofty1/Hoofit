@@ -1,5 +1,5 @@
 
-package com.example.hoofit.ui.editInfo;
+package com.tvoyhod.hoofit.ui.editInfo;
 
 import android.os.Bundle;
 
@@ -12,17 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.CoordinateAdapter;
-import com.example.hoofit.data.Coordinate;
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentEditTrailBinding;
-import com.example.hoofit.ui.ReserveFragment;
-import com.example.hoofit.ui.TrailFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.adapter.CoordinateAdapter;
+import com.tvoyhod.hoofit.data.Coordinate;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentEditTrailBinding;
+import com.tvoyhod.hoofit.ui.TrailFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

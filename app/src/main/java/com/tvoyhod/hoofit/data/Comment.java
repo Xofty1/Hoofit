@@ -1,7 +1,5 @@
-package com.example.hoofit.data;
+package com.tvoyhod.hoofit.data;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 public class Comment {

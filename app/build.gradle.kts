@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hoofit"
+    namespace = "com.tvoyhod.hoofit"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.hoofit"
-        minSdk = 24
+        applicationId = "com.tvoyhod.hoofit"
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

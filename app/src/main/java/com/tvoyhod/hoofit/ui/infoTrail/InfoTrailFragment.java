@@ -1,7 +1,6 @@
-package com.example.hoofit.ui.infoTrail;
+package com.tvoyhod.hoofit.ui.infoTrail;
 
 
-import android.animation.AnimatorInflater;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,15 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hoofit.AuthActivity;
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentInfoTrailBinding;
-import com.example.hoofit.ui.CommentFragment;
-import com.example.hoofit.ui.map.MapFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentInfoTrailBinding;
+import com.tvoyhod.hoofit.ui.CommentFragment;
+import com.tvoyhod.hoofit.ui.map.MapFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -170,16 +166,17 @@ public class InfoTrailFragment extends Fragment {
         }
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("Users");
         Trail finalCurrentTrail = currentTrail;
+        int textColor = ContextCompat.getColor(getContext(), R.color.text_color);
         binding.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ValueAnimator colorAnimator;
                 if (isLiked){
-                    colorAnimator = ValueAnimator.ofArgb(getResources().getColor(R.color.orange), Color.parseColor("#F0F3FF"));
+                    colorAnimator = ValueAnimator.ofArgb(getResources().getColor(R.color.orange), textColor);
                     HoofitApp.user.getLikedTrails().remove(finalCurrentTrail);
                 }
                 else{
-                    colorAnimator = ValueAnimator.ofArgb(Color.parseColor("#F0F3FF"), getResources().getColor(R.color.orange));
+                    colorAnimator = ValueAnimator.ofArgb(textColor, getResources().getColor(R.color.orange));
                     HoofitApp.user.getLikedTrails().add(viewModel.getTrailLiveData().getValue());
                 }
                 colorAnimator.setDuration(200); // Устанавливаем длительность анимации

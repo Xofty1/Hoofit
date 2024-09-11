@@ -1,41 +1,27 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.ReserveAdapter;
-import com.example.hoofit.adapter.TrailAdapter;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.databinding.FragmentInfoReserveBinding;
-import com.example.hoofit.databinding.FragmentReserveBinding;
-import com.example.hoofit.ui.editInfo.EditTrailFragment;
-import com.example.hoofit.utils.Utils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.databinding.FragmentInfoReserveBinding;
+import com.tvoyhod.hoofit.databinding.FragmentReserveBinding;
+import com.tvoyhod.hoofit.ui.editInfo.EditTrailFragment;
+import com.tvoyhod.hoofit.utils.Utils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class InfoReserveFragment extends Fragment {
     FragmentInfoReserveBinding binding;

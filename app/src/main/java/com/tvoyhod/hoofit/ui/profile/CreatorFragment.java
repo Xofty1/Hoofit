@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.profile;
+package com.tvoyhod.hoofit.ui.profile;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hoofit.R;
+import com.tvoyhod.hoofit.R;
 
 public class CreatorFragment extends Fragment {
 

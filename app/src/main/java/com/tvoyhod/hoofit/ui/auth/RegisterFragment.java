@@ -1,6 +1,5 @@
-package com.example.hoofit.ui.auth;
+package com.tvoyhod.hoofit.ui.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.data.User;
-import com.example.hoofit.databinding.FragmentRegisterBinding;
-import com.example.hoofit.ui.profile.HelpFragment;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.data.User;
+import com.tvoyhod.hoofit.databinding.FragmentRegisterBinding;
+import com.tvoyhod.hoofit.ui.profile.HelpFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;

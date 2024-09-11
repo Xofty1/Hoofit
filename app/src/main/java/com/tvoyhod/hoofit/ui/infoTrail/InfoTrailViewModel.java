@@ -1,11 +1,11 @@
-package com.example.hoofit.ui.infoTrail;
+package com.tvoyhod.hoofit.ui.infoTrail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
 
 public class InfoTrailViewModel extends ViewModel {
     private MutableLiveData<Trail> trailLiveData = new MutableLiveData<>();

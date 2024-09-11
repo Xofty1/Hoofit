@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.editInfo;
+package com.tvoyhod.hoofit.ui.editInfo;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -21,14 +21,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentEditReserveBinding;
-import com.example.hoofit.ui.ReserveFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentEditReserveBinding;
+import com.tvoyhod.hoofit.ui.ReserveFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.adapter.TrailAdapter;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentTrailBinding;
-import com.example.hoofit.mainMenu.OnFragmentInteractionListener;
-import com.example.hoofit.ui.editInfo.EditTrailFragment;
-import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.adapter.TrailAdapter;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentTrailBinding;
+import com.tvoyhod.hoofit.mainMenu.OnFragmentInteractionListener;
+import com.tvoyhod.hoofit.ui.editInfo.EditTrailFragment;
+import com.tvoyhod.hoofit.ui.infoTrail.InfoTrailFragment;
 
 import java.util.List;
 

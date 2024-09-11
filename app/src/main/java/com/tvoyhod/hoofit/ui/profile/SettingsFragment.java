@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.profile;
+package com.tvoyhod.hoofit.ui.profile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,32 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hoofit.AuthActivity;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.DialogTrailInfoBinding;
-import com.example.hoofit.databinding.FragmentSettingsBinding;
-import com.example.hoofit.databinding.RequestPasswordBinding;
-import com.example.hoofit.ui.InfoReserveFragment;
-import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.tvoyhod.hoofit.AuthActivity;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.databinding.DialogTrailInfoBinding;
+import com.tvoyhod.hoofit.databinding.FragmentSettingsBinding;
+import com.tvoyhod.hoofit.databinding.RequestPasswordBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.yandex.mapkit.map.PolylineMapObject;
-
-import java.io.Serializable;
 
 
 public class SettingsFragment extends Fragment {

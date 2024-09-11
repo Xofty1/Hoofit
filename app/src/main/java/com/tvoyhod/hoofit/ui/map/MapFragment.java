@@ -1,4 +1,4 @@
-package com.example.hoofit.ui.map;
+package com.tvoyhod.hoofit.ui.map;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -22,15 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Coordinate;
-import com.example.hoofit.data.ReserveData;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.DialogTrailInfoBinding;
-import com.example.hoofit.databinding.FragmentMapBinding;
-import com.example.hoofit.ui.infoTrail.InfoTrailFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Coordinate;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.DialogTrailInfoBinding;
+import com.tvoyhod.hoofit.databinding.FragmentMapBinding;
+import com.tvoyhod.hoofit.ui.infoTrail.InfoTrailFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;

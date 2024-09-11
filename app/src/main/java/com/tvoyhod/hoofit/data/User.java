@@ -1,7 +1,4 @@
-package com.example.hoofit.data;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+package com.tvoyhod.hoofit.data;
 
 import java.util.ArrayList;
 import java.util.List;

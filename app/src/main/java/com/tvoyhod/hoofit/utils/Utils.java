@@ -1,6 +1,4 @@
-package com.example.hoofit.utils;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
+package com.tvoyhod.hoofit.utils;
 
 
 import android.app.Activity;

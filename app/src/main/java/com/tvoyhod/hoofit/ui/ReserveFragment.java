@@ -1,24 +1,23 @@
-package com.example.hoofit.ui;
+package com.tvoyhod.hoofit.ui;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.ReserveAdapter;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.databinding.FragmentReserveBinding;
-import com.example.hoofit.ui.editInfo.EditReserveFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.adapter.ReserveAdapter;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.databinding.FragmentReserveBinding;
+import com.tvoyhod.hoofit.ui.editInfo.EditReserveFragment;
 
 public class ReserveFragment extends Fragment {
 

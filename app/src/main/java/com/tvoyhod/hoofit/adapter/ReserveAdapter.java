@@ -1,9 +1,6 @@
-package com.example.hoofit.adapter;
+package com.tvoyhod.hoofit.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.hoofit.R;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.ReserveData;
-import com.example.hoofit.utils.Utils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.ReserveData;
+import com.tvoyhod.hoofit.utils.Utils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

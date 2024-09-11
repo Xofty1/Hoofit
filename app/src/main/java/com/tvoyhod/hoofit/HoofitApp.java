@@ -1,11 +1,11 @@
-package com.example.hoofit;
+package com.tvoyhod.hoofit;
 
 import android.app.Application;
 
-import com.example.hoofit.data.Interesting;
-import com.example.hoofit.data.ReserveData;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.data.User;
+import com.tvoyhod.hoofit.data.Interesting;
+import com.tvoyhod.hoofit.data.ReserveData;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.data.User;
 import com.yandex.mapkit.MapKitFactory;
 
 import java.util.ArrayList;

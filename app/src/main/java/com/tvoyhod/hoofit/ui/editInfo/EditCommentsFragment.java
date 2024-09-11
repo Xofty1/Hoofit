@@ -1,10 +1,9 @@
-package com.example.hoofit.ui.editInfo;
+package com.tvoyhod.hoofit.ui.editInfo;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,16 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hoofit.HoofitApp;
-import com.example.hoofit.MainActivity;
-import com.example.hoofit.R;
-import com.example.hoofit.adapter.CommentAdapter;
-import com.example.hoofit.data.Comment;
-import com.example.hoofit.data.Reserve;
-import com.example.hoofit.data.Trail;
-import com.example.hoofit.databinding.FragmentCommentBinding;
-import com.example.hoofit.databinding.FragmentEditCommentsBinding;
-import com.example.hoofit.ui.CommentFragment;
+import com.tvoyhod.hoofit.HoofitApp;
+import com.tvoyhod.hoofit.MainActivity;
+import com.tvoyhod.hoofit.R;
+import com.tvoyhod.hoofit.data.Comment;
+import com.tvoyhod.hoofit.data.Reserve;
+import com.tvoyhod.hoofit.data.Trail;
+import com.tvoyhod.hoofit.databinding.FragmentCommentBinding;
+import com.tvoyhod.hoofit.databinding.FragmentEditCommentsBinding;
+import com.tvoyhod.hoofit.ui.CommentFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -77,8 +75,12 @@ public class EditCommentsFragment extends Fragment {
                 // Добавляем комментарий в локальный список
                 trail.getComments().add(comment);
                 trail.setStars(trail.getStars()+comment.getStars());
-                trail.setCommentsCounter(trail.getCommentsCounter()+1);
 
+
+                trail.setCommentsCounter(trail.getCommentsCounter()+1);
+                Log.e("SUIIIIIIIIIII", "Error adding comment " + trail.getComments() + " Stars " + trail.getCommentsCounter() );
+                trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("commentsCounter").setValue(trail.getCommentsCounter());
+                trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("stars").setValue(trail.getStars());
 //                // Сохраняем обновленный список комментариев
                 commentsRef.setValue(trail.getComments()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

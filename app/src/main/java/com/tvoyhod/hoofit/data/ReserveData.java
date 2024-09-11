@@ -1,4 +1,4 @@
-package com.example.hoofit.data;
+package com.tvoyhod.hoofit.data;
 
 import java.util.List;
 
