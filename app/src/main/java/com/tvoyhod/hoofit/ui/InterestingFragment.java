@@ -62,10 +62,10 @@ public class InterestingFragment extends Fragment {
                             if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(getContext(), "No app found to handle the link", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Нет приложений чтобы открыть ссылку", Toast.LENGTH_SHORT).show();
                             }
                         } catch (IllegalArgumentException e) {
-                            Toast.makeText(getContext(), "Invalid link", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Непреавильная ссылка", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

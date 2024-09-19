@@ -93,7 +93,6 @@ public class EditTrailFragment extends Fragment {
             if (trail == null) {
                 trail = new Trail();
                 isNewTrail = true;
-                Toast.makeText(getContext(), "мы создаем тропу", Toast.LENGTH_SHORT).show();
             } else {
                 binding.deleteButton.setVisibility(View.VISIBLE);
             }

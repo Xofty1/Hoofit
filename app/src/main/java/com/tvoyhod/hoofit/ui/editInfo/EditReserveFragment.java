@@ -66,7 +66,7 @@ public class EditReserveFragment extends Fragment {
         if (bundle != null) {
             binding.deleteButton.setVisibility(View.VISIBLE);
             reserve = (Reserve) bundle.getSerializable("reserve");
-            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Загружено", Toast.LENGTH_SHORT).show();
 
             binding.editTextDescription.setText(reserve.getDescription());
             binding.editTextName.setText(reserve.getName());
@@ -217,51 +217,6 @@ public class EditReserveFragment extends Fragment {
         }
     }
 
-
-//    private void openFileChooser() {
-//        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        pickPhotoIntent.setType("image/*");
-//
-//        // Создаем Intent для сделать фотографию
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//        // Создаем Intent для открытия диалога выбора изображения или фотографирования
-//        Intent chooserIntent = Intent.createChooser(pickPhotoIntent, "Select Image");
-//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{takePictureIntent});
-//
-//        // Запускаем Intent для выбора изображения из галереи или сделать фотографию
-//        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK
-//                && data != null) {
-//            if (data.getData() != null) {
-//                filePath = data.getData();
-//                binding.imageView.setImageURI(filePath);
-//                binding.saveButton.setVisibility(View.VISIBLE);
-//                binding.deleteImageButton.setVisibility(View.VISIBLE);
-//            } else if (data.getExtras() != null && data.getExtras().containsKey("data")) {
-//                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-//                Uri tempUri = getImageUri(requireContext(), imageBitmap);
-//                filePath = tempUri;
-//                binding.imageView.setImageURI(filePath);
-//                binding.saveButton.setVisibility(View.VISIBLE);
-//                binding.deleteImageButton.setVisibility(View.VISIBLE);
-//            }
-//        }
-//    }
-//
-//    // Метод для получения Uri изображения из Bitmap
-//    private Uri getImageUri(Context context, Bitmap bitmap) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-//        return Uri.parse(path);
-//    }
 private void openFileChooser() {
     Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     pickPhotoIntent.setType("image/*");

@@ -78,7 +78,6 @@ public class EditCommentsFragment extends Fragment {
 
 
                 trail.setCommentsCounter(trail.getCommentsCounter()+1);
-                Log.e("SUIIIIIIIIIII", "Error adding comment " + trail.getComments() + " Stars " + trail.getCommentsCounter() );
                 trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("commentsCounter").setValue(trail.getCommentsCounter());
                 trailsRef.getRef().child(String.valueOf(reserve.getTrails().indexOf(trail))).child("stars").setValue(trail.getStars());
 //                // Сохраняем обновленный список комментариев
