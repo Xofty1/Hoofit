@@ -109,7 +109,7 @@ public class Utils {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(activity, "com.example.hoofit.fileprovider", photoFile);
+            Uri photoURI = FileProvider.getUriForFile(activity, "com.tvoyhod.hoofit.fileprovider", photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         }
 

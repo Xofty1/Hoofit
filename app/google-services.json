@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "44383881321",
+    "firebase_url": "https://hoofit-5c8bd-default-rtdb.firebaseio.com",
     "project_id": "hoofit-5c8bd",
     "storage_bucket": "hoofit-5c8bd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:44383881321:android:f9b47fcc9e34da8ab77af8",
+        "mobilesdk_app_id": "1:44383881321:android:853a83cc698baa04b77af8",
         "android_client_info": {
           "package_name": "com.tvoyhod.hoofit"
         }

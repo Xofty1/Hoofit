@@ -285,7 +285,7 @@ public class EditInterestingFragment extends Fragment {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(requireContext(), "com.example.hoofit.fileprovider", photoFile);
+            Uri photoURI = FileProvider.getUriForFile(requireContext(), "com.tvoyhod.hoofit.fileprovider", photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         }
 
