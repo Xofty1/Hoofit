@@ -19,13 +19,35 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Interesting adapter.
+ */
 public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.ViewHolder> {
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Interestings.
+     */
     List<Interesting> interestings;
     private OnItemLongClickListener onItemLongClickListener;
+
+    /**
+     * Sets on item long click listener.
+     *
+     * @param listener the listener
+     */
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.onItemLongClickListener = listener;
     }
+
+    /**
+     * Instantiates a new Interesting adapter.
+     *
+     * @param context      the context
+     * @param interestings the interestings
+     */
     public InterestingAdapter(Context context, List<Interesting> interestings) {
         this.context = context;
         this.interestings = interestings;
@@ -33,6 +55,11 @@ public class InterestingAdapter extends RecyclerView.Adapter<InterestingAdapter.
 
     private OnItemClickListener itemClickListener;
 
+    /**
+     * Sets on item click listener.
+     *
+     * @param itemClickListener the item click listener
+     */
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
@@ -88,12 +115,29 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         return interestings.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text name.
+         */
         TextView textName;
+        /**
+         * The Text type.
+         */
         TextView textType;
+        /**
+         * The Image.
+         */
 //        TextView textType;
         ImageView image;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textName);
@@ -102,11 +146,27 @@ public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         }
     }
 
+    /**
+     * The interface On item click listener.
+     */
     public interface OnItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param interesting the interesting
+         */
         void onItemClick(Interesting interesting);
     }
 
+    /**
+     * The interface On item long click listener.
+     */
     public interface OnItemLongClickListener {
+        /**
+         * On item long click.
+         *
+         * @param interesting the interesting
+         */
         void onItemLongClick(Interesting interesting);
     }
 }

@@ -16,8 +16,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.tvoyhod.hoofit.databinding.ActivityMainBinding;
 import com.google.android.gms.location.LocationRequest;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+    /**
+     * The Binding.
+     */
     ActivityMainBinding binding;
+    /**
+     * The Transaction.
+     */
     FragmentTransaction transaction;
 
     @Override
@@ -60,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         binding.navView.setSelectedItemId(navItemId);
     }
 
+    /**
+     * Make transaction.
+     *
+     * @param transaction the transaction
+     * @param fragment    the fragment
+     */
     public static void makeTransaction(FragmentTransaction transaction, Fragment fragment) {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);

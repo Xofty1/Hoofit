@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.tvoyhod.hoofit.R;
 
+/**
+ * The type Creator fragment.
+ */
 public class CreatorFragment extends Fragment {
 
     @Override

@@ -41,14 +41,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Edit user fragment.
+ */
 public class EditUserFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentEditUserBinding binding;
+    /**
+     * The User.
+     */
     FirebaseUser user;
     private Uri filePath;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private StorageReference storageReference;
+    /**
+     * The Is deleted current image.
+     */
     boolean isDeletedCurrentImage = false;
+    /**
+     * The Current photo path.
+     */
     String currentPhotoPath;
 
     @Override
@@ -159,6 +174,9 @@ public class EditUserFragment extends Fragment {
 }
 
 
+    /**
+     * Update data.
+     */
     public void updateData() {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         if (filePath != null) {
@@ -233,6 +251,12 @@ public class EditUserFragment extends Fragment {
         MainActivity.makeTransaction(transaction, fragment);
     }
 
+    /**
+     * Change user password.
+     *
+     * @param user        the user
+     * @param newPassword the new password
+     */
     public void changeUserPassword(FirebaseUser user, String newPassword) {
         user.updatePassword(newPassword)
                 .addOnCompleteListener(task -> {

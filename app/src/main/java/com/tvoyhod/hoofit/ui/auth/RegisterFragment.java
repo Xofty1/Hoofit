@@ -24,12 +24,39 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+/**
+ * The type Register fragment.
+ */
 public class RegisterFragment extends Fragment {
+    /**
+     * The Auth.
+     */
     FirebaseAuth auth; //для авторизации
+    /**
+     * The Db.
+     */
     FirebaseDatabase db;
+    /**
+     * The Users.
+     */
     DatabaseReference users; //таблица в БД
+    /**
+     * The Binding.
+     */
     FragmentRegisterBinding binding;
-    String email, password, name, username;
+    /**
+     * The Email.
+     */
+    String email, /**
+     * The Password.
+     */
+    password, /**
+     * The Name.
+     */
+    name, /**
+     * The Username.
+     */
+    username;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

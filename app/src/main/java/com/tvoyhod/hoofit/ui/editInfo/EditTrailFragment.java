@@ -28,43 +28,110 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Edit trail fragment.
+ */
 public class EditTrailFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentEditTrailBinding binding;
+    /**
+     * The Trail.
+     */
     Trail trail = null;
+    /**
+     * The Reserve.
+     */
     Reserve reserve;
+    /**
+     * The Adapter.
+     */
     CoordinateAdapter adapter;
+    /**
+     * The Is new trail.
+     */
     boolean isNewTrail = false;
-    DatabaseReference reservesRef,trailsRef;
+    /**
+     * The Reserves ref.
+     */
+    DatabaseReference reservesRef, /**
+     * The Trails ref.
+     */
+    trailsRef;
+    /**
+     * The Trails.
+     */
     List<Trail> trails;
 
+    /**
+     * Gets trail.
+     *
+     * @return the trail
+     */
     public Trail getTrail() {
         return trail;
     }
 
+    /**
+     * Sets trail.
+     *
+     * @param trail the trail
+     */
     public void setTrail(Trail trail) {
         this.trail = trail;
     }
 
+    /**
+     * Gets reserve.
+     *
+     * @return the reserve
+     */
     public Reserve getReserve() {
         return reserve;
     }
 
+    /**
+     * Sets reserve.
+     *
+     * @param reserve the reserve
+     */
     public void setReserve(Reserve reserve) {
         this.reserve = reserve;
     }
 
+    /**
+     * Is new trail boolean.
+     *
+     * @return the boolean
+     */
     public boolean isNewTrail() {
         return isNewTrail;
     }
 
+    /**
+     * Sets new trail.
+     *
+     * @param newTrail the new trail
+     */
     public void setNewTrail(boolean newTrail) {
         isNewTrail = newTrail;
     }
 
+    /**
+     * Gets trails.
+     *
+     * @return the trails
+     */
     public List<Trail> getTrails() {
         return trails;
     }
 
+    /**
+     * Sets trails.
+     *
+     * @param trails the trails
+     */
     public void setTrails(List<Trail> trails) {
         this.trails = trails;
     }
@@ -85,6 +152,9 @@ public class EditTrailFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Init bundle.
+     */
     public void initBundle() {
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -99,11 +169,17 @@ public class EditTrailFragment extends Fragment {
         }
     }
 
+    /**
+     * Init database references.
+     */
     public void initDatabaseReferences() {
         reservesRef = FirebaseDatabase.getInstance().getReference("reserves");
         trailsRef = reservesRef.child(reserve.getId()).child("trails");
     }
 
+    /**
+     * Init data.
+     */
     public void initData() {
         if (reserve.getTrails() == null)
             trails = new ArrayList<>();
@@ -198,6 +274,17 @@ public class EditTrailFragment extends Fragment {
         }
     }
 
+    /**
+     * Is valid input boolean.
+     *
+     * @param name         the name
+     * @param description  the description
+     * @param difficulty   the difficulty
+     * @param length       the length
+     * @param timeRequired the time required
+     * @param coordinates  the coordinates
+     * @return the boolean
+     */
     public boolean isValidInput(String name, String description, String difficulty, String length, String timeRequired, List<Coordinate> coordinates) {
         if (name.isEmpty()) {
             Toast.makeText(getContext(), "Не введены данные в поле Имя", Toast.LENGTH_SHORT).show();

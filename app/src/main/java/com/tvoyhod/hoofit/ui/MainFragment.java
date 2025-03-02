@@ -22,8 +22,17 @@ import com.tvoyhod.hoofit.ui.editInfo.EditInterestingFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Main fragment.
+ */
 public class MainFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentMainBinding binding;
+    /**
+     * The F trans.
+     */
     FragmentTransaction fTrans;
 
     @Override
@@ -106,6 +115,12 @@ public class MainFragment extends Fragment {
         binding = null;
     }
 
+    /**
+     * Reverse list list.
+     *
+     * @param list the list
+     * @return the list
+     */
     public static List<Interesting> reverseList(List<Interesting> list) {
         List<Interesting> reversedList = new ArrayList<>(list.size());
         for (int i = list.size() - 1; i >= 0; i--) {

@@ -34,23 +34,49 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 
+/**
+ * The type Info trail fragment.
+ */
 public class InfoTrailFragment extends Fragment {
     private FragmentInfoTrailBinding binding;
     private InfoTrailViewModel viewModel;
+    /**
+     * The Is liked.
+     */
     boolean isLiked = false;
 
+    /**
+     * Sets view model.
+     *
+     * @param viewModel the view model
+     */
     public void setViewModel(InfoTrailViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
+    /**
+     * Sets binding.
+     *
+     * @param binding the binding
+     */
     public void setBinding(FragmentInfoTrailBinding binding) {
         this.binding = binding;
     }
 
+    /**
+     * Gets binding.
+     *
+     * @return the binding
+     */
     public FragmentInfoTrailBinding getBinding() {
         return binding;
     }
 
+    /**
+     * Gets view model.
+     *
+     * @return the view model
+     */
     public InfoTrailViewModel getViewModel() {
         return viewModel;
     }

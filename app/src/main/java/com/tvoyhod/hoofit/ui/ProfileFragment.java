@@ -35,12 +35,32 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 
+/**
+ * Фрагмент профиля пользователя, отображающий информацию о пользователе и
+ * предоставляющий доступ к настройкам, редактированию данных и сохраненным тропам.
+ */
 public class ProfileFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentProfileBinding binding;
+
+    /**
+     * Связывание представления для фрагмента профиля.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    /**
+     * Создает и возвращает иерархию представлений, связанную с фрагментом.
+     *
+     * @param inflater           Раздуватель для создания представлений из XML.
+     * @param container          Родительский контейнер, к которому будет присоединено представление.
+     * @param savedInstanceState Сохраненное состояние фрагмента.
+     * @return Корневое представление фрагмента.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

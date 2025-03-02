@@ -23,7 +23,13 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 
+/**
+ * The type Info reserve fragment.
+ */
 public class InfoReserveFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentInfoReserveBinding binding;
 
     @Override

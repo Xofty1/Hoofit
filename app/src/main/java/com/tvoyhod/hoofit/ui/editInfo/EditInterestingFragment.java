@@ -46,15 +46,33 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Edit interesting fragment.
+ */
 public class EditInterestingFragment extends Fragment {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final int PICK_IMAGE_REQUEST = 1;
+    /**
+     * The Binding.
+     */
     FragmentEditInterestingBinding binding;
+    /**
+     * The Interesting.
+     */
     Interesting interesting;
+    /**
+     * The Is new interesting.
+     */
     boolean isNewInteresting = false;
     private Uri filePath;
     private StorageReference storageReference;
+    /**
+     * The Is deleted current image.
+     */
     boolean isDeletedCurrentImage = false;
+    /**
+     * The Current photo path.
+     */
     String currentPhotoPath;
 
 
@@ -332,6 +350,9 @@ public class EditInterestingFragment extends Fragment {
     }
 
 
+    /**
+     * Update data.
+     */
     public void updateData() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());

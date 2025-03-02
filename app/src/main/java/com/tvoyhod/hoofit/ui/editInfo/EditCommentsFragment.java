@@ -28,11 +28,34 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Edit comments fragment.
+ */
 public class EditCommentsFragment extends Fragment {
+    /**
+     * The Trail.
+     */
     Trail trail;
+    /**
+     * The Reserve.
+     */
     Reserve reserve;
+    /**
+     * The Comment.
+     */
     Comment comment;
+    /**
+     * The Comments ref.
+     */
     DatabaseReference commentsRef;
+
+    /**
+     * New instance edit comments fragment.
+     *
+     * @param param1 the param 1
+     * @param param2 the param 2
+     * @return the edit comments fragment
+     */
     public static EditCommentsFragment newInstance(String param1, String param2) {
         EditCommentsFragment fragment = new EditCommentsFragment();
         Bundle args = new Bundle();

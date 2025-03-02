@@ -22,10 +22,25 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+/**
+ * The type Comment fragment.
+ */
 public class CommentFragment extends Fragment implements CommentAdapter.OnCommentClickListener{
+    /**
+     * The Trail.
+     */
     Trail trail;
+    /**
+     * The Reserve.
+     */
     Reserve reserve;
+    /**
+     * The Adapter.
+     */
     CommentAdapter adapter;
+    /**
+     * The Comments ref.
+     */
     DatabaseReference commentsRef;
     @Override
     public void onCreate(Bundle savedInstanceState) {

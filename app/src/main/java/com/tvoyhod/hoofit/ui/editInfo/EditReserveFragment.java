@@ -44,15 +44,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Edit reserve fragment.
+ */
 public class EditReserveFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentEditReserveBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private Uri filePath;
+    /**
+     * The Reserve.
+     */
     Reserve reserve = null;
+    /**
+     * The Is deleted current image.
+     */
     boolean isDeletedCurrentImage = false;
     private StorageReference storageReference;
+    /**
+     * The Is new reserve.
+     */
     boolean isNewReserve = false;
+    /**
+     * The Current photo path.
+     */
     String currentPhotoPath;
 
     @Override
@@ -275,6 +293,10 @@ private void openFileChooser() {
         currentPhotoPath = imageFile.getAbsolutePath(); // Сохраняем путь к файлу
         return imageFile;
     }
+
+    /**
+     * Update data.
+     */
     public void updateData() {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         if (filePath != null) {

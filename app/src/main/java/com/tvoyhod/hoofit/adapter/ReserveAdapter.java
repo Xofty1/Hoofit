@@ -17,20 +17,45 @@ import com.tvoyhod.hoofit.utils.Utils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * The type Reserve adapter.
+ */
 public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHolder> {
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Reserves.
+     */
     ReserveData reserves;
     private OnItemClickListener itemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
 
+    /**
+     * Sets on item click listener.
+     *
+     * @param listener the listener
+     */
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
     }
 
+    /**
+     * Sets on item long click listener.
+     *
+     * @param listener the listener
+     */
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.onItemLongClickListener = listener;
     }
 
+    /**
+     * Instantiates a new Reserve adapter.
+     *
+     * @param context  the context
+     * @param reserves the reserves
+     */
     public ReserveAdapter(Context context, ReserveData reserves) {
         this.context = context;
         this.reserves = reserves;
@@ -91,11 +116,28 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
         return reserves.getReserves().size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text name.
+         */
         TextView textName;
+        /**
+         * The Text count of trail.
+         */
         TextView textCountOfTrail;
+        /**
+         * The Image.
+         */
         ImageView image;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
@@ -105,11 +147,27 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ViewHold
         }
     }
 
+    /**
+     * The interface On item click listener.
+     */
     public interface OnItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param reserve the reserve
+         */
         void onItemClick(Reserve reserve);
     }
 
+    /**
+     * The interface On item long click listener.
+     */
     public interface OnItemLongClickListener {
+        /**
+         * On item long click.
+         *
+         * @param reserve the reserve
+         */
         void onItemLongClick(Reserve reserve);
     }
 

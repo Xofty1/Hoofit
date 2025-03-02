@@ -22,13 +22,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Trail adapter.
+ */
 public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> {
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Trails.
+     */
     List<Trail> trails;
     private OnItemLongClickListener onItemLongClickListener;
+
+    /**
+     * Sets on item long click listener.
+     *
+     * @param listener the listener
+     */
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.onItemLongClickListener = listener;
     }
+
+    /**
+     * Instantiates a new Trail adapter.
+     *
+     * @param context the context
+     * @param trails  the trails
+     */
     public TrailAdapter(Context context, List<Trail> trails) {
         this.context = context;
         this.trails = trails;
@@ -36,6 +58,11 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
 
     private OnItemClickListener itemClickListener;
 
+    /**
+     * Sets on item click listener.
+     *
+     * @param itemClickListener the item click listener
+     */
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
@@ -128,13 +155,33 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
         return trails.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text name.
+         */
         TextView textName;
+        /**
+         * The Text description.
+         */
         TextView textDescription;
+        /**
+         * The Text level.
+         */
         TextView textLevel;
+        /**
+         * The Button like.
+         */
         ImageView buttonLike;
 
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.text_name);
@@ -143,11 +190,27 @@ public class TrailAdapter extends RecyclerView.Adapter<TrailAdapter.ViewHolder> 
         }
     }
 
+    /**
+     * The interface On item click listener.
+     */
     public interface OnItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param trail the trail
+         */
         void onItemClick(Trail trail);
     }
 
+    /**
+     * The interface On item long click listener.
+     */
     public interface OnItemLongClickListener {
+        /**
+         * On item long click.
+         *
+         * @param trail the trail
+         */
         void onItemLongClick(Trail trail);
     }
 }

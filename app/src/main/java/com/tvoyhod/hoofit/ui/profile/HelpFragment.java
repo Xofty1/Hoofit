@@ -15,8 +15,14 @@ import com.tvoyhod.hoofit.MainActivity;
 import com.tvoyhod.hoofit.R;
 import com.tvoyhod.hoofit.databinding.FragmentHelpBinding;
 
+/**
+ * The type Help fragment.
+ */
 public class HelpFragment extends Fragment {
-FragmentHelpBinding binding;
+    /**
+     * The Binding.
+     */
+    FragmentHelpBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

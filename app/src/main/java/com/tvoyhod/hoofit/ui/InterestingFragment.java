@@ -18,8 +18,17 @@ import com.tvoyhod.hoofit.data.Interesting;
 import com.tvoyhod.hoofit.databinding.FragmentInterestingBinding;
 import com.tvoyhod.hoofit.ui.infoTrail.InfoTrailFragment;
 
+/**
+ * The type Interesting fragment.
+ */
 public class InterestingFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentInterestingBinding binding;
+    /**
+     * The Interesting.
+     */
     Interesting interesting;
 
     @Override

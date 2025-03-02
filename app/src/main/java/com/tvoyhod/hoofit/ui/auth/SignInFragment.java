@@ -31,11 +31,32 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
+/**
+ * The type Sign in fragment.
+ */
 public class SignInFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentSignInBinding binding;
-    String email, password;
+    /**
+     * The Email.
+     */
+    String email, /**
+     * The Password.
+     */
+    password;
+    /**
+     * The Auth.
+     */
     FirebaseAuth auth; //для авторизации
+    /**
+     * The Db.
+     */
     FirebaseDatabase db;
+    /**
+     * The Users.
+     */
     DatabaseReference users; //таблица в БД
 
     @Override

@@ -20,13 +20,39 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+/**
+ * The type Comment adapter.
+ */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Comments.
+     */
     List<Comment> comments;
     private OnCommentClickListener listener;
+
+    /**
+     * The interface On comment click listener.
+     */
     public interface OnCommentClickListener {
+        /**
+         * On delete comment.
+         *
+         * @param position the position
+         */
         void onDeleteComment(int position);
     }
+
+    /**
+     * Instantiates a new Comment adapter.
+     *
+     * @param context  the context
+     * @param comments the comments
+     * @param listener the listener
+     */
     public CommentAdapter(Context context, List<Comment> comments, OnCommentClickListener listener) {
         this.context = context;
         this.comments = comments;
@@ -68,15 +94,41 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return comments.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text name.
+         */
         TextView textName;
+        /**
+         * The Text message.
+         */
         TextView textMessage;
+        /**
+         * The Text date.
+         */
         TextView textDate;
+        /**
+         * The Rating bar.
+         */
         RatingBar ratingBar;
+        /**
+         * The Image.
+         */
         ImageView image;
+        /**
+         * The Delete comment.
+         */
         ImageView deleteComment;
 
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             deleteComment = itemView.findViewById(R.id.delete_comment);
@@ -88,6 +140,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         }
     }
+
+    /**
+     * Remove item.
+     *
+     * @param position the position
+     */
     public void removeItem(int position) {
         comments.remove(position);
         notifyItemRemoved(position);

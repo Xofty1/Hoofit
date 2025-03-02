@@ -25,9 +25,18 @@ import com.tvoyhod.hoofit.ui.infoTrail.InfoTrailFragment;
 
 import java.util.List;
 
+/**
+ * The type Trail fragment.
+ */
 public class TrailFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentTrailBinding binding;
     private OnFragmentInteractionListener listener;
+    /**
+     * The Reserve.
+     */
     Reserve reserve = null;
 
     @Override

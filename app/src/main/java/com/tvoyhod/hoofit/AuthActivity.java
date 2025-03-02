@@ -32,8 +32,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Auth activity.
+ */
 public class AuthActivity extends AppCompatActivity {
+    /**
+     * The M auth.
+     */
     FirebaseAuth mAuth;
+    /**
+     * The Database.
+     */
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static boolean isPersistenceEnabled = false;
 

@@ -52,18 +52,30 @@ import com.yandex.runtime.image.ImageProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Map fragment.
+ */
 public class MapFragment extends Fragment {
     private MapViewModel viewModel;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 1;
+    /**
+     * The constant isMapFragment.
+     */
     public static boolean isMapFragment;
+    /**
+     * The Binding.
+     */
     FragmentMapBinding binding;
     private MapObjectTapListener[] mapObjectTapListeners;
     private MapObjectTapListener mapTrailListener;
     private AlertDialog dialog = null;
     private MapObjectCollection mapObjects;
     private MapView mapView;
+    /**
+     * The Current location.
+     */
     Location currentLocation = null;
     private PlacemarkMapObject userLocationMarker;
 
@@ -244,6 +256,9 @@ public class MapFragment extends Fragment {
         // Установка других свойств стиля маркера, если необходимо
     }
 
+    /**
+     * Make map.
+     */
     public void makeMap() {
 
 //        mapView.getMap().move(new CameraPosition(new Point(reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLatitude(), reserves.getReserves().get(0).getTrails().get(0).getCoordinatesList().get(0).getLongitude()), 5.0F, 0.0F, 0.0F));
@@ -267,6 +282,11 @@ public class MapFragment extends Fragment {
         }
     }
 
+    /**
+     * Make trail.
+     *
+     * @param trail the trail
+     */
     public void makeTrail(Trail trail) {
         mapView.getMap().move(new CameraPosition(new Point(trail.getCoordinatesList().get(0).getLatitude(), trail.getCoordinatesList().get(0).getLongitude()), 15.0F, 0.0F, 0.0F), new Animation(Animation.Type.SMOOTH, 2), null);
         List<Coordinate> coordinates = trail.getCoordinatesList();

@@ -19,6 +19,9 @@ import com.tvoyhod.hoofit.data.Reserve;
 import com.tvoyhod.hoofit.databinding.FragmentReserveBinding;
 import com.tvoyhod.hoofit.ui.editInfo.EditReserveFragment;
 
+/**
+ * The type Reserve fragment.
+ */
 public class ReserveFragment extends Fragment {
 
     @Override

@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.tvoyhod.hoofit.R;
 
+/**
+ * The type Loader fragment.
+ */
 public class LoaderFragment extends Fragment {
 
 

@@ -31,8 +31,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The type Utils.
+ */
 public class Utils {
     private static final int PICK_IMAGE_REQUEST = 1;
+
+    /**
+     * Save image to preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param bitmap  the bitmap
+     */
     public static void saveImageToPreferences(Context context, String key, Bitmap bitmap) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("images", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -43,6 +54,13 @@ public class Utils {
         editor.apply();
     }
 
+    /**
+     * Gets image from preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the image from preferences
+     */
     public static Bitmap getImageFromPreferences(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("images", Context.MODE_PRIVATE);
         String encodedImage = sharedPreferences.getString(key, null);
@@ -52,6 +70,13 @@ public class Utils {
         }
         return null;
     }
+
+    /**
+     * Delete image from preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     */
     public static void deleteImageFromPreferences(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("images", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -59,13 +84,20 @@ public class Utils {
         editor.apply();
     }
 
+    /**
+     * Load image.
+     *
+     * @param context   the context
+     * @param imageId   the image id
+     * @param imageView the image view
+     * @param imageRef  the image ref
+     */
     public static void loadImage(Context context, String imageId, ImageView imageView, StorageReference imageRef) {
 
         Bitmap savedImage = getImageFromPreferences(context, imageId);
 
         if (savedImage != null) {
             imageView.setImageBitmap(savedImage);
-            Log.d("FFFF", "Ноль");
         }
 
         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -96,6 +128,12 @@ public class Utils {
         });
     }
 
+    /**
+     * Open file chooser file.
+     *
+     * @param activity the activity
+     * @return the file
+     */
     public static File openFileChooser(Activity activity) {
         Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickPhotoIntent.setType("image/*");

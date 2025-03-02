@@ -30,8 +30,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
+/**
+ * The type Settings fragment.
+ */
 public class SettingsFragment extends Fragment {
+    /**
+     * The Binding.
+     */
     FragmentSettingsBinding binding;
+    /**
+     * The M auth.
+     */
     FirebaseAuth mAuth;
 
     @Override

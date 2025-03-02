@@ -18,9 +18,19 @@ import com.tvoyhod.hoofit.data.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Coordinate adapter.
+ */
 public class CoordinateAdapter extends RecyclerView.Adapter<CoordinateAdapter.ViewHolder> {
     private Context context;
     private List<Coordinate> coordinates;
+
+    /**
+     * Instantiates a new Coordinate adapter.
+     *
+     * @param context     the context
+     * @param coordinates the coordinates
+     */
     public CoordinateAdapter(Context context, List<Coordinate> coordinates) {
         this.context = context;
         if (coordinates != null) {
@@ -50,11 +60,19 @@ public class CoordinateAdapter extends RecyclerView.Adapter<CoordinateAdapter.Vi
         return coordinates.size();
     }
 
+    /**
+     * Add coordinate.
+     *
+     * @param coordinate the coordinate
+     */
     public void addCoordinate(Coordinate coordinate) {
         coordinates.add(coordinate);
         notifyItemInserted(coordinates.size() - 1);
     }
 
+    /**
+     * Remove coordinate.
+     */
     public void removeCoordinate() {
         if (!coordinates.isEmpty()) {
             coordinates.remove(coordinates.size() - 1);
@@ -62,14 +80,33 @@ public class CoordinateAdapter extends RecyclerView.Adapter<CoordinateAdapter.Vi
         }
     }
 
+    /**
+     * Gets coordinates.
+     *
+     * @return the coordinates
+     */
     public List<Coordinate> getCoordinates() {
         return coordinates;
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text longitude.
+         */
         EditText textLongitude;
+        /**
+         * The Text latitude.
+         */
         EditText textLatitude;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textLongitude = itemView.findViewById(R.id.editTextLongitude);
@@ -109,6 +146,12 @@ public class CoordinateAdapter extends RecyclerView.Adapter<CoordinateAdapter.Vi
                 }
             });
         }
+
+        /**
+         * Bind.
+         *
+         * @param coordinate the coordinate
+         */
         public void bind(Coordinate coordinate) {
             textLatitude.setText(String.valueOf(coordinate.getLatitude()));
             textLongitude.setText(String.valueOf(coordinate.getLongitude()));
